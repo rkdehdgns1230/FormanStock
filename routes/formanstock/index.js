@@ -1,12 +1,18 @@
 var express = require('express');
-const app = require('../../app');
-var router = express.Router();
+const router = express.Router();
 
-/* GET home page. */
-app.use('/stocks',require('./routes/formanstock/stocks'));
-app.use('/board',require('./routes/formanstock/board'));
-app.use('/manage',require('./routes/formanstock/manage'));
-app.use('/mypage',require('./routes/formanstock/mypage'));
+const stockRouter = require('./stocks');
+const boardRouter = require('./board');
+const manageRouter = require('./manage');
+const mypageRouter = require('./mypage');
 
+router.use('/stocks', stockRouter);
+router.use('/board', boardRouter);
+router.use('/manage', manageRouter);
+router.use('/mypage', mypageRouter);
+
+router.get('/', (req, res, next) => {
+    res.render('index', {'title': 'FormanStock'});
+});
 
 module.exports = router;
