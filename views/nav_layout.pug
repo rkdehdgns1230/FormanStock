@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title= title
+
+    link(rel='stylesheet', href="/bootstrap/bootstrap.min.css")
+
+  body
+    navBar
+      nav.navbar.navbar-expand-lg(style="background-color: #e3f2fd;")
+        .container-fluid
+          a.navbar-brand(href='#') Navbar scroll
+          button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarScroll' aria-controls='navbarScroll' aria-expanded='false' aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+          #navbarScroll.collapse.navbar-collapse
+            ul.navbar-nav.me-auto.my-2.my-lg-0.navbar-nav-scroll(style='--bs-scroll-height: 100px;')
+              li.nav-item
+                a.nav-link.active(aria-current='page' href='#') Home
+              li.nav-item
+                a.nav-link(href='#') Link
+              li.nav-item.dropdown
+                a.nav-link.dropdown-toggle(href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false')
+                  | Link
+                ul.dropdown-menu
+                  li
+                    a.dropdown-item(href='#') Action
+                  li
+                    a.dropdown-item(href='#') Another action
+                  li
+                    hr.dropdown-divider
+                  li
+                    a.dropdown-item(href='#') Something else here
+              li.nav-item
+                a.nav-link.disabled Link
+            form.d-flex(role='search')
+              input.form-control.me-2(type='search' placeholder='Search' aria-label='Search')
+              button.btn.btn-outline-success(type='submit') Search
+
+    block content
