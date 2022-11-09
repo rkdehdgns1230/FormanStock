@@ -1,5 +1,58 @@
-extends navi_layout
+extends ../navi_manage_layout
 
-block content
-  h1= title
-  p Welcome to #{title}  
+block content                        
+    .card.shadow.mb-4  
+        .card-header.py-3 
+            h4.m-0.font-weight-bold.text-primary= title
+        .card-body 
+            .table-responsive
+                table.table.table-bordered#dataTable(
+                    width="100%"
+                    cellspacing="0"
+                    style = "text-align:center"
+                )
+                    thead
+                        tr 
+                        th 이름 
+                        th 시가총액 
+                        th 상장주식수
+                        th 가격                        
+                        th 수정
+                    tbody                                                 
+                            tr 
+                            td 삼성전자
+                            td 1조
+                            td 500만                                
+                            td 23000                            
+                            td 
+                             a.btn.btn-success.btn-icon-split(href="/board/write-form")
+                                span.icon.text-white-50
+                                 i.fas.fa-check 
+                                span.text 수정
+
+                                                                     
+                            tr 
+                            td 삼성전자
+                            td 1조
+                            td 500만                                
+                            td 23000                            
+                            td 
+                             a.btn.btn-success.btn-icon-split(href="/board/write-form")
+                                span.icon.text-white-50
+                                 i.fas.fa-check 
+                                span.text 수정      
+                            
+                        
+    nav(aria-label="...")
+        ul.pagination.justify-content-center        
+            li.page-item.disabled 
+                a.page-link(href="#" tabindex="-1") Previous
+            li.page-item
+                a.page-link(href="#") 1
+            li.page-item.active 
+                a.page-link(href = "#") 2 
+                span.sr-only (current)
+            li.page-item
+                a.page-link(href="#") 3
+            li.page-item
+                a.page-link(href="#") Next  

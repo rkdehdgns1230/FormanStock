@@ -1,6 +1,7 @@
 var express = require('express');
 const router = express.Router();
 
+
 const stockRouter = require('./stocks');
 const boardRouter = require('./board');
 const manageRouter = require('./manage');
@@ -11,7 +12,7 @@ router.use('/board', boardRouter);
 router.use('/manage', manageRouter);
 router.use('/mypage', mypageRouter);
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res, next) => { // localhost:3000/formanstock
     res.render('index', {'title': 'FormanStock'});
 });
 
