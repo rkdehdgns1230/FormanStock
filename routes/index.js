@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
+const formanstockRouter = require('./formanstock');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'FormanStock' }); //index.pug로 접근(title 변수 가지고)
-});
+// formanstock router 미들웨어 등록
+router.use('/', formanstockRouter);
  
 module.exports = router;
