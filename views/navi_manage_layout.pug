@@ -45,33 +45,19 @@ html(lang="en")
                     div.sb-sidenav-menu
                         div.nav
                             div.sb-sidenav-menu-heading Company Manage
-                            a.nav-link(href="index.html")
+                            a.nav-link(href="/formanstock/manage/companies")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-tachometer-alt 
                                     span  company                                                            
-                            div.sb-sidenav-menu-heading User Manage
-                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts")
+                            div.sb-sidenav-menu-heading Company Manage
+                            a.nav-link(href="/formanstock/manage/users")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-columns 
-                                    span  All Users                                                                      
-                                div.sb-sidenav-collapse-arrow
-                                    i.fas.fa-angle-down                            
-                            div.collapse(id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
-                                nav.sb-sidenav-menu-nested.nav
-                                    a.nav-link(href="layout-static.html") Static Navigation
-                                    a.nav-link(href="layout-sidenav-light.html") Light Sidenav                                
-                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages")
-                                div.sb-nav-link-icon
-                                    i.fas.fa-columns  
-                                    span  Suspended Users                                 
-                                div.sb-sidenav-collapse-arrow
-                                    i.fas.fa-angle-down 
-                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages")
-                                div.sb-nav-link-icon
+                                    span  Normal Users
+                            a.nav-link(href="/formanstock/manage/users-suspension")
+                                div.sb-nav-link-icon 
                                     i.fas.fa-columns 
-                                    span  Deleted Users
-                                div.sb-sidenav-collapse-arrow
-                                    i.fas.fa-angle-down                                   
+                                    span  suspension Users                                                                                 
                             div.collapse(id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion")
                                 nav.sb-sidenav-menu-nested.nav.accordion(id="sidenavAccordionPages")
                                     a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth") Authentication                                        
@@ -91,11 +77,11 @@ html(lang="en")
                                             a.nav-link(href="404.html") 404 Page
                                             a.nav-link(href="500.html") 500 Page                                        
                             div.sb-sidenav-menu-heading Content Manage
-                            a.nav-link(href="charts.html")
+                            a.nav-link(href="/formanstock/manage/board")
                                 div.sb-nav-link-icon
                                     i.fas.fa-book-open 
                                     span  Boards                                                            
-                            a.nav-link(href="tables.html")
+                            a.nav-link(href="/formanstock/manage/comments")
                                 div.sb-nav-link-icon
                                     i.fas.fa-book-open 
                                     span  Comments                                
