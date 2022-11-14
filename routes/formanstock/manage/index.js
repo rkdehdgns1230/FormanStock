@@ -9,11 +9,12 @@ router.get('/', function(req, res, next) { //localhost:3000/formanstock/manage
 });
 */
 //localhost:3000/formanstock/manage/companies
-router.get('/board',manage_controllers.getlist_board);
+router.get('/board/:stock_code',manage_controllers.getlist_board);
 router.get('/companies',manage_controllers.getlist_company);
 router.get('/users-suspension',manage_controllers.getlist_users_suspension);
 router.get('/users',manage_controllers.getlist_users);
 router.get('/comments',manage_controllers.getlist_comments);
+
 
 
 
