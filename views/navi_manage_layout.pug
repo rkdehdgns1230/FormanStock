@@ -49,7 +49,7 @@ html(lang="en")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-tachometer-alt 
                                     span  company                                                            
-                            div.sb-sidenav-menu-heading Company Manage
+                            div.sb-sidenav-menu-heading Company Manage                            
                             a.nav-link(href="/formanstock/manage/users")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-columns 
@@ -57,34 +57,26 @@ html(lang="en")
                             a.nav-link(href="/formanstock/manage/users-suspension")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-columns 
-                                    span  suspension Users                                                                                 
-                            div.collapse(id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion")
-                                nav.sb-sidenav-menu-nested.nav.accordion(id="sidenavAccordionPages")
-                                    a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth") Authentication                                        
-                                        div.sb-sidenav-collapse-arrow
-                                            i.fas.fa-angle-down                                    
-                                    div.collapse(id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
-                                        nav.sb-sidenav-menu-nested.nav
-                                            a.nav-link(href="login.html") Login
-                                            a.nav-link(href="register.html") Register
-                                            a.nav-link(href="password.html") Forgot Password                                        
-                                    a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError") Error                                        
-                                        div.sb-sidenav-collapse-arrow
-                                            i.fas.fa-angle-down                                    
-                                    #pagesCollapseError.collapse(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
-                                        nav.sb-sidenav-menu-nested.nav
-                                            a.nav-link(href="401.html") 401 Page
-                                            a.nav-link(href="404.html") 404 Page
-                                            a.nav-link(href="500.html") 500 Page                                        
+                                    span  suspension Users                                        
                             div.sb-sidenav-menu-heading Content Manage
-                            a.nav-link(href="/formanstock/manage/board")
+                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts")
+                                div.sb-nav-link-icon 
+                                    i.fas.fa-columns 
+                                    span  Boards                                                                      
+                                div.sb-sidenav-collapse-arrow
+                                    i.fas.fa-angle-down                            
+                            div.collapse(id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
+                                nav.sb-sidenav-menu-nested.nav
+
+                                for stock in rows[1]
+                                    - const _url = `/formanstock/manage/board/${stock.STOCK_CODE}`;
+                                    a.nav-link(href=_url) #{stock.STOCK_NAME} 
+                                                                                            
+                            a.nav-link(href=`/formanstock/manage/comments`)
                                 div.sb-nav-link-icon
                                     i.fas.fa-book-open 
-                                    span  Boards                                                            
-                            a.nav-link(href="/formanstock/manage/comments")
-                                div.sb-nav-link-icon
-                                    i.fas.fa-book-open 
-                                    span  Comments                                
+                                    span  Comments
+                                                                    
                     div.sb-sidenav-footer
                         div.small Logged in as: 
                         span Start Bootstrap
