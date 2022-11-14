@@ -13,35 +13,24 @@ block content
                 )
                     thead
                         tr 
-                        th 이름 
-                        th 시가총액 
-                        th 상장주식수
-                        th 가격                        
-                        th 수정
-                    tbody                                                 
-                            tr 
-                            td 삼성전자
-                            td 1조
-                            td 500만                                
-                            td 23000                            
-                            td 
-                             a.btn.btn-success.btn-icon-split(href="/board/write-form")
-                                span.icon.text-white-50
-                                 i.fas.fa-check 
-                                span.text 수정
+                        th 게시물 번호
+                        th 유저 ID
+                        th 댓글 내용 
+                        th 작성 시기                          
+                        th 삭제                                      
 
-                                                                     
+                    tbody           
+                        for row in rows                                      
                             tr 
-                            td 삼성전자
-                            td 1조
-                            td 500만                                
-                            td 23000                            
+                            td #{row.post_no}
+                            td #{row.user_id}
+                            td #{row.comment_content}
+                            td #{row.reg_date}                            
                             td 
                              a.btn.btn-success.btn-icon-split(href="/board/write-form")
                                 span.icon.text-white-50
                                  i.fas.fa-check 
-                                span.text 수정      
-                            
+                                span.text 삭제
                         
     nav(aria-label="...")
         ul.pagination.justify-content-center        
