@@ -13,35 +13,22 @@ block content
                 )
                     thead
                         tr 
-                        th 이름 
-                        th 시가총액 
-                        th 상장주식수
-                        th 가격                        
-                        th 수정
-                    tbody                                                 
-                            tr 
-                            td 삼성전자
-                            td 1조
-                            td 500만                                
-                            td 23000                            
-                            td 
-                             a.btn.btn-success.btn-icon-split(href="/board/write-form")
-                                span.icon.text-white-50
-                                 i.fas.fa-check 
-                                span.text 수정
+                        th 유저 ID
+                        th 성명 
+                        th 나이                          
+                        th 삭제하기              
 
-                                                                     
+                    tbody           
+                        for row in rows[0]                                      
                             tr 
-                            td 삼성전자
-                            td 1조
-                            td 500만                                
-                            td 23000                            
+                            td #{row.USER_ID}
+                            td #{row.USER_REAL_NAME}
+                            td #{row.AGE}                                                     
                             td 
                              a.btn.btn-success.btn-icon-split(href="/board/write-form")
                                 span.icon.text-white-50
                                  i.fas.fa-check 
-                                span.text 수정      
-                            
+                                span.text 삭제
                         
     nav(aria-label="...")
         ul.pagination.justify-content-center        
