@@ -1,10 +1,33 @@
 extends navi_layout
 
 block content 
-  .p-4.p-md-5.m-4.rounded.text-bg-info(style="background-color: var(--bs-gray-900);color: #fff!important;")
+  .p-4.p-md-5.m-4.rounded(style="background-color: var(--bs-gray-900);color: #fff!important;")
     .col-md-6.px-0
       h1.display-4.fst-italic Welcome to Forman Stock!!! 
       p.lead.my-3= welcome_comment
       p.lead.mb-0  
         a.text-white.fw-bold(href="#") Continue reading...            
-    
+  
+  .p-4.p-md-5.m-4.rouded(style="background-color: var(--bs-light);")
+    .col-md-6.px-0 
+      h1.display-4.fst-italic hello
+        div 
+          canvas#myChart
+        // myChart에 대한 정보를 입력해주는 코드를 include한다.
+        h3 그래프 예제!!
+        script.
+          let ctx = document.getElementById('myChart').getContext('2d');
+          let chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: ['1', '2', '3', '4'],
+              datasets: [{
+              label: 'first chart',
+              backgroundColor: 'transparent',
+              borderColor: 'red',
+              data:[3, 4, 5, 5]
+              }]
+            },
+            options: {}
+          });
+         
