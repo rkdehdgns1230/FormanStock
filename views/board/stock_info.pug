@@ -1,53 +1,66 @@
 extends ../navi_layout
 
 block content
-  .p-4.p-md-5.m-4.rouded(style="background-color: var(--bs-light);")
-    .col-md-6.px-0 
-      h3.display-4.fst-italic 종목 코드: #{stockInfo.stockCode}
-      div(style="width: 900px; height: 900px;") 
+  .p-4.p-md-5.m-4.rounded(style="background-color: #C1DCF7;color: #212529!important;")
+    .col-md-6.px-0
+      h1.display-4(style="color: #212529;") #{stockInfo.companyName}(#{stockInfo.stockCode})
+      div(style="width: 1200px;") 
         canvas#myChart
+  div hello  
+
+
+
+  // myChart에 대한 정보를 입력해주는 코드를 include한다.
+  // script, style 같이 안에 다른 언으를 쓰는 특별한 태그들은 반드시 뒤에 점(.)을 붙여줘야
+  // pug template이 인식할 수 있다고 한다.
+  script.
+    window.onload = () => {
+      // 종가를 기준으로 차트에 들어갈 데이티 리스트를 만든다.
+      let date_list = '#{stockDateList}';
+      let price_list = '#{stockClosePriceList}';
+
+      // ','를 기준으로 split 해서 리스트로 만들어줘야 한다.
+      let dateList = date_list.split(',');
+      let priceList = price_list.split(',');
+
+      // 이 코드가 생기기 전에 박아놓고 시작하는 구조라서 골치아프다.
+      let ctx = document.getElementById('myChart').getContext('2d');
       
-      // myChart에 대한 정보를 입력해주는 코드를 include한다.
-      // script, style 같이 안에 다른 언으를 쓰는 특별한 태그들은 반드시 뒤에 점(.)을 붙여줘야
-      // pug template이 인식할 수 있다고 한다.
-      script.
-        window.onload = () => {
-          // 종가를 기준으로 차트에 들어갈 데이티 리스트를 만든다.
-          let date_list = '#{stockDateList}';
-          let price_list = '#{stockClosePriceList}';
-
-          // ','를 기준으로 split 해서 리스트로 만들어줘야 한다.
-          let dateList = date_list.split(',');
-          let priceList = price_list.split(',');
-
-          // 이 코드가 생기기 전에 박아놓고 시작하는 구조라서 골치아프다.
-          let ctx = document.getElementById('myChart').getContext('2d');
-          
-          let chartData = {
-            labels: dateList,
-            datasets: [{
-              label: 'example chart',
-              backgroundColor: 'transparent',
-              borderColor: 'black',
-              data: priceList
+      // 차트에 들어갈 데이터
+      let chartData = {
+        labels: dateList,
+        datasets: [{
+          label: '#{stockInfo.companyName} 일간 차트',
+          backgroundColor: 'transparent',
+          borderColor: 'black',
+          data: priceList
+        }]
+      }
+      // 차트의 옵션을 정의하는 부분
+      const options = {
+        elements:{
+          point:{
+            radius: 1.5,
+            pointBorderWidth: 1,
+            backgroundColor: '#212529',
+            hoverRadius: 5
+          },
+          line: {
+            borderWidth: 0.5
+          },
+        },
+        scales: {
+            xAxes: [{
+              gridLines:{
+                lineWidth: 0
+              }
             }]
           }
-          const options = {
-            elements:{
-              point:{
-                radius: 1.5,
-                pointBorderWidth: 1,
-                backgroundColor: '#212529',
-                hoverRadius: 5
-              },
-              line: {
-                borderWidth: 0.5
-              }
-            }
-          }
-          let chart = new Chart(ctx, {
-            type: 'line',
-            data: chartData,
-            options: options
-          });
-        }
+      }
+      // 차트 선언 및, canvas 태그에 데이터를 넣어주는 부분
+      let chart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: options
+      });
+    }
