@@ -4,8 +4,10 @@ const formanstockRouter = require('./formanstock');
 const loginRouter = require('./login-page');
 const signUpRouter = require('./signup-page');
 
-// formanstock router 미들웨어 등록
-router.use('/', formanstockRouter);
+// 각 router를 url path에 맞게 미들웨어로 등록
+// 각각의 미들웨어는 폴더를 통해 계층적으로 관리한다.
+router.use('/formanstock', formanstockRouter);
 router.use('/login-page', loginRouter);
 router.use('/signup-page',signUpRouter);
+
 module.exports = router;

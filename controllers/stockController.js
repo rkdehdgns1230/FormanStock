@@ -6,13 +6,33 @@ module.exports = {
         const stock_code = req.params.stock_code;
 
         stockModel.getSpecificStockInfo(stock_code, (stockInfo, stockPriceInfo) => {
-            res.send([stockInfo, stockPriceInfo]);
-            /*
+            //res.send([stockInfo, stockPriceInfo]);
+            // stock_info template과 data를 결합해 rendering한다.
+            console.log(stockPriceInfo[0].close_price);
+
+            // 종가 가격 리스트와 그에 맞는 날짜 정보 리스트 형태로 데이터를 변환해서 view component(template)로 넘겨준다.
+            let dateList = new Array();
+            let closePriceList = new Array();
+            // 리스트에 append 해준다.
+            for(let i = 0; i < stockPriceInfo.length; i++){
+                dateList.push(String(stockPriceInfo[i].stock_date));
+                closePriceList.push(stockPriceInfo[i].close_price);
+            }
+            console.log(dateList.length, closePriceList.length);
+            console.log(stockInfo[0].stock_code);
             res.render('board/stock_info', {
-                stockInfo: stockInfo,
-                stockPriceInfo: stockPriceInfo
+                title: 'FormanStock',
+                stockInfo: {
+                    stockCode: stockInfo[0].stock_code,
+                    companyName: stockInfo[0].company_name, 
+                    totalStockNum: stockInfo[0].total_stock_num, 
+                    companyInfo: stockInfo[0].company_info
+                },
+                stockDateList: dateList,
+                stockClosePriceList: closePriceList,
+                listLength: dateList.length
             });
-            */
+            
         });
     },
     loadCompanyData: (req, res, next) => {

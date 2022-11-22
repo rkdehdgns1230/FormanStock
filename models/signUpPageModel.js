@@ -1,11 +1,7 @@
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    connectionLimit: 5,
-    host: 'localhost',
-    user: 'root',
-    password: '0406',
-    database: 'stock_market'
-})
+const mysql = require('mysql');
+const dbInfo = require('../controllers/config/dev.js');
+
+const connection = mysql.createConnection(dbInfo.mySQL_config);
 
 
 module.exports = {insertData(datas, callback){

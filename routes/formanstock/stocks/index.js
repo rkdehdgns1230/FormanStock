@@ -3,11 +3,12 @@ const router = express.Router();
 
 const stockController = require('../../../controllers/stockController');
 
-/* GET home page. */
+// 종목 관련 종합 정보를 제공하는 페이지 구현 예정
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'FormanStock' });
 });
 
+// 개별 종목 조회 페이지 제공
 router.get('/:stock_code', stockController.getSpecificStockInfo);
 router.post('/:stock_code/buy');
 router.post('/:stock_code/sell');

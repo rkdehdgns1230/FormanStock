@@ -12,6 +12,7 @@ router.use('/board', boardRouter);
 router.use('/manage', manageRouter);
 router.use('/mypage', mypageRouter);
 
+// 웹 페이지의 메인 페이지를 보여주는 공간
 router.get('/', (req, res, next) => { // localhost:3000/formanstock
     res.render('index', {
         'title': 'FormanStock',
