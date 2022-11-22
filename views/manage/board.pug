@@ -27,12 +27,13 @@ block content
                             td #{row.post_title}
                             td #{row.post_content}
                             td #{row.user_id}
-                            td #{row.reg_date}                                                        
-                            td 
-                             a.btn.btn-success.btn-icon-split(href="/board/write-form")
-                                span.icon.text-white-50
-                                 i.fas.fa-check 
-                                span.text 삭제
+                            td #{row.reg_date}                                                                                    
+                            td                                                                                     
+                                form(action=`/formanstock/manage/board/${stock_code}/posts/${row.post_no}` method = "post")
+                                    button.btn.btn-success.btn-icon-split(type ="submit")
+                                        span.icon.text-white-50
+                                            i.fas.fa-check 
+                                        span.text 삭제
                         
     nav(aria-label="...")
         ul.pagination.justify-content-center        

@@ -6,7 +6,7 @@ html(lang="en")
         meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
         meta(name="description" content="")
         meta(name="author" content="")
-        title= title
+        title 포맨스톡
         link(href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet")
         link(href="/css/styles.css" rel="stylesheet")
         script(src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous")    
@@ -14,7 +14,7 @@ html(lang="en")
     body.sb-nav-fixed
         nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
             //- Navbar Brand
-            a.navbar-brand.ps-3(href="index.html")= title
+            a.navbar-brand.ps-3(href="/formanstock") 포맨스톡
             //- Sidebar Toggle
             button.btn.btn-link.btn-sm.order-1.order-lg-0.me-4.me-lg-0(id="sidebarToggle" href="#!")
                 i.fas.fa-bars
@@ -44,12 +44,12 @@ html(lang="en")
                 nav.sb-sidenav.accordion.sb-sidenav-dark(id="sidenavAccordion")
                     div.sb-sidenav-menu
                         div.nav
-                            div.sb-sidenav-menu-heading Company Manage
+                            div.sb-sidenav-menu-heading 회사 관리
                             a.nav-link(href="/formanstock/manage/companies")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-tachometer-alt 
                                     span  company                                                            
-                            div.sb-sidenav-menu-heading Company Manage                            
+                            div.sb-sidenav-menu-heading 유저 관리
                             a.nav-link(href="/formanstock/manage/users")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-columns 
@@ -58,7 +58,7 @@ html(lang="en")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-columns 
                                     span  suspension Users                                        
-                            div.sb-sidenav-menu-heading Content Manage
+                            div.sb-sidenav-menu-heading 콘텐츠 관리
                             a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-columns 
@@ -78,8 +78,8 @@ html(lang="en")
                                     span  Comments
                                                                     
                     div.sb-sidenav-footer
-                        div.small Logged in as: 
-                        span Start Bootstrap
+                        div.small 로그인: 
+                        span 김태욱
                             
             div#layoutSidenav_content
                 //- 여기에 본인들 넣을 프론트 템플릿 추가하면 댐

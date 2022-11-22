@@ -14,6 +14,22 @@ router.get('/companies',manage_controllers.getlist_company);
 router.get('/users-suspension',manage_controllers.getlist_users_suspension);
 router.get('/users',manage_controllers.getlist_users);
 router.get('/comments',manage_controllers.getlist_comments);
+ 
+//정지, 삭제, 수정관련
+
+
+//유저 삭제
+router.post('/users/:user_id/delete',manage_controllers.user_delete)
+//유저 정지
+router.post('/users/:user_id',manage_controllers.user_suspend);
+//정지 유저 삭제
+router.post('/users-suspension/:user_id',manage_controllers.suspended_user_delete)
+//게시물 삭제
+router.post('/board/:stock_code/posts/:post_no',manage_controllers.post_delete)
+//댓글 삭제
+router.post('/comments/:comment_no',manage_controllers.comment_delete)
+
+
 
 
 

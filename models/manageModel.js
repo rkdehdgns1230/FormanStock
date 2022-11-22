@@ -10,10 +10,10 @@ exports.getList_company=(callback)=>{
        });
     }
 exports.getList_board=(stock_code,callback)=>{
-    const sql = `select c.company_name, p.post_title, p.post_content, p.user_id, date_format(p.reg_date,'%Y-%m-%d') reg_date
+    const sql = `select p.post_no, c.company_name, p.post_title, p.post_content, p.user_id, date_format(p.reg_date,'%Y-%m-%d') reg_date
     from company c, post p
-    where c.stock_code = p.stock_code and c.stock_code = ?;
-    select * from stock;`;
+    where c.stock_code = p.stock_code and c.stock_code = ?
+    and p.delete_yn = 'n'; select * from stock;`;
 
     connection.query(sql,stock_code,(err,rows,fields)=>{
         if(err) throw err;
@@ -41,13 +41,45 @@ exports.getlist_users_suspension=(callback)=>{
        });
     }   
 exports.getList_comments=(callback)=>{
-    const sql = `select post_no, user_id, comment_content, date_format(reg_date,'%Y-%m-%d') reg_date 
+    const sql = `select comment_no, post_no, user_id, comment_content, date_format(reg_date,'%Y-%m-%d') reg_date 
                  from comment
                  where delete_yn = 'n'; select * from stock;`;
 
     connection.query(sql,(err,rows,fields)=>{
         if(err) throw err;
         callback(rows);
-       });
+       }); 
     } 
+exports.user_suspend=(user_id,callback)=>{
+    const sql = `update user set suspension_yn = 'y' where user_id = ?;`;
+
+    connection.query(sql,user_id,(err,rows,fields)=>{
+        if(err) throw err;
+        callback(rows);
+       });
+    }   
+exports.user_delete=(user_id,callback)=>{
+    const sql = `update user set delete_yn = 'y' where user_id = ?;`;
+
+    connection.query(sql,user_id,(err,rows,fields)=>{
+        if(err) throw err;
+        callback(rows);
+       });
+    }     
+exports.post_delete=(post_no,callback)=>{
+    const sql = `update post set delete_yn = 'y' where post_no = ?;`;
+
+    connection.query(sql,post_no,(err,rows,fields)=>{
+        if(err) throw err;
+        callback(rows);
+       });
+    }    
+exports.comment_delete=(comment_no,callback)=>{
+    const sql = `update comment set delete_yn = 'y' where comment_no = ?;`;
+
+    connection.query(sql,comment_no,(err,rows,fields)=>{
+        if(err) throw err;
+        callback(rows);
+       });
+    }
     

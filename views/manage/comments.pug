@@ -26,11 +26,12 @@ block content
                             td #{row.user_id}
                             td #{row.comment_content}
                             td #{row.reg_date}                            
-                            td 
-                             a.btn.btn-success.btn-icon-split(href="/board/write-form")
-                                span.icon.text-white-50
-                                 i.fas.fa-check 
-                                span.text 삭제
+                            td                                                                                     
+                                form(action=`/formanstock/manage/comments/${row.comment_no}` method = "post")
+                                    button.btn.btn-success.btn-icon-split(type ="submit")
+                                        span.icon.text-white-50
+                                            i.fas.fa-check 
+                                        span.text 삭제
                         
     nav(aria-label="...")
         ul.pagination.justify-content-center        
