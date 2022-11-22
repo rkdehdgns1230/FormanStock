@@ -1,14 +1,8 @@
 const mysql = require('mysql');
-const dbInfo = require('../config.json');
 const companyData = require('../company_info.json');
+const dbInfo = require('../controllers/config/dev.js');
 
-const connection = mysql.createConnection({
-    multipleStatements: true,
-    host: dbInfo.host,
-    user: dbInfo.user,
-    password: dbInfo.password,
-    database: dbInfo.database
-});
+const connection = mysql.createConnection(dbInfo.mySQL_config);
 
 module.exports = {
     getSpecificStockInfo: (stock_code, cb) => {

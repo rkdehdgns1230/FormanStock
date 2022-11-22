@@ -1,14 +1,6 @@
-var mysql = require('mysql');
-var express = require('express');
-const dbInfo = require('../config.json');
-var connection = mysql.createConnection({
-    multipleStatements: true,
-    connectionLimit: 5,
-    host: dbInfo.host,
-    user: dbInfo.user,
-    password: dbInfo.password,
-    database: dbInfo.database
-});
+const mysql = require('mysql');
+const dbInfo = require('../controllers/config/dev.js');
+const connection = mysql.createConnection(dbInfo.mySQL_config);
 
 exports.getList_company=(callback)=>{
     const sql = `select * from company; select * from stock;`;
