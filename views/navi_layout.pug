@@ -19,10 +19,10 @@ html(lang="en")
             button.btn.btn-link.btn-sm.order-1.order-lg-0.me-4.me-lg-0(id="sidebarToggle" href="#!")
                 i.fas.fa-bars
             //- Navbar Search
-            form.d-none.d-md-inline-block.form-inline.ms-auto.me-0.me-md-3.my-2.my-md-0
+            form.d-none.d-md-inline-block.form-inline.ms-auto.me-0.me-md-3.my-2.my-md-0(action="/formanstock/search", method="GET")
                 div.input-group
-                    input.form-control(type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch")
-                    button.btn.btn-primary(id="btnNavbarSearch" type="button")
+                    input.form-control(type="text" name="query" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch")
+                    button.btn.btn-primary(id="btnNavbarSearch" type="submit")
                         i.fas.fa-search                
             form
             //- Navbar
