@@ -21,6 +21,7 @@ module.exports = {
             console.log(dateList.length, closePriceList.length);
             console.log(stockInfo[0].stock_code);
             res.render('board/stock_info', {
+                title: 'FormanStock',
                 stockInfo: {
                     stockCode: stockInfo[0].stock_code,
                     companyName: stockInfo[0].company_name, 
