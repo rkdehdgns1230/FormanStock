@@ -17,6 +17,7 @@ block content
                         th 성명
                         th 나이                        
                         th 정지              
+                        th 삭제
 
                     tbody           
                         for row in rows[0]                                      
@@ -25,10 +26,17 @@ block content
                             td #{row.USER_REAL_NAME}
                             td #{row.AGE}                                                      
                             td 
-                             a.btn.btn-success.btn-icon-split(href="/board/write-form")
-                                span.icon.text-white-50
-                                 i.fas.fa-check 
-                                span.text 정지
+                                form(action=`/formanstock/manage/users/${row.USER_ID}` method = "post")
+                                    button.btn.btn-success.btn-icon-split(type ="submit")
+                                        span.icon.text-white-50
+                                            i.fas.fa-check 
+                                        span.text 정지
+                            td 
+                                form(action=`/formanstock/manage/users/${row.USER_ID}/delete` method = "post")
+                                    button.btn.btn-success.btn-icon-split(type ="submit")
+                                        span.icon.text-white-50
+                                            i.fas.fa-check 
+                                        span.text 삭제
                         
     nav(aria-label="...")
         ul.pagination.justify-content-center        
