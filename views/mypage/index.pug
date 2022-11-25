@@ -18,11 +18,11 @@ block content
                             li.nav-item
                                 button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-interest') 관심종목
                             li.nav-item
-                                button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-edit') 프로필 수정
+                                button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-edit') 나의 프로필
                             //- li.nav-item
                             //-     button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-settings') 설정
-                            li.nav-item
-                                button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-change-password') 비밀번호 변경
+                            //- li.nav-item
+                            //-     button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-change-password') 비밀번호 변경
                         .tab-content.pt-2
                             #profile-stock.tab-pane.fade.show.active.profile-stock
                                 .card-body 
@@ -75,11 +75,11 @@ block content
                                                 for row in rows[1]                                     
                                                     tr 
                                                     td #{row.stock_name}
-                                                    td #{row.open_price}
-                                                    td #{row.close_price} 
-                                                    td #{row.high_price}
-                                                    td #{row.low_price}        
-                                                    td #{row.trading_volume}                             
+                                                    td #{row.OPEN_PRICE}
+                                                    td #{row.CLOSE_PRICE} 
+                                                    td #{row.HIGH_PRICE}
+                                                    td #{row.LOW_PRICE}        
+                                                    td #{row.TRADING_VOLUME}                             
                                                     td 
                                                         a.btn.btn-success.btn-icon-split(href="/board/write-form")
                                                             span.icon.text-white-50
@@ -96,15 +96,15 @@ block content
                             #profile-edit.tab-pane.fade.profile-edit.pt-3
                                 // Profile Edit Form
                                 form
-                                    .row.mb-3
-                                        label.col-md-4.col-lg-3.col-form-label(for='profileImage') 프로필 이미지
-                                        .col-md-8.col-lg-9
-                                            img(src='/mypage/img/profile-img.jpg' alt='Profile')
-                                            .pt-2
-                                                a.btn.btn-primary.btn-sm(href='#' title='Upload new profile image')
-                                                    i.bi.bi-upload
-                                                a.btn.btn-danger.btn-sm(href='#' title='Remove my profile image')
-                                                    i.bi.bi-trash
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='profileImage') 프로필 이미지
+                                    //-     .col-md-8.col-lg-9
+                                    //-         img(src='/mypage/img/profile-img.jpg' alt='Profile')
+                                    //-         .pt-2
+                                    //-             a.btn.btn-primary.btn-sm(href='#' title='Upload new profile image')
+                                    //-                 i.bi.bi-upload
+                                    //-             a.btn.btn-danger.btn-sm(href='#' title='Remove my profile image')
+                                    //-                 i.bi.bi-trash
                                     .row
                                         label.col-md-4.col-lg-3.col-form-label(for='fullName') 이름
                                         .col-lg-9.col-md-8 #{rows[2][0].user_real_name}
@@ -114,6 +114,20 @@ block content
                                     .row
                                         label.col-md-4.col-lg-3.col-form-label(for='Age') 나이
                                         .col-lg-9.col-md-8 #{rows[2][0].age}
+                                    .row.mb-3
+                                        label.col-md-4.col-lg-3.col-form-label(for='currentPassword') 현재 비밀번호
+                                        .col-md-8.col-lg-9
+                                            input#currentPassword.form-control(name='password' type='password')
+                                    .row.mb-3
+                                        label.col-md-4.col-lg-3.col-form-label(for='newPassword') 변경할 비밀번호
+                                        .col-md-8.col-lg-9
+                                            input#newPassword.form-control(name='newpassword' type='password')
+                                    .row.mb-3
+                                        label.col-md-4.col-lg-3.col-form-label(for='renewPassword') 변경할 비밀번호 확인
+                                        .col-md-8.col-lg-9
+                                            input#renewPassword.form-control(name='renewpassword' type='password')
+                                    .text-center
+                                        button.btn.btn-primary(type='submit') 비밀번호 변경
                                     
                                     //- .row.mb-3
                                     //-     label.col-md-4.col-lg-3.col-form-label(for='about') About
@@ -188,22 +202,22 @@ block content
                             //-         .text-center
                             //-             button.btn.btn-primary(type='submit') Save Changes
                             //-     // End settings Form
-                            #profile-change-password.tab-pane.fade.pt-3
-                                // Change Password Form
-                                form
-                                    .row.mb-3
-                                        label.col-md-4.col-lg-3.col-form-label(for='currentPassword') 현재 비밀번호
-                                        .col-md-8.col-lg-9
-                                            input#currentPassword.form-control(name='password' type='password')
-                                    .row.mb-3
-                                        label.col-md-4.col-lg-3.col-form-label(for='newPassword') 변경할 비밀번호
-                                        .col-md-8.col-lg-9
-                                            input#newPassword.form-control(name='newpassword' type='password')
-                                    .row.mb-3
-                                        label.col-md-4.col-lg-3.col-form-label(for='renewPassword') 변경할 비밀번호 확인
-                                        .col-md-8.col-lg-9
-                                            input#renewPassword.form-control(name='renewpassword' type='password')
-                                    .text-center
-                                        button.btn.btn-primary(type='submit') 비밀번호 변경
-                                // End Change Password Form
-                                // End Bordered Tabs
+                            //- #profile-change-password.tab-pane.fade.pt-3
+                            //-     // Change Password Form
+                            //-     form
+                            //-         .row.mb-3
+                            //-             label.col-md-4.col-lg-3.col-form-label(for='currentPassword') 현재 비밀번호
+                            //-             .col-md-8.col-lg-9
+                            //-                 input#currentPassword.form-control(name='password' type='password')
+                            //-         .row.mb-3
+                            //-             label.col-md-4.col-lg-3.col-form-label(for='newPassword') 변경할 비밀번호
+                            //-             .col-md-8.col-lg-9
+                            //-                 input#newPassword.form-control(name='newpassword' type='password')
+                            //-         .row.mb-3
+                            //-             label.col-md-4.col-lg-3.col-form-label(for='renewPassword') 변경할 비밀번호 확인
+                            //-             .col-md-8.col-lg-9
+                            //-                 input#renewPassword.form-control(name='renewpassword' type='password')
+                            //-         .text-center
+                            //-             button.btn.btn-primary(type='submit') 비밀번호 변경
+                            //-     // End Change Password Form
+                            //-     // End Bordered Tabs
