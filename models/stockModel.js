@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const companyData = require('../company_info.json');
-const dbInfo = require('../config.json');
+const dbInfo = require('../controllers/config/dev.js');
 
 const connection = mysql.createConnection(dbInfo.mySQL_config);
 
