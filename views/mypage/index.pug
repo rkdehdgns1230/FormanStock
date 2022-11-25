@@ -1,0 +1,209 @@
+extends ../navi_mypage_layout
+
+block content
+    section.section.profile
+        .row
+            .col-xl-4
+                .card
+                    .card-body.profile-card.pt-4.d-flex.flex-column.align-items-center
+                        img.rounded-circle(src='/mypage/img/profile-img.jpg' alt='Profile')
+                        h2 #{rows[0][0].user_real_name}
+            .col-xl-8
+                .card
+                    .card-body.pt-3
+                        // Bordered Tabs
+                        ul.nav.nav-tabs.nav-tabs-bordered
+                            li.nav-item
+                                button.nav-link.active(data-bs-toggle='tab' data-bs-target='#profile-stock') 보유주식
+                            li.nav-item
+                                button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-interest') 관심종목
+                            li.nav-item
+                                button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-edit') 프로필 수정
+                            //- li.nav-item
+                            //-     button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-settings') 설정
+                            li.nav-item
+                                button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-change-password') 비밀번호 변경
+                        .tab-content.pt-2
+                            #profile-stock.tab-pane.fade.show.active.profile-stock
+                                .card-body 
+                                    .table-responsive
+                                        table.table.table-bordered#dataTable(
+                                            width="100%"
+                                            cellspacing="0"
+                                            style = "text-align:center"
+                                        )
+                                            thead
+                                                tr 
+                                                th 이름
+                                                th 매매시각
+                                                th 매매가  
+                                                th 보유량                   
+                                                th 매매
+                                            tbody            
+                                                for row in rows[0]                                     
+                                                    tr 
+                                                    td #{row.stock_name}
+                                                    td #{row.reg_date}
+                                                    td #{row.trade_price}     
+                                                    td #{row.trade_stock_cnt}                             
+                                                    td 
+                                                        a.btn.btn-primary.btn-icon-split(href="/board/write-form")
+                                                            span.icon.text-white-50
+                                                                i.fas.fa-check 
+                                                            span.text 거래창으로 이동
+
+
+                            #profile-interest.tab-pane.fade.profile-interest
+                                .card-body 
+                                    .table-responsive
+                                        table.table.table-bordered#dataTable(
+                                            width="100%"
+                                            cellspacing="0"
+                                            style = "text-align:center"
+                                        )
+                                            thead
+                                                tr 
+                                                th 이름
+                                                th 시가
+                                                th 종가
+                                                th 고가
+                                                th 저가
+                                                th 거래량   
+                                                th 상세정보 이동                    
+                                                th 관심종목에서 제거
+                                            tbody                                                 
+                                                for row in rows[1]                                     
+                                                    tr 
+                                                    td #{row.stock_name}
+                                                    td #{row.open_price}
+                                                    td #{row.close_price} 
+                                                    td #{row.high_price}
+                                                    td #{row.low_price}        
+                                                    td #{row.trading_volume}                             
+                                                    td 
+                                                        a.btn.btn-success.btn-icon-split(href="/board/write-form")
+                                                            span.icon.text-white-50
+                                                                i.fas.fa-check 
+                                                            span.text 이동                       
+                                                    td 
+                                                        a.btn.btn-danger.btn-icon-split(href="/board/write-form")
+                                                            span.icon.text-white-50
+                                                                i.fas.fa-check 
+                                                            span.text 제거
+
+                                            
+                                
+                            #profile-edit.tab-pane.fade.profile-edit.pt-3
+                                // Profile Edit Form
+                                form
+                                    .row.mb-3
+                                        label.col-md-4.col-lg-3.col-form-label(for='profileImage') 프로필 이미지
+                                        .col-md-8.col-lg-9
+                                            img(src='/mypage/img/profile-img.jpg' alt='Profile')
+                                            .pt-2
+                                                a.btn.btn-primary.btn-sm(href='#' title='Upload new profile image')
+                                                    i.bi.bi-upload
+                                                a.btn.btn-danger.btn-sm(href='#' title='Remove my profile image')
+                                                    i.bi.bi-trash
+                                    .row
+                                        label.col-md-4.col-lg-3.col-form-label(for='fullName') 이름
+                                        .col-lg-9.col-md-8 #{rows[2][0].user_real_name}
+                                    .row
+                                        label.col-md-4.col-lg-3.col-form-label(for='ID') 아이디
+                                        .col-lg-9.col-md-8 #{rows[2][0].user_id}
+                                    .row
+                                        label.col-md-4.col-lg-3.col-form-label(for='Age') 나이
+                                        .col-lg-9.col-md-8 #{rows[2][0].age}
+                                    
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='about') About
+                                    //-     .col-md-8.col-lg-9
+                                    //-         textarea#about.form-control(name='about' style='height: 100px')
+                                    //-             | Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='company') Company
+                                    //-     .col-md-8.col-lg-9
+                                    //-         input#company.form-control(name='company' type='text' value='Lueilwitz, Wisoky and Leuschke')
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='Job') Job
+                                    //-     .col-md-8.col-lg-9
+                                    //-         input#Job.form-control(name='job' type='text' value='Web Designer')
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='Country') Country
+                                    //-     .col-md-8.col-lg-9
+                                    //-         input#Country.form-control(name='country' type='text' value='USA')
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='Address') Address
+                                    //-     .col-md-8.col-lg-9
+                                    //-         input#Address.form-control(name='address' type='text' value='A108 Adam Street, New York, NY 535022')
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='Phone') Phone
+                                    //-     .col-md-8.col-lg-9
+                                    //-         input#Phone.form-control(name='phone' type='text' value='(436) 486-3538 x29071')
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='Email') Email
+                                    //-     .col-md-8.col-lg-9
+                                    //-         input#Email.form-control(name='email' type='email' value='k.anderson@example.com')
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='Twitter') Twitter Profile
+                                    //-     .col-md-8.col-lg-9
+                                    //-         input#Twitter.form-control(name='twitter' type='text' value='https://twitter.com/#')
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='Facebook') Facebook Profile
+                                    //-     .col-md-8.col-lg-9
+                                    //-         input#Facebook.form-control(name='facebook' type='text' value='https://facebook.com/#')
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='Instagram') Instagram Profile
+                                    //-     .col-md-8.col-lg-9
+                                    //-         input#Instagram.form-control(name='instagram' type='text' value='https://instagram.com/#')
+                                    //- .row.mb-3
+                                    //-     label.col-md-4.col-lg-3.col-form-label(for='Linkedin') Linkedin Profile
+                                    //-     .col-md-8.col-lg-9
+                                    //-         input#Linkedin.form-control(name='linkedin' type='text' value='https://linkedin.com/#')
+                                    //- .text-center
+                                    //-     button.btn.btn-primary(type='submit') Save Changes
+                                // End Profile Edit Form
+                            //- #profile-settings.tab-pane.fade.pt-3
+                            //-     // Settings Form
+                            //-     form
+                            //-         .row.mb-3
+                            //-             label.col-md-4.col-lg-3.col-form-label(for='fullName') Email Notifications
+                            //-             .col-md-8.col-lg-9
+                            //-                 .form-check
+                            //-                     input#changesMade.form-check-input(type='checkbox' checked='')
+                            //-                     label.form-check-label(for='changesMade')
+                            //-                         | Changes made to your account
+                            //-                 .form-check
+                            //-                     input#newProducts.form-check-input(type='checkbox' checked='')
+                            //-                     label.form-check-label(for='newProducts')
+                            //-                         | Information on new products and services
+                            //-                 .form-check
+                            //-                     input#proOffers.form-check-input(type='checkbox')
+                            //-                     label.form-check-label(for='proOffers')
+                            //-                         | Marketing and promo offers
+                            //-                 .form-check
+                            //-                     input#securityNotify.form-check-input(type='checkbox' checked='' disabled='')
+                            //-                     label.form-check-label(for='securityNotify')
+                            //-                         | Security alerts
+                            //-         .text-center
+                            //-             button.btn.btn-primary(type='submit') Save Changes
+                            //-     // End settings Form
+                            #profile-change-password.tab-pane.fade.pt-3
+                                // Change Password Form
+                                form
+                                    .row.mb-3
+                                        label.col-md-4.col-lg-3.col-form-label(for='currentPassword') 현재 비밀번호
+                                        .col-md-8.col-lg-9
+                                            input#currentPassword.form-control(name='password' type='password')
+                                    .row.mb-3
+                                        label.col-md-4.col-lg-3.col-form-label(for='newPassword') 변경할 비밀번호
+                                        .col-md-8.col-lg-9
+                                            input#newPassword.form-control(name='newpassword' type='password')
+                                    .row.mb-3
+                                        label.col-md-4.col-lg-3.col-form-label(for='renewPassword') 변경할 비밀번호 확인
+                                        .col-md-8.col-lg-9
+                                            input#renewPassword.form-control(name='renewpassword' type='password')
+                                    .text-center
+                                        button.btn.btn-primary(type='submit') 비밀번호 변경
+                                // End Change Password Form
+                                // End Bordered Tabs
