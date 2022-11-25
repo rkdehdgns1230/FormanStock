@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const dbInfo = require('../config.json');
-// const companyData = require('../company_info.json');
+const companyData = require('../company_info.json');
 
 const connection = mysql.createConnection({
     multipleStatements: true,
