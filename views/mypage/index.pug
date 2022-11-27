@@ -3,11 +3,11 @@ extends ../navi_mypage_layout
 block content
     section.section.profile
         .row
-            .col-xl-4
-                .card
-                    .card-body.profile-card.pt-4.d-flex.flex-column.align-items-center
-                        img.rounded-circle(src='/mypage/img/profile-img.jpg' alt='Profile')
-                        h2 #{rows[0][0].user_real_name}
+            //- .col-xl-4
+            //-     .card
+            //-         .card-body.profile-card.pt-4.d-flex.flex-column.align-items-center
+            //-             img.rounded-circle(src='/mypage/img/profile-img.jpg' alt='Profile')
+            //-             h2 #{rows[0][0].user_real_name}
             .col-xl-8
                 .card
                     .card-body.pt-3
@@ -95,7 +95,7 @@ block content
                                 
                             #profile-edit.tab-pane.fade.profile-edit.pt-3
                                 // Profile Edit Form
-                                form
+                                //form
                                     //- .row.mb-3
                                     //-     label.col-md-4.col-lg-3.col-form-label(for='profileImage') 프로필 이미지
                                     //-     .col-md-8.col-lg-9
@@ -105,15 +105,16 @@ block content
                                     //-                 i.bi.bi-upload
                                     //-             a.btn.btn-danger.btn-sm(href='#' title='Remove my profile image')
                                     //-                 i.bi.bi-trash
-                                    .row
-                                        label.col-md-4.col-lg-3.col-form-label(for='fullName') 이름
-                                        .col-lg-9.col-md-8 #{rows[2][0].user_real_name}
-                                    .row
-                                        label.col-md-4.col-lg-3.col-form-label(for='ID') 아이디
-                                        .col-lg-9.col-md-8 #{rows[2][0].user_id}
-                                    .row
-                                        label.col-md-4.col-lg-3.col-form-label(for='Age') 나이
-                                        .col-lg-9.col-md-8 #{rows[2][0].age}
+                                .row
+                                    label.col-md-4.col-lg-3.col-form-label(for='fullName') 이름
+                                    .col-lg-9.col-md-8 #{rows[2][0].user_real_name}
+                                .row
+                                    label.col-md-4.col-lg-3.col-form-label(for='ID') 아이디
+                                    .col-lg-9.col-md-8 #{rows[2][0].user_id}
+                                .row
+                                    label.col-md-4.col-lg-3.col-form-label(for='Age') 나이
+                                    .col-lg-9.col-md-8 #{rows[2][0].age}
+                                form(action=`/formanstock/mypage/change_pw/${rows[2][0].user_id}` method = "post")
                                     .row.mb-3
                                         label.col-md-4.col-lg-3.col-form-label(for='currentPassword') 현재 비밀번호
                                         .col-md-8.col-lg-9
@@ -128,6 +129,15 @@ block content
                                             input#renewPassword.form-control(name='renewpassword' type='password')
                                     .text-center
                                         button.btn.btn-primary(type='submit') 비밀번호 변경
+
+                                    
+                                    //- -
+                                    //-     document.getElementById('form').onsubmit = function(){
+                                    //-         var test = document.getElementById('currentPassword')
+                                    //-         console.log(test.value)
+                                    //-         return false;
+                                    //-     }
+                                    
                                     
                                     //- .row.mb-3
                                     //-     label.col-md-4.col-lg-3.col-form-label(for='about') About
