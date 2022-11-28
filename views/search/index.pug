@@ -1,0 +1,24 @@
+extends ../navi_layout
+
+block content
+  .card.shadow.mb-4  
+    .card-header.py-3 
+      h4.m-0.font-weight-bold.text-primary= title
+    .card-body 
+      .table-responsive
+        table.table.table-bordered#dataTable(
+          width="100%"
+          cellspacing="0"
+          style = "text-align:center"
+        )
+          thead
+            tr 
+            th 종목 코드
+            th 회사 이름
+            th 총 주식량
+          tbody
+            for row in rows                                  
+              tr 
+              td #{row.stock_code}
+              td #{row.company_name}
+              td #{row.total_stock_num} 
