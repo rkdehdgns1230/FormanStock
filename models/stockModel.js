@@ -15,7 +15,7 @@ module.exports = {
         where s.stock_code = '${stock_code}'
         and s.stock_code = c.stock_code;
 
-        select date_format(sp.stock_date, '%Y.%m.%d') stock_date, sp.close_price
+        select date_format(sp.stock_date, '%Y-%m-%d %H:%i:%S') stock_date, sp.close_price
         from STOCK_PRICE sp, stock s
         where s.stock_code = '${stock_code}'
         and s.stock_code = sp.stock_code;
