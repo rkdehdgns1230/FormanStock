@@ -7,10 +7,18 @@ html(lang="en")
         meta(name="description" content="")
         meta(name="author" content="")
         title= title
+        // css file import
         link(href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet")
         link(href="/css/styles.css" rel="stylesheet")
+        link(href="/css/my_style.css" rel="stylesheet")
+
         script(src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous")    
+        // chartjs cdn 링크 추가
         script(src="https://cdn.jsdelivr.net/npm/chart.js")
+        // chartjs-adapter-date-fnd cdn 링크 추가
+        script(src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js")
+        script(src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js")
+
     body.sb-nav-fixed
         nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
             //- Navbar Brand
@@ -97,7 +105,7 @@ html(lang="en")
                         div.small Logged in as: 
                         span Start Bootstrap
                             
-            div#layoutSidenav_content
+            div#layoutSidenav_content(style="background-color: #e2e2e2;")
                 //- 여기에 본인들 넣을 프론트 템플릿 추가하면 댐
                 block content                    
                 
