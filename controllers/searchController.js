@@ -8,7 +8,11 @@ module.exports = {
         searchModel.searchStockList(search, (stockList) => {
             console.log(search);
             // 질의 결과를 클라이언트에게 전송
-            res.send(stockList);
+            //res.send(stockList);
+            res.render('search', {
+                rows: stockList,
+                title: 'FormanStock'
+            });
         });
     }
 }

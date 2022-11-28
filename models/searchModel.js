@@ -7,7 +7,7 @@ module.exports = {
     searchStockList: (search, cb) => {
         // 기업명 혹은 기업 개요에 검색어가 포함되는 종목을 질의하는 sql문 
         const sql = `
-        SELECT C.stock_code, C.company_name, C.company_info
+        SELECT C.stock_code, C.company_name, C.company_info, C.total_stock_num
         FROM COMPANY C
         WHERE C.company_name LIKE ('%${search}%') OR C.company_info LIKE ('%${search}%');
         `;
