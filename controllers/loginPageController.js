@@ -15,7 +15,7 @@ exports.login=(req, res, next) => {
     var datas = [email, password];
     //console.log(req.body)
     loginPageModel.checkUser(req, res, datas, ()=>{
-        res.redirect('/');
+        res.redirect('/formanstock');
     });
 
 }
