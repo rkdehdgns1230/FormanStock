@@ -20,13 +20,20 @@ module.exports = {
             }
             console.log(dateList.length, closePriceList.length);
             console.log(stockInfo[0].stock_code);
+            // template과 data를 합쳐서 rendering 한다.
             res.render('board/stock_info', {
                 title: 'FormanStock',
                 stockInfo: {
                     stockCode: stockInfo[0].stock_code,
                     companyName: stockInfo[0].company_name, 
                     totalStockNum: stockInfo[0].total_stock_num, 
-                    companyInfo: stockInfo[0].company_info
+                    companyInfo: stockInfo[0].company_info,
+                    like: 12,
+                    interest: 100
+                },
+                userInfo: {
+                    like: false, // 일단 false로
+                    interest: false
                 },
                 stockDateList: dateList,
                 stockClosePriceList: closePriceList,
