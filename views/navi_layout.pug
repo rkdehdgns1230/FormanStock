@@ -9,8 +9,10 @@ html(lang="en")
         title= title
         // css file import
         link(href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet")
+        // bootstrap icon
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css")
         link(href="/css/styles.css" rel="stylesheet")
-        link(href="/css/my_style.css" rel="stylesheet")
+        link(rel="shortcut icon" href="/assets/img/4.png")
 
         script(src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous")    
         // chartjs cdn 링크 추가
@@ -22,7 +24,9 @@ html(lang="en")
     body.sb-nav-fixed
         nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
             //- Navbar Brand
-            a.navbar-brand.ps-3(href="/formanstock")= title
+            div.navbar-brand.ps-3
+                a(href="/formanstock" style="text-decoration: none; color:white;") #{title} 
+                img(src="/assets/img/4_24.png")
             //- Sidebar Toggle
             button.btn.btn-link.btn-sm.order-1.order-lg-0.me-4.me-lg-0(id="sidebarToggle" href="#!")
                 i.fas.fa-bars
@@ -125,8 +129,6 @@ html(lang="en")
                 
         script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous")
         script(src="/js/scripts.js")
-        script(src="/assets/demo/chart-area-demo.js")
-        script(src="/assets/demo/chart-bar-demo.js")
         script(src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous")
         script(src="/js/datatables-simple-demo.js")
     
