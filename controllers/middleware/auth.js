@@ -7,7 +7,7 @@ const config = require('../config/key');
 var pool = mysql.createPool(config.mySQL_config);
 
 let auth = function(req, res, next){
-    console.log("req: ", req)
+    //console.log("req: ", req)
     //인증을 처리하는 곳
 
     //client cookie에서 토큰을 가져오기
@@ -34,7 +34,10 @@ let auth = function(req, res, next){
             var sqlForSelectMember = "SELECT * FROM user where USER_ID = ? && token = ?"
             var data = [decoded, token]
             connection.query(sqlForSelectMember, data, function(err,rows){
-                if(err) console.error("err: "+err);
+                if(err) {
+                    console.error("err: "+err);
+                    return;
+                }
                 console.log('[auth]extracted rows: '+ JSON.stringify(rows))
                 if(rows.length === 0){
                     /*
@@ -58,6 +61,7 @@ let auth = function(req, res, next){
                     next();
                 }
             });
+            connection.release();
     //유저가 있으면 인증 okay
         });
     });
