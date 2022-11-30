@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var router = require('./routes');
 var app = express();
+const {auth} = require('./controllers/middleware/auth');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', router);
+app.use('/', auth, router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

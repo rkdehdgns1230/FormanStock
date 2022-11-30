@@ -37,18 +37,22 @@ let auth = function(req, res, next){
                 if(err) console.error("err: "+err);
                 console.log('[auth]extracted rows: '+ JSON.stringify(rows))
                 if(rows.length === 0){
+                    /*
                     return res.json({
                     is_Auth: false,
                     message: "인증 실패"
-                    })
+                    });
+                    */
+                    next();
                 }
-
-                //middleware이기 때문에 다음 함수에 갈 수 있도록 해줌.
-                //이 때, req.token = token, req.row = rows[0] 이렇게 해주면 req안에 속성들이 생겨서 전달 가능.
-                //다음 함수에 req를 넘겨주기 위해 next()사용
-                req.token = token;
-                req.row = rows[0];
-                next();
+                else{
+                    //middleware이기 때문에 다음 함수에 갈 수 있도록 해줌.
+                    //이 때, req.token = token, req.row = rows[0] 이렇게 해주면 req안에 속성들이 생겨서 전달 가능.
+                    //다음 함수에 req를 넘겨주기 위해 next()사용
+                    req.token = token;
+                    req.row = rows[0];
+                    next();
+                }
             });
     //유저가 있으면 인증 okay
         });
