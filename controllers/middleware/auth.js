@@ -7,7 +7,7 @@ const config = require('../config/key');
 var pool = mysql.createPool(config.mySQL_config);
 
 let auth = function(req, res, next){
-    console.log("req: ", req)
+    //console.log("req: ", req)
     //인증을 처리하는 곳
 
     //client cookie에서 토큰을 가져오기
@@ -34,7 +34,10 @@ let auth = function(req, res, next){
             var sqlForSelectMember = "SELECT * FROM user where USER_ID = ? && token = ?"
             var data = [decoded, token]
             connection.query(sqlForSelectMember, data, function(err,rows){
-                if(err) console.error("err: "+err);
+                if(err) {
+                    console.error("err: "+err);
+                    return;
+                }
                 console.log('[auth]extracted rows: '+ JSON.stringify(rows))
                 if(rows.length === 0){
                     /*
@@ -43,17 +46,22 @@ let auth = function(req, res, next){
                     message: "인증 실패"
                     });
                     */
+                    console.log("login fail");
+                    console.log(`rows.length: ${rows.length}`);
                     next();
                 }
                 else{
                     //middleware이기 때문에 다음 함수에 갈 수 있도록 해줌.
                     //이 때, req.token = token, req.row = rows[0] 이렇게 해주면 req안에 속성들이 생겨서 전달 가능.
                     //다음 함수에 req를 넘겨주기 위해 next()사용
+                    console.log("login success");
+                    console.log(`token: ${token}`);
                     req.token = token;
                     req.row = rows[0];
                     next();
                 }
             });
+            connection.release();
     //유저가 있으면 인증 okay
         });
     });
