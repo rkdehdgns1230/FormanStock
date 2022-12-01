@@ -10,8 +10,16 @@ router.get('/', function(req, res, next) {
 
 // 개별 종목 조회 페이지 제공
 router.get('/:stock_code', stockController.getSpecificStockInfo);
+
+router.post('/:stock_code/like', stockController.likeStock);
+router.post('/:stock_code/unlike', stockController.unlikeStock);
+
+router.post('/:stock_code/interest');
+router.post('/:stock_code/not-interest');
+
 router.post('/:stock_code/buy');
 router.post('/:stock_code/sell');
+
 // 임시로 company data 추가하는 api 추가
 router.get('/:stock_code/importCompanyInfo', stockController.loadCompanyData);
 
