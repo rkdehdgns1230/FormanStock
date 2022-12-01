@@ -75,7 +75,7 @@ module.exports={
         manage_model.get_company_info(company_name,(row) =>{
             console.log("rows:" + JSON.stringify(row));
             res.render('manage/modify-form', {row:row});
-        });                
+        });                 
     },
     update_company:function(req,res){                         
         var stock_code = req.body.stock_code          
@@ -85,6 +85,23 @@ module.exports={
                company_info,               
                stock_code];
         manage_model.update_company(datas,(num) =>{
+            console.log("datas:" + JSON.stringify(datas));
+            res.redirect('/formanstock/manage/companies');
+        });                
+    },
+    insert_company:function(req,res){                         
+        var stock_code = req.body.stock_code          
+        var company_name = req.body.company_name          
+        var total_stock_num = req.body.total_stock_num;
+        var company_info = req.body.company_info;
+        var datas =[stock_code,
+                company_name,
+                stock_code,
+               company_name, 
+               parseInt(total_stock_num),
+               company_info,               
+               ];
+        manage_model.insert_company(datas,(num) =>{
             console.log("datas:" + JSON.stringify(datas));
             res.redirect('/formanstock/manage/companies');
         });                

@@ -9,7 +9,9 @@ router.get('/', function(req, res, next) { //localhost:3000/formanstock/manage
 });
 */
 //localhost:3000/formanstock/manage/companies
- 
+router.get('/companies/register', function(req, res, next) { //localhost:3000/formanstock/manage
+  res.render('manage/register-form');
+}); 
 router.get('/companies/:company_name/info', manage_controllers.get_company_info);
 router.get('/board/:stock_code',manage_controllers.getlist_board);
 router.get('/companies',manage_controllers.getlist_company);
@@ -19,6 +21,7 @@ router.get('/comments',manage_controllers.getlist_comments);
 
 //정지, 삭제, 수정관련
 
+router.post('/companies',manage_controllers.insert_company)
 //회사 변경
 router.post('/companies/:company_name/info',manage_controllers.update_company)
 //유저 삭제

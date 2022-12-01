@@ -100,4 +100,14 @@ exports.update_company=(datas,callback)=>{
         callback(row);
        });
     }    
+exports.insert_company=(datas,callback)=>{
+    const sql = `INSERT INTO STOCK(stock_code, stock_name) VALUES(?,?);
+    INSERT INTO COMPANY(stock_code, company_name, total_stock_num, company_info) VALUES(?,?,?,?);`;
+    
+    console.log("datas:" + datas);
+    connection.query(sql,datas,(err,row,fields)=>{
+        if(err) throw err;
+        callback(row);
+       });
+    }        
     
