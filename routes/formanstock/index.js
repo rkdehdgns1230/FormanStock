@@ -17,9 +17,18 @@ router.use('/search', searchRouter);
 // 웹 페이지의 메인 페이지를 보여주는 공간
 router.get('/', (req, res, next) => { // localhost:3000/formanstock
     // 웹 페이지의 이름과 환영 문구를 템플릿과 합쳐 랜더링한다.
+    let loginSuccess = !(req.token === undefined);
+    let loginString= loginSuccess ? "success" : "fail";
+    console.log(`loginSuccess: ${loginSuccess}`);
+    
     res.render('index', {
-        'title': 'FormanStock',
-        'welcome_comment': "KOSPI 주식 종목 거래와 종목 토론 서비스를 이용해 보세요!!"
+        title: 'FormanStock',
+        welcome_comment: "KOSPI 주식 종목 거래와 종목 토론 서비스를 이용해 보세요!!",
+        userInfo: {
+            login: loginString,
+            info: loginSuccess ? req.row : 'empty'
+        },
+        token: req.token
     });
 });
 
