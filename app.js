@@ -20,9 +20,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(auth);
+
 // root route에 auth middleware + router middleware 등록
-app.use('/', router);
+app.use('/', auth, router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
