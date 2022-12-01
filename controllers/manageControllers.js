@@ -69,5 +69,24 @@ module.exports={
             console.log("rows:" + JSON.stringify(num));
             res.redirect('/formanstock/manage/board/comments');
         });        
+    }, 
+    get_company_info:function(req,res){
+        const company_name = req.params.company_name;                
+        manage_model.get_company_info(company_name,(row) =>{
+            console.log("rows:" + JSON.stringify(row));
+            res.render('manage/modify-form', {row:row});
+        });                
+    },
+    update_company:function(req,res){                         
+        var stock_code = req.body.stock_code          
+        var total_stock_num = req.body.total_stock_num;
+        var company_info = req.body.company_info;
+        var datas =[parseInt(total_stock_num),
+               company_info,               
+               stock_code];
+        manage_model.update_company(datas,(num) =>{
+            console.log("datas:" + JSON.stringify(datas));
+            res.redirect('/formanstock/manage/companies');
+        });                
     },
 }

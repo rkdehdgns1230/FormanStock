@@ -7,7 +7,7 @@ exports.getList_company=(callback)=>{
     connection.query(sql,(err,rows,fields)=>{
         if(err) throw err;
         callback(rows);
-       });
+       }); 
     }
 exports.getList_board=(stock_code,callback)=>{
     const sql = `select p.post_no, c.company_name, p.post_title, p.post_content, p.user_id, date_format(p.reg_date,'%Y-%m-%d') reg_date
@@ -82,4 +82,22 @@ exports.comment_delete=(comment_no,callback)=>{
         callback(rows);
        });
     }
+exports.get_company_info=(company_name,callback)=>{
+    const sql = `select * from company where company_name = ?;`;
+
+    connection.query(sql,company_name,(err,row,fields)=>{
+        if(err) throw err;
+        callback(row);
+       });
+    }
+exports.update_company=(datas,callback)=>{
+    const sql = `update company set total_stock_num = ?,
+                 company_info = ?
+                 where stock_code = ?;`;
+    console.log("datas:" + datas);
+    connection.query(sql,datas,(err,row,fields)=>{
+        if(err) throw err;
+        callback(row);
+       });
+    }    
     
