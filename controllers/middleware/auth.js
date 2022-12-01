@@ -62,10 +62,13 @@ let auth = function(req, res, next){
                     req.row = rows[0];
                     console.log(req.row.USER_ID);
                 }
+                // pool 방식은 이용후 connection release 해줘야 한다.
+                // javascript의 경우 비동기 방식으로 동작한다는 점으로 인해
+                // callback 함수 안에서 release와 다음 middleware를 호출해야 정상 동작하는 것 같다.
+                connection.release();
+                next();
             });
-            // pool 방식은 이용후 connection release 해줘야 한다.
-            connection.release();
-            next();
+            
         });
     });
 };
