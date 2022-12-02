@@ -21,6 +21,8 @@ router.get('/comments',manage_controllers.getlist_comments);
 
 //정지, 삭제, 수정관련
 
+
+//회사 추가
 router.post('/companies',manage_controllers.insert_company)
 //회사 변경
 router.post('/companies/:company_name/info',manage_controllers.update_company)

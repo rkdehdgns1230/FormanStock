@@ -32,7 +32,7 @@ module.exports={
         manage_model.getList_comments((rows) =>{
             console.log("rows:" + JSON.stringify(rows));
             res.render('manage/comments',{title:'댓글', rows:rows});
-        });        
+        });         
     },
     user_suspend:function(req,res){
         const user_id = req.params.user_id;        

@@ -1,6 +1,8 @@
 var express = require('express');
 const router = express.Router();
-
+const mysql = require('mysql');
+const dbInfo = require('../../controllers/config/dev.js');
+const connection = mysql.createConnection(dbInfo.mySQL_config);
 
 const stockRouter = require('./stocks');
 const boardRouter = require('./board');
@@ -10,7 +12,13 @@ const searchRouter = require('./search');
 
 router.use('/stocks', stockRouter);
 router.use('/board', boardRouter);
-router.use('/manage', manageRouter);
+router.use('/manage', (req,res,next) =>{    
+    const val = req.row.AUTHORITY;
+    console.log("val:" + JSON.stringify(val));
+    if(val != "MANAGER") 
+        throw err;
+    next();
+},manageRouter);
 router.use('/mypage', mypageRouter);
 router.use('/search', searchRouter);
 

@@ -88,7 +88,7 @@ exports.get_company_info=(company_name,callback)=>{
     connection.query(sql,company_name,(err,row,fields)=>{
         if(err) throw err;
         callback(row);
-       });
+       }); 
     }
 exports.update_company=(datas,callback)=>{
     const sql = `update company set total_stock_num = ?,
