@@ -132,7 +132,10 @@ html(lang="en")
             div#layoutSidenav_content(style="background-color: #e2e2e2;")
                 //- 여기에 본인들 넣을 프론트 템플릿 추가하면 댐
                 block content                    
-                
+                footer.py-4.bg-light.mt-auto 
+                    .container-fluid.px-4      
+                        .d-flex.align-items-center.justify-content-between.small
+                            .text-muted Contact &copy; 010-6654-1318    
         script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous")
         script(src="/js/scripts.js")
         script(src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous")
