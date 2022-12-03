@@ -23,16 +23,21 @@ module.exports = {
         SELECT COUNT(*) like_count FROM LIKE_STOCK WHERE STOCK_CODE = ?;
 
         SELECT * FROM LIKE_STOCK WHERE USER_ID = ? and STOCK_CODE = ?;
+
+        SELECT COUNT(*) interest_count FROM INTEREST_IN WHERE STOCK_CODE = ?;
+
+        SELECT * FROM INTEREST_IN WHERE USER_ID = ? and STOCK_CODE = ?;
         `;
         
-        connection.query(sql, [stock_code, stock_code, stock_code, user_id, stock_code], (err, rows) => {
+        connection.query(sql, [stock_code, stock_code, stock_code, user_id, stock_code, stock_code, user_id, stock_code], (err, rows) => {
             // rows[0]: 종목 정보
             // rows[1]: 종목 가격 정보
             if(err){
                 console.log(err);
                 return;
             }
-            cb(rows[0], rows[1], rows[2][0], rows[3]);
+            // stockInfo, stockPriceInfo, likeCount, userLike, interestCount, userInterest
+            cb(rows[0], rows[1], rows[2][0], rows[3], rows[4][0], rows[5]);
             return;
         });
     },
