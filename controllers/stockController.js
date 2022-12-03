@@ -5,8 +5,9 @@ module.exports = {
         // 종목 코드는 path parameter 형태로 넘어온다.
         const stock_code = req.params.stock_code;
         const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
-        console.log("살려줘 ~~~~~~~~~~~~~~~~");
-        stockModel.getSpecificStockInfo(user_id, stock_code, (stockInfo, stockPriceInfo, likeCount, userLike) => {
+        
+
+        stockModel.getSpecificStockInfo(user_id, stock_code, (stockInfo, stockPriceInfo, likeCount, userLike, interestCount, userInterest) => {
             //res.send([stockInfo, stockPriceInfo]);
             // stock_info template과 data를 결합해 rendering한다.
             //console.log(stockPriceInfo[0].close_price);
@@ -34,11 +35,11 @@ module.exports = {
                     totalStockNum: stockInfo[0].total_stock_num, 
                     companyInfo: stockInfo[0].company_info,
                     like: likeCount.like_count,
-                    interest: 100
+                    interest: interestCount.interest_count
                 },
                 userInfo: {
-                    like: userLike != 0 ? true : false, // 좋아요 누른 기록 없으면 0
-                    interest: false,
+                    like: userLike != 0 ? true : false, // 좋아요 누른 기록 없으면 0일것
+                    interest: userInterest != 0 ? true : false, // 관심 종목 누른 기록 없으면 0일것
                     login: loginString,
                     info: loginSuccess ? req.row : 'empty'
                 },
@@ -94,9 +95,33 @@ module.exports = {
         });
     },
     registerInterestInStock: (req, res, next) => {
+        const user_id = req.row.USER_ID;
+        const stock_code = req.params.stock_code;
+        console.log("관심 종목 등록 작업");
 
+        stockModel.insertInterestStockList(stock_code, user_id, (success) => {
+            // 일단 성공 실패 상관없이 종목 조회 페이지로 redirection
+            if(success){
+                res.redirect(`/formanstock/stocks/${stock_code}`);
+            }
+            else{
+                res.redirect(`/formanstock/stocks/${stock_code}`);
+            }
+        });
     },
     excludeInterestInStock: (req, res, next) => {
-        
+        const user_id = req.row.USER_ID;
+        const stock_code = req.params.stock_code;
+        console.log("관심 종목 제외 작업");
+
+        stockModel.deleteInterestStockList(stock_code, user_id, (success) => {
+            // 일단 성공 실패 상관없이 종목 조회 페이지로 redirection
+            if(success){
+                res.redirect(`/formanstock/stocks/${stock_code}`);
+            }
+            else{
+                res.redirect(`/formanstock/stocks/${stock_code}`);
+            }
+        });
     }
 }
