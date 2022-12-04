@@ -27,7 +27,7 @@ module.exports = {
             }
 
             // template과 data를 합쳐서 rendering 한다.
-            res.render('board/stock_info', {
+            res.render('stock/stock_info', {
                 title: 'FormanStock',
                 stockInfo: {
                     stockCode: stockInfo[0].stock_code,
@@ -44,9 +44,7 @@ module.exports = {
                     info: loginSuccess ? req.row : 'empty'
                 },
                 stockDateList: dateList,
-                stockClosePriceList: closePriceList,
-                listLength: dateList.length,
-                token: req.token
+                stockClosePriceList: closePriceList
             });
         });
     },
@@ -121,6 +119,30 @@ module.exports = {
             }
             else{
                 res.redirect(`/formanstock/stocks/${stock_code}`);
+            }
+        });
+    },
+    getStockTradePage: (req, res, next) => {
+        // 종목 코드는 path parameter 형태로 넘어온다.
+        const stock_code = req.params.stock_code;
+        const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
+        
+        // 로그인 성공 여부를 판단하기 위한 변수들
+        let loginSuccess = !(req.token === undefined);
+        let loginString= loginSuccess ? "success" : "fail";
+        console.log("Hello");
+        
+        res.render('stock/stock_trade', {
+            title: 'FormanStock',
+            // stockInfo: {
+            //     stockCode: stockInfo[0].stock_code,
+            //     companyName: stockInfo[0].company_name, 
+            //     totalStockNum: stockInfo[0].total_stock_num, 
+            //     companyInfo: stockInfo[0].company_info
+            // },
+            userInfo: {
+                login: loginString,
+                info: loginSuccess ? req.row : 'empty'
             }
         });
     }
