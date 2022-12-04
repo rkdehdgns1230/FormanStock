@@ -16,7 +16,6 @@ exports.getPage=(req, res, next) => {
         }});
     });
 };
-
 exports.read_board=(req, res, next) => {
     stock_code = req.params.stock_code;
     let loginSuccess = !(req.token === undefined);
