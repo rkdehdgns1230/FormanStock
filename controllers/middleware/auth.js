@@ -32,8 +32,9 @@ let auth = function(req, res, next){
 
         //유저아이디를 이용해서 유저를 찾은 다음 클라이언트에서 가져온 token과 DB에 보관된 토큰이 일치하는지 확인
         pool.getConnection(function(err, connection){
-            var sqlForSelectMember = "SELECT * FROM user where USER_ID = ? && token = ?"
-            var data = [decoded, token]
+            var sqlForSelectMember = "SELECT * FROM user where USER_ID = ? && token = ?";
+            var data = [decoded, token];
+
             connection.query(sqlForSelectMember, data, function(err,rows) {
                 if(err) {
                     console.error("err: "+err);

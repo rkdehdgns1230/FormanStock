@@ -68,19 +68,29 @@ block content
         .m-1.ms-auto
           // 좋아요 버튼을 누르면 /formanstock/stocks/:stock_code/like url로 POST request가 전달되어 DB에 좋아요가 반영되도록
           // 꽉찬 하트일 때 버튼을 누르면 /formanstock/stocks/:stock_code/unlike로 POST request가 전달되어 DB에 좋아요 취소가 반영되도록
-          form(action=`/formanstock/stocks/${stockInfo.stockCode}/${userInfo.like ? 'unlike' : 'like'}`, method="post")
+          form(
+            action=`/formanstock/stocks/${stockInfo.stockCode}/${userInfo.like ? 'unlike' : 'like'}`, 
+            method="post"
+          )
+            // 로그인 안한 유저는 버튼 활성화 X
             button.tooltip1.bi.btn#like-icon(
-              class= userInfo.like ? 'bi-heart-fill' : 'bi-heart'
+              class= userInfo.like ? 'bi-heart-fill' : 'bi-heart',
+              type= `${userInfo.login == "success" ? 'submit' : 'button'}`
             )
               span.tooltip-text 좋아요
             span.center-font= stockInfo.like
         .m-1
-          button.tooltip1.bi.btn#interest-icon(
-            class= userInfo.interest ? "bi-bookmark-plus-fill" : "bi-bookmark-plus",
-            type="button"
+          form(
+            action=`/formanstock/stocks/${stockInfo.stockCode}/${userInfo.interest ? 'not-interest' : 'interest'}`, 
+            method = "post"
           )
-            span.tooltip-text 관심종목 추가
-          span.center-font= stockInfo.interest
+            // 로그인 안한 유저는 버튼 활성화 X
+            button.tooltip1.bi.btn#interest-icon(
+              class= userInfo.interest ? "bi-bookmark-plus-fill" : "bi-bookmark-plus",
+              type= `${userInfo.login == "success" ? 'submit' : 'button'}`
+            )
+              span.tooltip-text 관심종목 추가
+            span.center-font= stockInfo.interest
 
       hr
       //////////// bootstrap tab을 이용한 주식 차트 탭 ///////////
@@ -194,7 +204,7 @@ block content
     //  btn_like.classList.toggle('bi-heart-fill');
     //}
     // 북마크 버튼 누를때 마다 class toggle
-    btn_interest.onclick = () =>{
-      btn_interest.classList.toggle('bi-bookmark-plus');
-      btn_interest.classList.toggle('bi-bookmark-plus-fill');
-    }
+    //btn_interest.onclick = () =>{
+    //  btn_interest.classList.toggle('bi-bookmark-plus');
+    //  btn_interest.classList.toggle('bi-bookmark-plus-fill');
+    //}

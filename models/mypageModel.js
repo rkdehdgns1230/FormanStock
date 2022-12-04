@@ -30,14 +30,14 @@ const saltRounds = 10
 
 exports.get_userINFO=(id, callback)=>{
     const sql = `
-    select s.stock_name, date_format(t.reg_date,'%Y-%m-%d') reg_date, t.trade_price, t.trade_stock_cnt
+    select s.stock_name, date_format(t.reg_date,'%Y-%m-%d') reg_date, t.trade_price, t.trade_stock_cnt, s.stock_code
     from hold h, trade t, stock s
     where h.stock_code = t.stock_code and h.user_id = t.user_id and s.stock_code = h.stock_code and h.user_id = ?;
 
     
     
     select
-    s.stock_name, p.open_price, p.close_price, p.high_price, p.low_price, p.trading_volume
+    s.stock_name, p.open_price, p.close_price, p.high_price, p.low_price, p.trading_volume, s.stock_code
     from(
         select
             *

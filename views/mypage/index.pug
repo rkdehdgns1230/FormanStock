@@ -47,7 +47,7 @@ block content
                                                     td #{row.trade_price}     
                                                     td #{row.trade_stock_cnt}                             
                                                     td 
-                                                        a.btn.btn-primary.btn-icon-split(href="/board/write-form")
+                                                        a.btn.btn-primary.btn-icon-split(href=`/formanstock/stocks/${row.stock_code}`)
                                                             span.icon.text-white-50
                                                                 i.fas.fa-check 
                                                             span.text 거래창으로 이동
@@ -81,15 +81,16 @@ block content
                                                     td #{row.LOW_PRICE}        
                                                     td #{row.TRADING_VOLUME}                             
                                                     td 
-                                                        a.btn.btn-success.btn-icon-split(href="/board/write-form")
+                                                        a.btn.btn-success.btn-icon-split(href=`/formanstock/stocks/${row.stock_code}`)
                                                             span.icon.text-white-50
                                                                 i.fas.fa-check 
                                                             span.text 이동                       
                                                     td 
-                                                        a.btn.btn-danger.btn-icon-split(href="/board/write-form")
-                                                            span.icon.text-white-50
-                                                                i.fas.fa-check 
-                                                            span.text 제거
+                                                        form(action=`/formanstock/stocks/${row.stock_code}/not-interest/` method = "post")
+                                                            a.btn.btn-danger.btn-icon-split(type ="submit")
+                                                                span.icon.text-white-50
+                                                                    i.fas.fa-check 
+                                                                span.text 제거
 
                                             
                                 
