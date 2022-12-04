@@ -3,7 +3,7 @@ module.exports = {
         connectionLimit: 5,
         host: 'localhost',
         user: 'root',
-        password: '7674',
+        password: '1717',
         database: 'stock_market',
         multipleStatements: true
     }
