@@ -10,35 +10,41 @@ html(lang="en")
         link(href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet")
         link(href="/css/styles.css" rel="stylesheet")
         script(src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous")    
-        
-        //- MyPage
-        //- link(href='/mypage/img/favicon.png' rel='icon')
-        //- link(href='/mypage/img/apple-touch-icon.png' rel='apple-touch-icon')
-        link(href='/https://fonts.gstatic.com' rel='preconnect')
-        link(href='/https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i' rel='stylesheet')
+        //-조회
+                // Google Fonts
+        link(rel='preconnect' href='https://fonts.googleapis.com')
+        link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin='')
+        link(href='https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap' rel='stylesheet')
+        // Vendor CSS Files
         link(href='/vendor/bootstrap/css/bootstrap.min.css' rel='stylesheet')
         link(href='/vendor/bootstrap-icons/bootstrap-icons.css' rel='stylesheet')
-        link(href='/vendor/boxicons/css/boxicons.min.css' rel='stylesheet')
-        link(href='/vendor/quill/quill.snow.css' rel='stylesheet')
-        link(href='/vendor/quill/quill.bubble.css' rel='stylesheet')
-        link(href='/vendor/remixicon/remixicon.css' rel='stylesheet')
-        link(href='/vendor/simple-datatables/style.css' rel='stylesheet')
-        link(href='/css/mypage/style.css' rel='stylesheet')
+        link(href='/vendor/aos/aos.css' rel='stylesheet')
+        link(href='/vendor/glightbox/css/glightbox.min.css' rel='stylesheet')
+        link(href='/vendor/swiper/swiper-bundle.min.css' rel='stylesheet')
+        // Template Main CSS File
+        link(href='/css/board/main.css' rel='stylesheet')
+        //
+            =======================================================
+            * Template Name: Impact - v1.1.1
+            * Template URL: https://bootstrapmade.com/impact-bootstrap-business-website-template/
+            * Author: BootstrapMade.com
+            * License: https://bootstrapmade.com/license/
+            ========================================================
+
+
 
     body.sb-nav-fixed
         nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
             //- Navbar Brand
-            div.navbar-brand.ps-3
-                a(href="/formanstock" style="text-decoration: none; color:white;") #{title} 
-                img(src="/assets/img/4_24.png")
+            a.navbar-brand.ps-3(href="/formanstock") 포맨스톡
             //- Sidebar Toggle
             button.btn.btn-link.btn-sm.order-1.order-lg-0.me-4.me-lg-0(id="sidebarToggle" href="#!")
                 i.fas.fa-bars
             //- Navbar Search
-            form.d-none.d-md-inline-block.form-inline.ms-auto.me-0.me-md-3.my-2.my-md-0(action="/formanstock/search", method="GET")
+            form.d-none.d-md-inline-block.form-inline.ms-auto.me-0.me-md-3.my-2.my-md-0
                 div.input-group
-                    input.form-control(type="text" name="query" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch")
-                    button.btn.btn-danger(id="btnNavbarSearch" type="submit")
+                    input.form-control(type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch")
+                    button.btn.btn-primary(id="btnNavbarSearch" type="button")
                         i.fas.fa-search                
             form
             //- Navbar
@@ -54,19 +60,17 @@ html(lang="en")
                         li 
                             hr.dropdown-divider
                         li
-                            a.dropdown-item(href=`/formanstock/${userInfo.login === "success" ? "logout" : "login-page"}`) #{userInfo.login === "success" ? "Logout" : "LogIn"}
+                            a.dropdown-item(href="#!") Logout                    
         div#layoutSidenav
             div#layoutSidenav_nav
                 nav.sb-sidenav.accordion.sb-sidenav-dark(id="sidenavAccordion")
                     div.sb-sidenav-menu
                         div.nav
-                            // Core tab
                             div.sb-sidenav-menu-heading Menu
                             a.nav-link(href="/formanstock")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-tachometer-alt
                                     span  HOME 
-                             
                             // a tag, div tag 형태로 구성됨. 계층 구조 형태가 아님
                             // Pages tab                         
                                 a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#example" aria-expanded="false" aria-controls="collapsePages")
@@ -126,7 +130,21 @@ html(lang="en")
                                         a.nav-link(href="/signup-page") 회원가입
                                         a.nav-link(href="#") 비밀번호 찾기
                                     
+                            div.sb-sidenav-menu-heading 콘텐츠 관리
+                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts")
+                                div.sb-nav-link-icon 
+                                    i.fas.fa-columns 
+                                    span  게시판                                                                      
+                                div.sb-sidenav-collapse-arrow
+                                    i.fas.fa-angle-down                            
+                            div.collapse(id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
+                                nav.sb-sidenav-menu-nested.nav
 
+                                for stock in rows[1]
+                                    - const _url = `/formanstock/board/${stock.STOCK_CODE}/posts`;
+                                    a.nav-link(href=_url) #{stock.STOCK_NAME} 
+                                                                                                                
+                                                                    
                     // navigation bar footer: 로그인시 회원 정보를 가져올 수 있도록 구현 완료                  
                     div.sb-sidenav-footer
                         div.small #{userInfo.login === "fail" ? `Guest` : `Loggined as ${userInfo.info.USER_ID}`}
@@ -135,29 +153,13 @@ html(lang="en")
                             
             div#layoutSidenav_content
                 //- 여기에 본인들 넣을 프론트 템플릿 추가하면 댐
-                block content                    
-                footer.py-4.bg-light.mt-auto 
-                    .container-fluid.px-4      
-                        .d-flex.align-items-center.justify-content-between.small
-                            .text-muted Contact &copy; 010-6654-1318     
-        script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous")
+                block content                                                        
+        script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous")
         script(src="/js/scripts.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous")
         script(src="/assets/demo/chart-area-demo.js")
         script(src="/assets/demo/chart-bar-demo.js")
         script(src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous")
         script(src="/js/datatables-simple-demo.js")
-
-        //- My Page
-        script(src='/vendor/apexcharts/apexcharts.min.js')
-        script(src='/vendor/bootstrap/js/bootstrap.bundle.min.js')
-        script(src='/vendor/chart.js/chart.min.js')
-        script(src='/vendor/echarts/echarts.min.js')
-        script(src='/vendor/quill/quill.min.js')
-        script(src='/vendor/simple-datatables/simple-datatables.js')
-        script(src='/vendor/tinymce/tinymce.min.js')
-        script(src='/vendor/php-email-form/validate.js')
-        script(src='/js/main.js')
-
     
 
