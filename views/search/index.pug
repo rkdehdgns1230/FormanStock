@@ -1,0 +1,30 @@
+extends ../navi_layout
+
+block content
+  .card.shadow.mb-4  
+    .card-header.py-3 
+      strong.m-0.font-weight-bold.text-primary "#{query}" 검색결과
+    .card-body 
+      .table-responsive
+        table.table.table-hover#dataTable(
+          width="100%"
+          cellspacing="0"
+          style = "text-align:center"
+        )
+          colgroup
+            col(width="20%")
+            col(width="50%")
+            col(width="30%")
+          thead.table-light
+            tr 
+            th(scope="col") 종목 코드
+            th(scope="col") 종목 이름
+            th(scope="col") 총 주식량
+          tbody
+            for row in rows                                  
+              tr
+                td
+                  strong #{row.stock_code}
+                td 
+                  a(href=`/formanstock/stocks/${row.stock_code}` style="text-decoration:none") #{row.company_name}
+                td #{row.total_stock_num} 

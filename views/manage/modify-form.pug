@@ -1,0 +1,46 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+        meta(name="description" content="")
+        meta(name="author" content="")
+        title Register - SB Admin
+        link(href="/css/styles.css" rel="stylesheet")
+        script(src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous")    
+    body.primary
+        div#layoutAuthentication
+            div#layoutAuthentication_content
+                main
+                    .container
+                        .row.justify-content-center
+                            .col-lg-7
+                                .card.shadow-lg.border-0.rounded-lg.mt-5
+                                    .card-header
+                                    h3.text-center.font-weight-light.my-4 화사 정보 변경
+                                    .card-body
+                                        form(action=`/formanstock/manage/companies/${row[0].COMPANY_NAME}/info` method = "post")
+                                            .row.mb-3
+                                                .col-md-6
+                                                    .form-floating.mb-3.mb-md-0                                                                                                                
+                                                        input(class="form-control" name = "stock_code" type="text" value =`${row[0].STOCK_CODE}` readonly)
+                                                        label(for="stock_code") 주식 번호    
+                                                .col-md-6
+                                                    .form-floating.mb-3.mb-md-0                                                                                                               
+                                                        input.form-control#company_name(name = "company_name" value = `${row[0].COMPANY_NAME}` type="text" readonly)
+                                                        label(for="company_name") 회사 명                                                    
+                                            .row.mb-3
+                                                .col-md-6
+                                                    .form-floating.mb-3.mb-md-0
+                                                        input.form-control#total_stock_num(name="total_stock_num" type="text")
+                                                        label(for="total_stock_num") 총 주식량                                                                                         
+                                            .form-floating.mb-3
+                                                textarea.form-control#company_info(name="company_info" style="height: 200px;" )
+                                                label(for="company_info") 회사 정보                                                                                   
+                                            .mt-4.mb-0
+                                                .grid
+                                                button.btn.btn-primary.btn-block(type="submit") 수정하기                  
+ 
+        script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous")
+        script(src="/js/scripts.js")

@@ -3,7 +3,7 @@ var express = require('express');
 
 module.exports={
     get_userINFO:function(req,res){     
-        console.log("============================")
+        console.log("============================")        
         const user_id = req.row.USER_ID;   
         console.log("id:" + JSON.stringify(user_id));
         mypage_model.get_userINFO(user_id,(rows) =>{
