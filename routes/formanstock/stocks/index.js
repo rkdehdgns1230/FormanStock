@@ -19,8 +19,9 @@ router.post('/:stock_code/unlike', stockController.unlikeStock);
 router.post('/:stock_code/interest', stockController.registerInterestInStock);
 router.post('/:stock_code/not-interest', stockController.excludeInterestInStock);
 
-router.post('/:stock_code/buy');
-router.post('/:stock_code/sell');
+router.get('/:stock_code/trade', stockController.getStockTradePage);
+router.post('/:stock_code/trade/buy');
+router.post('/:stock_code/trade/sell');
 
 // 임시로 company data 추가하는 api 추가
 router.get('/:stock_code/importCompanyInfo', stockController.loadCompanyData);
