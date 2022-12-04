@@ -21,7 +21,7 @@ html(lang="en")
         script(src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js")
         script(src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js")
 
-    body.sb-nav-fixed
+    body.sb-nav-fixed.sb-sidenav-toggled
         nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
             //- Navbar Brand
             div.navbar-brand.ps-3
@@ -116,7 +116,7 @@ html(lang="en")
                                 nav.sb-sidenav-menu-nested.nav
                                     if (userInfo.login === "success")
                                         a.nav-link(href=`/logout`) 로그아웃
-                                        a.nav-link(href=`/mypage/${userInfo.info.USER_ID}`) 마이페이지
+                                        a.nav-link(href=`/formanstock/mypage/${userInfo.info.USER_ID}`) 마이페이지
                                     else
                                         a.nav-link(href='/login-page') 로그인
                                         a.nav-link(href="/signup-page") 회원가입

@@ -6,12 +6,12 @@ exports.getPage=(req, res, next) => {
     res.render('login-page',{title: 'login'});
 };
 
-exports.login=(req, res, next) => {
+exports.login = (req, res, next) => {
     console.log('로그인 수행')
     var email = req.body.email
     var password = req.body.password
-    console.log(req.body)
-    console.log(email, password)
+    //console.log(req.body)
+    //console.log(email, password)
     var datas = [email, password];
     //console.log(req.body)
     loginPageModel.checkUser(req, res, datas, (user_info)=>{        
@@ -26,3 +26,4 @@ exports.login=(req, res, next) => {
         }
     });
 }
+
