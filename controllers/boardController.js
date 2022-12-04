@@ -45,3 +45,19 @@ exports.write_board=(req, res, next) => {
         res.redirect('/formanstock/board/'+ stock_code +'/posts');
     });
 };
+
+exports.read_post=(req, res, next) => {
+    console.log(req.params.post_no)
+    console.log('게시글 확인');
+    let loginSuccess = !(req.token === undefined);
+    let loginString= loginSuccess ? "success" : "fail"; 
+    post_no = req.params.post_no;
+    user_id = req.row.user_id;
+    boardModel.read_post(post_no, (rows)=>{
+        console.log("rows:" + JSON.stringify(rows));
+        res.render('board/post',{title:'게시물', rows:rows, user_id:user_id, userInfo: {
+            login: loginString,
+            info: loginSuccess ? req.row : 'empty'
+        }});
+    });
+};
