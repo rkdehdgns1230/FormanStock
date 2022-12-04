@@ -45,3 +45,16 @@ exports.write_board=(req, res, next) => {
         res.redirect('/formanstock/board/'+ stock_code +'/posts');
     });
 };
+
+exports.remove_board=(req, res, next)=>{
+    console.log(req.params.stock_code, req.params.post_no)
+    stock_code = req.params.stock_code
+    post_no = req.params.post_no
+    boardModel.remove_board(post_no,()=>{
+        res.redirect('/formanstock/board/'+ stock_code +'/posts');
+    })
+};
+
+exports.getUpdatepage=(req, res, next)=>{
+    console.log(req.row)
+}

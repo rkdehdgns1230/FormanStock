@@ -2,18 +2,11 @@ const mysql = require('mysql');
 const dbInfo = require('../controllers/config/dev.js');
 const connection = mysql.createConnection(dbInfo.mySQL_config);
 
-exports.write_board=(stock_code, user_id, Data, time, callback)=>{
-    const sql = `INSERT INTO post(POST_TITLE, POST_CONTENT, USER_ID, REG_DATE, STOCK_CODE, DELETE_YN) VALUES(?, ?, ?, ?, ?, 'N');`;
-    console.log(stock_code)
-    console.log('게시글 페이지');
-    connection.query(sql,[Data['POST_TITLE'], Data['POST_CONTENT'], user_id, time, stock_code],(err,rows,fields)=>{
-        if(err) throw err;
-        callback(rows);
-    });
-}    
-module.exports = {getPosts(stock_code, callback){
+
+module.exports = {
+    getPosts(stock_code, callback){
     console.log('in getPosts')
-    const sql = `SELECT POST_TITLE, POST_CONTENT, USER_ID, date_format(REG_DATE,'%Y-%m-%d') as REG_DATE FROM POST WHERE STOCK_CODE = ?;select * from stock;`
+    const sql = 'SELECT POST_TITLE, POST_CONTENT, USER_ID, REG_DATE FROM POST WHERE STOCK_CODE = ?; SELECT * FROM STOCK;'
     var data = [stock_code]
     console.log('data:', data)
     connection.query(sql,data,(err, rows, fileds)=>{
@@ -29,9 +22,18 @@ exports.write_board=(post_no, callback)=>{
     connection.query(sql,post_no,(err,rows,fields)=>{
         if(err) throw err;
         callback(rows);
-        });
-    }    
+    });
+}    
 
+exports.remove_board=(post_no, callback)=>{
+    const sql = 'DELETE FROM POST WHERE POST_NO=?; SELECT * FROM STOCK;'
+    var data = [post_no]
+    console.log(data)
+    connection.query(sql,data,(err, fileds)=>{
+        if(err) throw err;
+        callback()
+        });
+}
 // exports.getList_company=(callback)=>{
 //     const sql = `select * from company; select * from stock;`;
 //     connection.query(sql,(err,rows,fields)=>{
