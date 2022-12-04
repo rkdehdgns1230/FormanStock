@@ -9,7 +9,7 @@ const router = express.Router();
 
 
 
-router.get('/', middleware.auth, mypageControllers.get_userINFO);
+router.get('/:user_id', middleware.auth, mypageControllers.get_userINFO);
 router.post('/change_pw/:user_id', middleware.auth, mypageControllers.ChangePW);
 
 // router.get('/companies',manage_controllers.getlist_company);
