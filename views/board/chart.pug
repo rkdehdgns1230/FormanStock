@@ -1,0 +1,169 @@
+script.
+  //window.onload = () => {
+  // 종가를 기준으로 차트에 들어갈 데이터 리스트를 만든다.
+  let date_list = '#{stockDateList}';
+  let price_list = '#{stockClosePriceList}';
+
+  const day_day = 7;
+  const week_day = 90;
+  const month_day = 350;
+  const year_day = month_day * 3;
+
+  // ','를 기준으로 split 해서 리스트로 만들어줘야 한다.
+  let dateList = date_list.split(',');
+  let priceList = price_list.split(',');
+
+  // 최근 7일 데이터를 추출
+  let day7DateList = dateList.slice(-day_day);
+  let price7DateList = priceList.slice(-day_day);
+
+  // 최근 10주 데이터를 추출
+  let weekDateList = dateList.slice(-week_day);
+  let weekPriceList = priceList.slice(-week_day);
+
+  // 최근 12달 데이터 추출
+  let monthDateList = dateList.slice(-month_day);
+  let monthPriceList = priceList.slice(-month_day);
+
+  // 이 코드가 생기기 전에 박아놓고 시작하는 구조라서 골치아프다.
+  let ctx = document.getElementById('myChart');
+  let ctxDay = document.getElementById('DayChart');
+  let ctxWeek = document.getElementById('WeekChart');
+  let ctxMonth = document.getElementById('MonthChart');
+
+  // 차트에 들어갈 데이터
+  let chartData = {
+    labels: dateList,
+    datasets: [{
+      label: '#{stockInfo.companyName} 일간 차트',
+      //backgroundColor: 'transparent',
+      //borderColor: 'black',
+      data: priceList
+    }]
+  }
+
+  let dayChartData = {
+    labels: day7DateList,
+    datasets:[{
+      label: '#{stockInfo.companyName} 일간 차트',
+      data: price7DateList
+    }]
+  }
+
+  let weekChartData = {
+    labels: weekDateList,
+    datasets:[{
+      label: '#{stockInfo.companyName} 일간 차트',
+      data: weekPriceList
+    }]
+  }
+
+  let monthChartData = {
+    labels: monthDateList,
+    datasets:[{
+      label: '#{stockInfo.companyName} 일간 차트',
+      data: monthPriceList
+    }]
+  }
+
+  // 차트의 옵션을 정의하는 부분
+  makeOptions = (labelUnit) => {
+    return {
+      responsive: true,
+      elements:{
+        point:{
+          radius: 1, // 반지름
+          backgroundColor: 'transparent',
+          borderColor: '#fb3640',
+          hoverRadius: 6,
+          hoverBorderWidth: 2,
+          borderWidth: 1
+        },
+        line: {
+          borderWidth: 2,
+          borderColor: '#fb3640'
+        },
+      },
+      scales: {
+        x: {
+          grid: {
+            display: false,
+          },
+          type: 'time',
+          time:{
+            unit: labelUnit
+          }
+        },
+        y:{
+          ticks: {
+            // y축에 '원'이라는 문자를 붙여서 표현하기 위한 코드
+            callback: (val, idx, ticks) => {
+              return `${val}원`;
+            }
+          }
+        }
+      },
+      interaction: {
+        // 차트에서 같은 index를 갖는 데이터를 focus한다.
+        intersect: false,
+        mode: 'index'
+      }
+    }
+  }
+
+  const plugins = [{
+    // 차트 point hover 이벤트 정의를 통해 cross line 설정
+    afterDraw: chart => {
+      if (chart.tooltip?._active?.length) {
+        // 현재 x, y 좌표
+        let x = chart.tooltip._active[0].element.x;
+        let y = chart.tooltip._active[0].element.y;
+
+        let yAxis = chart.scales.y;
+        let ctx = chart.ctx;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(x, yAxis.top);
+        ctx.lineTo(x, yAxis.bottom);
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = '#ff0000';
+
+        //ctx.moveTo(0, y);
+        //ctx.lineTo(x, y);
+
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+  }]
+
+  // 차트의 기본 폰트 색상 설정
+  //Chart.defaults.color = 'white';
+  // 차트 선언 및, canvas 태그에 데이터를 넣어주는 부분
+  let chart = new Chart(ctx, {
+    type: 'line',
+    data: chartData,
+    options: makeOptions('month'),
+    plugins: plugins
+  });
+
+  let chartDay = new Chart(ctxDay, {
+    type: 'line',
+    data: dayChartData,
+    options: makeOptions('day'),
+    plugins: plugins
+  });
+
+  let chartWeek = new Chart(ctxWeek, {
+    type: 'line',
+    data: weekChartData,
+    options: makeOptions('week'),
+    plugins: plugins
+  });
+
+  let chartMonth = new Chart(ctxMonth, {
+    type:'line',
+    data: monthChartData,
+    options: makeOptions('month'),
+    plugins: plugins
+  });
