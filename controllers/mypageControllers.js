@@ -8,7 +8,7 @@ module.exports={
         console.log("id:" + JSON.stringify(user_id));
         mypage_model.get_userINFO(user_id,(rows) =>{
             console.log("rows:" + JSON.stringify(rows));
-            res.render('mypage/index',{title:'유저 정보', rows:rows});
+            res.render('mypage/index',{title:'유저 정보', rows:rows, user_id:user_id});
         });        
     },
     ChangePW:function(req,res){     
