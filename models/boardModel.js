@@ -3,13 +3,25 @@ const dbInfo = require('../controllers/config/dev.js');
 const connection = mysql.createConnection(dbInfo.mySQL_config);
 
 
+module.exports = {getPosts(stock_code, callback){
+    console.log('in getPosts')
+    const sql = 'SELECT POST_TITLE, POST_CONTENT, USER_ID, REG_DATE FROM POST WHERE STOCK_CODE = ?;select * from stock;'
+    var data = [stock_code]
+    console.log('data:', data)
+    connection.query(sql,data,(err, rows, fileds)=>{
+        if(err) throw err;
+        console.log(rows)
+        callback(rows)
+        });
+    }
+}
 exports.write_board=(post_no, callback)=>{
     const sql = `update post set delete_yn = 'y' where post_no = ?;`;
 
     connection.query(sql,post_no,(err,rows,fields)=>{
         if(err) throw err;
         callback(rows);
-       });
+        });
     }    
 
 // exports.getList_company=(callback)=>{
