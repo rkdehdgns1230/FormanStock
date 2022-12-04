@@ -1,0 +1,53 @@
+doctype html
+head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Join with Formanstock!!
+    link(href='css/styles.css', rel='stylesheet')
+    script(src='https://use.fontawesome.com/releases/v6.1.0/js/all.js', crossorigin='anonymous')
+#layoutAuthentication
+    #layoutAuthentication_content
+        main
+        .container
+            .row.justify-content-center
+                .col-lg-7
+                    .card.shadow-lg.border-0.rounded-lg.mt-5
+                    .card-header
+                    h3.text-center.font-weight-light.my-4 회원가입
+                    .card-body
+                        form(action='/signup-page' method='post')
+                            .row.mb-3
+                                .col-md-6
+                                    .form-floating.mb-3.mb-md-0
+                                        input#name.form-control(type='text', name='name', placeholder='이름')
+                                        label(for='name') 이름
+                                .col-md-6
+                                    .form-floating
+                                        input#age.form-control(type='text', name='age', placeholder='나이')
+                                        label(for='age') 나이
+                            .form-floating.mb-3
+                                input#email.form-control(type='email', name='email' placeholder='name@example.com')
+                                label(for='email') 이메일
+                            .form-floating.mb-3
+                                input#password.form-control(type='password', name='password' placeholder='Create a password')
+                                label(for='password') 비밀번호
+                            .mt-4.mb-0
+                                .d-grid
+                                button.btn.btn-primary.btn-block(type='submit', href='/login-page') Create Account
+                .card-footer.text-center.py-3
+                    .small
+                    a(href='/login-page') Have an account? Go to login
+    #layoutAuthentication_footer
+        footer.py-4.bg-light.mt-auto
+            .container-fluid.px-4
+                .d-flex.align-items-center.justify-content-between.small
+                    .text-muted Copyright &copy; Your Website 2022
+                    div
+                        a(href='#') Privacy Policy
+                        |                                 &middot;
+                        a(href='#') Terms &amp; Conditions
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js', crossorigin='anonymous')
+script(src='js/scripts.js')

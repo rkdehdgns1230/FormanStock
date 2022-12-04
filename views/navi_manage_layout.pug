@@ -6,7 +6,7 @@ html(lang="en")
         meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
         meta(name="description" content="")
         meta(name="author" content="")
-        title Dashboard - SB Admin
+        title 포맨스톡
         link(href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet")
         link(href="/css/styles.css" rel="stylesheet")
         script(src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous")    
@@ -14,7 +14,7 @@ html(lang="en")
     body.sb-nav-fixed
         nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
             //- Navbar Brand
-            a.navbar-brand.ps-3(href="index.html") Start Bootstrap
+            a.navbar-brand.ps-3(href="/formanstock") 포맨스톡
             //- Sidebar Toggle
             button.btn.btn-link.btn-sm.order-1.order-lg-0.me-4.me-lg-0(id="sidebarToggle" href="#!")
                 i.fas.fa-bars
@@ -44,70 +44,51 @@ html(lang="en")
                 nav.sb-sidenav.accordion.sb-sidenav-dark(id="sidenavAccordion")
                     div.sb-sidenav-menu
                         div.nav
-                            div.sb-sidenav-menu-heading Company Manage
-                            a.nav-link(href="index.html")
+                            div.sb-sidenav-menu-heading 회사 관리
+                            a.nav-link(href="/formanstock/manage/companies")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-tachometer-alt 
-                                    span  company                                                            
-                            div.sb-sidenav-menu-heading User Manage
+                                    span  주식 회사 
+                            a.nav-link(href="/formanstock/manage/companies/register")
+                                div.sb-nav-link-icon 
+                                    i.fas.fa-tachometer-alt 
+                                    span  주식 회사 정보 추가                                                           
+                            div.sb-sidenav-menu-heading 유저 관리
+                            a.nav-link(href="/formanstock/manage/users")
+                                div.sb-nav-link-icon 
+                                    i.fas.fa-columns 
+                                    span  일반 유저
+                            a.nav-link(href="/formanstock/manage/users-suspension")
+                                div.sb-nav-link-icon 
+                                    i.fas.fa-columns 
+                                    span  정지 유저                                       
+                            div.sb-sidenav-menu-heading 콘텐츠 관리
                             a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-columns 
-                                    span  All Users                                                                      
+                                    span  게시판                                                                      
                                 div.sb-sidenav-collapse-arrow
                                     i.fas.fa-angle-down                            
                             div.collapse(id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
                                 nav.sb-sidenav-menu-nested.nav
-                                    a.nav-link(href="layout-static.html") Static Navigation
-                                    a.nav-link(href="layout-sidenav-light.html") Light Sidenav                                
-                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages")
-                                div.sb-nav-link-icon
-                                    i.fas.fa-columns  
-                                    span  Suspended Users                                 
-                                div.sb-sidenav-collapse-arrow
-                                    i.fas.fa-angle-down 
-                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages")
-                                div.sb-nav-link-icon
-                                    i.fas.fa-columns 
-                                    span  Deleted Users
-                                div.sb-sidenav-collapse-arrow
-                                    i.fas.fa-angle-down                                   
-                            div.collapse(id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion")
-                                nav.sb-sidenav-menu-nested.nav.accordion(id="sidenavAccordionPages")
-                                    a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth") Authentication                                        
-                                        div.sb-sidenav-collapse-arrow
-                                            i.fas.fa-angle-down                                    
-                                    div.collapse(id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
-                                        nav.sb-sidenav-menu-nested.nav
-                                            a.nav-link(href="login.html") Login
-                                            a.nav-link(href="register.html") Register
-                                            a.nav-link(href="password.html") Forgot Password                                        
-                                    a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError") Error                                        
-                                        div.sb-sidenav-collapse-arrow
-                                            i.fas.fa-angle-down                                    
-                                    #pagesCollapseError.collapse(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
-                                        nav.sb-sidenav-menu-nested.nav
-                                            a.nav-link(href="401.html") 401 Page
-                                            a.nav-link(href="404.html") 404 Page
-                                            a.nav-link(href="500.html") 500 Page                                        
-                            div.sb-sidenav-menu-heading Content Manage
-                            a.nav-link(href="charts.html")
+
+                                for stock in rows[1]
+                                    - const _url = `/formanstock/manage/board/${stock.STOCK_CODE}`;
+                                    a.nav-link(href=_url) #{stock.STOCK_NAME} 
+                                                                                            
+                            a.nav-link(href=`/formanstock/manage/comments`)
                                 div.sb-nav-link-icon
                                     i.fas.fa-book-open 
-                                    span  Boards                                                            
-                            a.nav-link(href="tables.html")
-                                div.sb-nav-link-icon
-                                    i.fas.fa-book-open 
-                                    span  Comments                                
+                                    span  댓글
+                                                                    
                     div.sb-sidenav-footer
-                        div.small Logged in as: 
-                        span Start Bootstrap
+                        div.small 로그인: 
+                        span 김태욱
                             
             div#layoutSidenav_content
                 //- 여기에 본인들 넣을 프론트 템플릿 추가하면 댐
-                block content                    
-                
-        script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous")
+                block content                                                        
+        script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous")
         script(src="/js/scripts.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous")
         script(src="/assets/demo/chart-area-demo.js")

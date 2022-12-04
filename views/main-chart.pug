@@ -1,0 +1,98 @@
+script.
+  //window.onload = () => {
+  // 삼성전자 데이터를 서버에서 가져온다.
+  let samsung_price_list = '#{stockClosePriceListSamsung}';
+  let samsung_date_list = '#{stockDateListSamsung}';
+  // LG전자 데이터를 서버에서 가져온다.
+  let lg_price_list = '#{stockClosePriceListLg}';
+  let lg_date_list = '#{stockDateListLG}'
+
+  // ','를 기준으로 split 해서 리스트로 만들어줘야 한다.
+  let samsungPriceList = samsung_price_list.split(',');
+  let samsungDateList = samsung_date_list.split(',');
+
+  let lgPriceList = lg_price_list.split(',');
+  let lgDateList = lg_date_list.split(',');
+
+  // 이 코드가 생기기 전에 박아놓고 시작하는 구조라서 골치아프다.
+  let ctxSamsung = document.getElementById('samsungChart');
+  let ctxLG = document.getElementById('lgChart');
+
+  // 차트에 들어갈 데이터
+  let samsungChartData = {
+    labels: samsungDateList,
+    datasets: [{
+      label: 'Samsung',
+      backgroundColor: 'transparent',
+      //borderColor: 'black',
+      data: samsungPriceList
+    }]
+  }
+
+  let lgChartData = {
+    labels: lgDateList,
+    datasets:[{
+      label: 'LG',
+      data: lgPriceList
+    }]
+  }
+
+  // 차트의 옵션을 정의하는 부분
+  makeOptions = (color, labelUnit) => {
+    return {
+      responsive: true,
+      elements:{
+        point:{
+          radius: 1, // 반지름
+          backgroundColor: 'transparent',
+          borderColor: color,
+          hoverRadius: 6,
+          hoverBorderWidth: 2,
+          borderWidth: 1
+        },
+        line: {
+          borderWidth: 2,
+          borderColor: color
+        },
+      },
+      scales: {
+        x: {
+          grid: {
+            display: false,
+          },
+          type: 'time',
+          time:{
+            unit: labelUnit
+          }
+        },
+        y:{
+          ticks: {
+            // y축에 '원'이라는 문자를 붙여서 표현하기 위한 코드
+            callback: (val, idx, ticks) => {
+              return `${val}원`;
+            }
+          }
+        }
+      },
+      interaction: {
+        // 차트에서 같은 index를 갖는 데이터를 focus한다.
+        intersect: false,
+        mode: 'index'
+      }
+    }
+  }
+
+  // 차트의 기본 폰트 색상 설정
+  //Chart.defaults.color = 'white';
+  // 차트 선언 및, canvas 태그에 데이터를 넣어주는 부분
+  let samsungChart = new Chart(ctxSamsung, {
+    type: 'line',
+    data: samsungChartData,
+    options: makeOptions('#4285F4', 'year')
+  });
+
+  let lgChart = new Chart(ctxLG, {
+    type: 'line',
+    data: lgChartData,
+    options: makeOptions('#202124', 'year')
+  });

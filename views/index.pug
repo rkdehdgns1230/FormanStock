@@ -1,5 +1,121 @@
 extends navi_layout
 
 block content 
-    h4= title                       
-    
+  style.
+    .carousel-inner{
+      width: auto;
+      height: 490px;
+      background-color: transparent;
+    }
+    .carousel-item{
+      max-width: 100%;
+      height: auto;
+    }
+    .carousel-caption{
+      color: white;
+      bottom: 50%;
+      transition: all ease 1s;
+    }
+    .carousel-caption:hover{
+      transform: scale(1.2);
+    }
+  #carouselExampleControls.carousel.slide(data-bs-ride="carousel")
+    .carousel-inner 
+      .carousel-item.active 
+        img.d-block.w-100(src="assets/img/stock_1920.jpg" alt="" width='100%')
+        .carousel-caption.d-none.d-md-block 
+          h3 모의 주식 거래 기능
+          p 다양한 KOSPI 종목을 만나보세요!! 
+      .carousel-item 
+        img.d-block.w-100(src="assets/img/community_1920.jpg" alt="")
+        .carousel-caption.d-none.d-md-block 
+          h3 커뮤니티를 만나보세요
+          p 종목별로 사람들을 만나 토론해보세요!!
+    button.carousel-control-prev(type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev")
+      span.carousel-control-prev-icon(aria-hidden="true")
+      span.visually-hidden Previous
+    button.carousel-control-next(type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next")
+      span.carousel-control-next-icon(aria-hidden="true")
+      span.visually-hidden Next
+  // 여기
+  .container-fluid.px-4
+    h1.mt-4 
+    .row 
+      .col-xl-3.col-md-6   
+        .card.text-black.fw-bold.mb-4(style="background-color: #B8A49B")
+          .card-body 종목게시판
+          .card-footer.d-flex.align-items-center.justify-content-between  
+            a.small.text-black.stretched-link(href='#') 구경가기
+            .small.text-white
+            i.fas.fa-angle-right
+      .col-xl-3.col-md-6
+        .card.text-black.fw-bold.mb-4(style="background-color: #B8A49B")
+          .card-body 주식 회사 조회
+          .card-footer.d-flex.align-items-center.justify-content-between
+            a.small.text-black.stretched-link(href='#') 구경하기
+            .small.text-white
+            i.fas.fa-angle-right
+      .col-xl-3.col-md-6
+        .card.text-black.fw-bold.mb-4(style="background-color: #B8A49B")
+          .card-body 매매하러가기
+          .card-footer.d-flex.align-items-center.justify-content-between
+            a.small.text-black.stretched-link(href='#') 구경하기
+            .small.text-white
+            i.fas.fa-angle-right
+      .col-xl-3.col-md-6
+        .card.text-black.fw-bold.mb-4(style="background-color: #B8A49B")
+          .card-body 시세 보러가기
+          .card-footer.d-flex.align-items-center.justify-content-between
+            a.small.text-black.stretched-link(href='#') 구경하기
+            .small.text-white
+            i.fas.fa-angle-right      
+    //그래프 주식왕
+    .row 
+      .col-sm 
+        .card.mb-4 
+          .card-header(style="background-color: #F9F0E7") 삼성차트 
+            i.fas.fa-chart-area.me-1(style="color: #037ef3")          
+          .card-body
+            canvas#samsungChart(width="100%" height="100%")
+      .col-sm 
+        .card.mb-4 
+          .card-header(style="background-color: #F9F0E7") LG차트 
+            i.fas.fa-chart-area.me-1
+          .card-body 
+            canvas#lgChart(width="100%" height="100%")
+      .col-sm 
+        .card.mb-4 
+          .card-header(style="background-color: #F9F0E7") 인기 BEST 종목 
+            i.fas.fa-solid.fa-fire
+          .card-body 
+            canvas#myAreaChart(width="100%" height="100")
+    .row 
+      .col-sm 
+        .card.mb-4 
+          .card-header(style="background-color: #F9F0E7") 종목게시판 
+            i.fas.fa-regular.fa-comments
+          .card-body 
+          
+      .col-sm 
+        .card.mb-4 
+          .card-header(style="background-color: #F9F0E7") 오늘의 주식왕 
+            i.fas.fa-solid.fa-crown
+          .card-body 
+            ul
+              - for(let i = 1; i <= 10; i++){
+                li #{i}등 홍길동
+              -}
+
+
+  .toast-container.position-fixed.bottom-0.end-0.p-3
+    // 기본적으로 toast를 show 상태로 설정
+    .toast.show(role="alert" aria-live="assertive" aria-atomic="true")
+      .toast-header
+        img.rounded.me-2(src="assets/img/4_24.png" alt="...")
+        strong.me-auto FormanStock
+        small from master 
+        button.btn-close(type="button" data-bs-dismiss="toast" aria-label="Close")
+      .toast-body.
+        환영합니다! 모의 주식 매매 기능을 이용해보세요!!
+  
+  include ./main-chart.pug

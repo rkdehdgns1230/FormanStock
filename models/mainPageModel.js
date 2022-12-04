@@ -1,23 +1,27 @@
 const mysql = require('mysql');
-const dbInfo = require('../config.json');
+const dbInfo = require('../controllers/config/dev.js');
+const connection = mysql.createConnection(dbInfo.mySQL_config);
 
-const connection = mysql.createConnection({
-    "host": dbInfo.host,
-    "user": dbInfo.user,
-    "password": dbInfo.password,
-    "database": dbInfo.database
-});
+module.exports = {
+    getMainPage: (stock_code1, stock_code2, callback) => {
+        const sql = `select date_format(sp.stock_date, '%Y-%m-%d %H:%i:%S') stock_date, sp.close_price
+        from STOCK_PRICE sp, stock s
+        where s.stock_code = ?
+        and s.stock_code = sp.stock_code;
+        select date_format(sp.stock_date, '%Y-%m-%d %H:%i:%S') stock_date, sp.close_price
+        from STOCK_PRICE sp, stock s
+        where s.stock_code = ?
+        and s.stock_code = sp.stock_code;`
 
-exports.getStockList = (cb) => {
-    const sql = `select * from stock, company
-    where stock.stock_code = company.stock_code`;
-
-    connection.query(sql, (err, rows) => {
-        if(err){
-            console.log(err);
-            return;
-        }
-        // callback function에 sql 실행 결과를 돌려준다.
-        cb(rows);
-    })
+        connection.query(sql, [stock_code1, stock_code2], (err, rows) => {
+            if(err){
+                console.log(err);
+                return;
+            }
+            else{
+                callback(rows[0], rows[1]);
+                return;
+            }
+        })
+    }
 }

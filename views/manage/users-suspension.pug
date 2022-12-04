@@ -1,0 +1,46 @@
+extends ../navi_manage_layout
+
+block content                        
+    .card.shadow.mb-4  
+        .card-header.py-3 
+            h4.m-0.font-weight-bold.text-primary= title
+        .card-body 
+            .table-responsive
+                table.table.table-bordered#dataTable(
+                    width="100%"
+                    cellspacing="0"
+                    style = "text-align:center"
+                )
+                    thead
+                        tr 
+                        th 유저 ID
+                        th 성명 
+                        th 나이                          
+                        th 삭제하기              
+ 
+                    tbody           
+                        for row in rows[0]                                      
+                            tr 
+                            td #{row.USER_ID}
+                            td #{row.USER_REAL_NAME}
+                            td #{row.AGE}                                                     
+                            td 
+                                form(action=`/formanstock/manage/users-suspension/${row.USER_ID}` method = "post")                                    
+                                    button.btn.btn-success.btn-icon-split(type ="submit")
+                                        span.icon.text-white-50
+                                            i.fas.fa-check 
+                                        span.text 삭제
+                        
+    nav(aria-label="...")
+        ul.pagination.justify-content-center        
+            li.page-item.disabled 
+                a.page-link(href="#" tabindex="-1") Previous
+            li.page-item
+                a.page-link(href="#") 1
+            li.page-item.active 
+                a.page-link(href = "#") 2 
+                span.sr-only (current)
+            li.page-item
+                a.page-link(href="#") 3
+            li.page-item
+                a.page-link(href="#") Next  
