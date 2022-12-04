@@ -28,7 +28,7 @@ exports.read_post=(post_no, callback)=>{
 
 exports.getPosts=(stock_code, callback)=>{
     console.log('in getPosts')
-    const sql = `SELECT POST_TITLE, POST_CONTENT, USER_ID, date_format(REG_DATE,'%Y-%m-%d') as REG_DATE FROM POST WHERE STOCK_CODE = ?;select * from stock;`
+    const sql = 'SELECT POST_TITLE, POST_CONTENT, USER_ID, REG_DATE FROM POST WHERE STOCK_CODE = ?; SELECT * FROM STOCK;'
     var data = [stock_code]
     console.log('data:', data)
     connection.query(sql,data,(err, rows, fileds)=>{
@@ -39,7 +39,15 @@ exports.getPosts=(stock_code, callback)=>{
 }
 
 
-
+exports.remove_board=(post_no, callback)=>{
+    const sql = 'DELETE FROM POST WHERE POST_NO=?; SELECT * FROM STOCK;'
+    var data = [post_no]
+    console.log(data)
+    connection.query(sql,data,(err, fileds)=>{
+        if(err) throw err;
+        callback()
+        });
+}
 // exports.getList_company=(callback)=>{
 //     const sql = `select * from company; select * from stock;`;
 //     connection.query(sql,(err,rows,fields)=>{
