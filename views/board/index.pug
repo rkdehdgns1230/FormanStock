@@ -1,4 +1,4 @@
-//extends ../navi_manage_layout
+extends ../navi_board_layout
 
 block content                        
     .card.shadow.mb-4  
@@ -17,7 +17,7 @@ block content
                         th 작성자                                           
                         th 날짜                                                          
                     tbody           
-                        for row in rows[0]                                      
+                        for row in rows[0]                                     
                             tr 
                             td #{row.POST_TITLE}
                             td #{row.POST_CONTENT}
