@@ -1,6 +1,5 @@
 var boardModel = require('../models/boardModel')
 var express = require('express')
-require('date-utils')
 
 exports.getPage=(req, res, next) => {
     console.log(req.params.stock_code)
