@@ -3,14 +3,15 @@ const dbInfo = require('../controllers/config/dev.js');
 const connection = mysql.createConnection(dbInfo.mySQL_config);
 
 
-exports.write_board=(post_no, callback)=>{
-    const sql = `update post set delete_yn = 'y' where post_no = ?;`;
-
-    connection.query(sql,post_no,(err,rows,fields)=>{
+exports.write_board=(stock_code, user_id, Data, time, callback)=>{
+    const sql = `INSERT INTO post(POST_TITLE, POST_CONTENT, USER_ID, REG_DATE, STOCK_CODE, DELETE_YN) VALUES(?, ?, ?, ?, ?, 'N');`;
+    console.log(stock_code)
+    console.log('게시글 페이지');
+    connection.query(sql,[Data['POST_TITLE'], Data['POST_CONTENT'], user_id, time, stock_code],(err,rows,fields)=>{
         if(err) throw err;
         callback(rows);
-       });
-    }    
+    });
+}    
 
 // exports.getList_company=(callback)=>{
 //     const sql = `select * from company; select * from stock;`;
