@@ -26,11 +26,12 @@ block content
                             td #{row.COMPANY_NAME}
                             td #{row.TOTAL_STOCK_NUM}
                             td #{row.COMPANY_INFO}                            
-                            td 
-                             a.btn.btn-success.btn-icon-split(href="/board/write-form")
-                                span.icon.text-white-50
-                                 i.fas.fa-check 
-                                span.text 수정
+                            td                                                                                    
+                                form(action=`/formanstock/manage/companies/${row.COMPANY_NAME}/info` method = "get")
+                                    button.btn.btn-success.btn-icon-split(type ="submit")
+                                        span.icon.text-white-50
+                                            i.fas.fa-check 
+                                        span.text 수정
                         
     nav(aria-label="...")
         ul.pagination.justify-content-center        
