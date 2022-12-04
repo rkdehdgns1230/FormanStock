@@ -3,12 +3,23 @@ var express = require('express');
 
 module.exports={
     get_userINFO:function(req,res){     
-        console.log("============================")        
+        console.log("============================")       
+        let loginSuccess = !(req.token === undefined);
+        let loginString= loginSuccess ? "success" : "fail"; 
         const user_id = req.row.USER_ID;   
         console.log("id:" + JSON.stringify(user_id));
         mypage_model.get_userINFO(user_id,(rows) =>{
             console.log("rows:" + JSON.stringify(rows));
-            res.render('mypage/index',{title:'유저 정보', rows:rows, user_id:user_id});
+            res.render('mypage/index',
+                {title:'FormanStock', 
+                rows:rows, 
+                user_id:user_id, 
+                userInfo: {
+                    login: loginString,
+                    info: loginSuccess ? req.row : 'empty'
+                },
+                token: req.token,
+            });
         });        
     },
     ChangePW:function(req,res){     

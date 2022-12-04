@@ -28,15 +28,17 @@ html(lang="en")
     body.sb-nav-fixed
         nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
             //- Navbar Brand
-            a.navbar-brand.ps-3(href="/formanstock") 포맨스톡
+            div.navbar-brand.ps-3
+                a(href="/formanstock" style="text-decoration: none; color:white;") #{title} 
+                img(src="/assets/img/4_24.png")
             //- Sidebar Toggle
             button.btn.btn-link.btn-sm.order-1.order-lg-0.me-4.me-lg-0(id="sidebarToggle" href="#!")
                 i.fas.fa-bars
             //- Navbar Search
-            form.d-none.d-md-inline-block.form-inline.ms-auto.me-0.me-md-3.my-2.my-md-0
+            form.d-none.d-md-inline-block.form-inline.ms-auto.me-0.me-md-3.my-2.my-md-0(action="/formanstock/search", method="GET")
                 div.input-group
-                    input.form-control(type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch")
-                    button.btn.btn-primary(id="btnNavbarSearch" type="button")
+                    input.form-control(type="text" name="query" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch")
+                    button.btn.btn-danger(id="btnNavbarSearch" type="submit")
                         i.fas.fa-search                
             form
             //- Navbar
@@ -52,64 +54,84 @@ html(lang="en")
                         li 
                             hr.dropdown-divider
                         li
-                            a.dropdown-item(href="#!") Logout                    
+                            a.dropdown-item(href=`/formanstock/${userInfo.login === "success" ? "logout" : "login-page"}`) #{userInfo.login === "success" ? "Logout" : "LogIn"}
         div#layoutSidenav
             div#layoutSidenav_nav
                 nav.sb-sidenav.accordion.sb-sidenav-dark(id="sidenavAccordion")
                     div.sb-sidenav-menu
                         div.nav
-                            div.sb-sidenav-menu-heading Core
-                            a.nav-link(href="index.html")
+                            // Core tab
+                            div.sb-sidenav-menu-heading Menu
+                            a.nav-link(href="/formanstock")
                                 div.sb-nav-link-icon 
-                                    i.fas.fa-tachometer-alt 
-                                    span  Dashboard                                                            
-                            div.sb-sidenav-menu-heading Interface
-                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts")
+                                    i.fas.fa-tachometer-alt
+                                    span  HOME 
+                             
+                            // a tag, div tag 형태로 구성됨. 계층 구조 형태가 아님
+                            // Pages tab                         
+                                a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#example" aria-expanded="false" aria-controls="collapsePages")
+                                    div.sb-nav-link-icon
+                                        i.fas.fa-book-open 
+                                        span  Pages                                
+                                    div.sb-sidenav-collapse-arrow
+                                        i.fas.fa-angle-down                            
+                                div.collapse(id="example" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion")
+                                    nav.sb-sidenav-menu-nested.nav.accordion(id="sidenavAccordionPages")
+                                        a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth") Authentication                                        
+                                            div.sb-sidenav-collapse-arrow
+                                                i.fas.fa-angle-down                                    
+                                        div.collapse(id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
+                                            nav.sb-sidenav-menu-nested.nav
+                                                a.nav-link(href="login.html") Login
+                                                a.nav-link(href="register.html") Register
+                                                a.nav-link(href="password.html") Forgot Password                                        
+                                        a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false") HOT                                    
+                                            div.sb-sidenav-collapse-arrow
+                                                i.fas.fa-angle-down                                    
+                                        #pagesCollapseError.collapse(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
+                                            nav.sb-sidenav-menu-nested.nav
+                                                a.nav-link(href="401.html") BEST
+                                                a.nav-link(href="404.html") WORST
+                                                a.nav-link(href="500.html") 관심종목
+
+                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapseLayouts")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-columns 
-                                    span  Layouts                                                                      
+                                    span  Pages                                                                      
                                 div.sb-sidenav-collapse-arrow
-                                    i.fas.fa-angle-down                            
-                            div.collapse(id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
+                                    i.fas.fa-angle-down
+                            // sidenavAccordion 이라는 아이디가 설정된 태그의 child이다.                      
+                            div.collapse(id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
                                 nav.sb-sidenav-menu-nested.nav
-                                    a.nav-link(href="layout-static.html") Static Navigation
-                                    a.nav-link(href="layout-sidenav-light.html") Light Sidenav                                
-                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages")
-                                div.sb-nav-link-icon
-                                    i.fas.fa-book-open 
-                                    span  Pages                                
+                                    a.nav-link(href="#") BEST
+                                    a.nav-link(href="#") 종목게시판
+                                    a.nav-link(href="#") My 관심 종목
+
+                            // 계정 관련 설정 탭
+                            div.sb-sidenav-menu-heading Setting
+                            a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapseAccount" aria-expanded="false" aria-controls="collapseLayouts")
+                                div.sb-nav-link-icon 
+                                    i.fas.fa-columns 
+                                    span  Account                                                                      
                                 div.sb-sidenav-collapse-arrow
-                                    i.fas.fa-angle-down                            
-                            div.collapse(id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion")
-                                nav.sb-sidenav-menu-nested.nav.accordion(id="sidenavAccordionPages")
-                                    a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth") Authentication                                        
-                                        div.sb-sidenav-collapse-arrow
-                                            i.fas.fa-angle-down                                    
-                                    div.collapse(id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
-                                        nav.sb-sidenav-menu-nested.nav
-                                            a.nav-link(href="login.html") Login
-                                            a.nav-link(href="register.html") Register
-                                            a.nav-link(href="password.html") Forgot Password                                        
-                                    a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError") Error                                        
-                                        div.sb-sidenav-collapse-arrow
-                                            i.fas.fa-angle-down                                    
-                                    #pagesCollapseError.collapse(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
-                                        nav.sb-sidenav-menu-nested.nav
-                                            a.nav-link(href="401.html") 401 Page
-                                            a.nav-link(href="404.html") 404 Page
-                                            a.nav-link(href="500.html") 500 Page                                        
-                            div.sb-sidenav-menu-heading Addons
-                            a.nav-link(href="charts.html")
-                                div.sb-nav-link-icon
-                                    i.fas.fa-chart-area 
-                                    span  Charts                                                            
-                            a.nav-link(href="tables.html")
-                                div.sb-nav-link-icon
-                                    i.fas.fa-table 
-                                    span  Tables                                
+                                    i.fas.fa-angle-down
+                            // sidenavAccordion 이라는 아이디가 설정된 태그의 child이다.                      
+                            div.collapse(id="collapseAccount" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
+                                nav.sb-sidenav-menu-nested.nav
+                                    if (userInfo.login === "success")
+                                        a.nav-link(href=`/logout`) 로그아웃
+                                        a.nav-link(href=`/mypage/${userInfo.info.USER_ID}`) 마이페이지
+                                    else
+                                        a.nav-link(href='/login-page') 로그인
+                                        a.nav-link(href="/signup-page") 회원가입
+                                        a.nav-link(href="#") 비밀번호 찾기
+                                    
+
+                    // navigation bar footer: 로그인시 회원 정보를 가져올 수 있도록 구현 완료                  
                     div.sb-sidenav-footer
-                        div.small Logged in as: 
-                        span Start Bootstrap
+                        div.small #{userInfo.login === "fail" ? `Guest` : `Loggined as ${userInfo.info.USER_ID}`}
+                        // 회원 정보에 따라 사용자 이름 표시되도록 수정해야 
+                        span #{userInfo.login === "fail" ? "더 많은 서비스를 이용해보세요" : `환영합니다!!`}
                             
             div#layoutSidenav_content
                 //- 여기에 본인들 넣을 프론트 템플릿 추가하면 댐
