@@ -7,26 +7,19 @@ const connection = mysql.createConnection(dbInfo.mySQL_config);
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const saltRounds = 10
-// select s.stock_name, p.open_price, p.close_price, p.high_price, p.low_price, p.trading_volume
-//     from interest_in i, stock s, stock_price p
-//     where i.stock_code = s.stock_code and i.stock_code = p.stock_code and i.user_id = ?
-//     ;
 
-// select
-//     s.stock_name, p.open_price, p.close_price, p.high_price, p.low_price, p.trading_volume
-//     from(
-//         select
-//             *
-//         from stock_price
-//         where (stock_code, stock_date) in (
-//             select stock_code, max(stock_date) as stock_date
-//             from stock_price group by stock_code
-//         )
-//         order by stock_date desc
-//     ) p, interest_in i, stock s
-//     where i.stock_code = s.stock_code and i.stock_code = p.stock_code and i.user_id = ?
-//     group by p.stock_code;
+exports.get_interests=(user_id, callback)=>{
+    console.log('여깄어요');
+    const sql = `select i.stock_code code, c.company_name name, c.company_info info
+    from interest_in i, company c
+    where i.stock_code = c.stock_code
+    and user_id = ?;`;
 
+    connection.query(sql,user_id,(err,rows,fields)=>{
+        if(err) throw err;
+        callback(rows);
+    }); 
+} 
 
 exports.get_userINFO=(id, callback)=>{
     const sql = `
@@ -101,39 +94,17 @@ exports.ChangePW=(req, res, Data, callback)=>{
             callback();
         }
     })
-    // connection.query(sqlForFindPW, user_id, function(err, rows){
-    //     if(err) console.error("err : "+err);
-    //     console.log("rows : "+JSON.stringify(rows));
-        
-    //     bcrypt.compare(member_password, rows.USER_PASSWD, function (err, isMatch) {
-    //         if (err) console.error("login_bcrpyt_compare_eror: " + err);
-    //         if (!isMatch){
-    //             alert('비밀번호가 틀렸습니다.')
-    //             callback();
-    //         }
-    //         else if(Data['newpassword'] != Data['renewpassword']){
-    //             alert('비밀번호가 서로 일치하지 않습니다.')
-    //             callback()
-    //         }
-    //         else if(Data['newpassword'] == Data['renewpassword']){
-    //             bcrypt.genSalt(saltRounds, function(err,salt){
-    //                 if (err) console.error("bcrypt err: " + err);
-    //                 bcrypt.hash(password, salt, function(err, hash){
-    //                     if (err) console.error("bcrypt err: " + err);
-    //                     password = hash
-    //                     var sqlForUpdateMember = "Update user SET USER_PASSWD=? WHERE USER_ID=?"
-    //                     connection.query(sqlForUpdateMember, [password, user_id], function (err, result) {
-    //                         if (err) console.error("login_token_update_err: ", err);
-    //                         alert('비밀번호가 변경되었습니다.')
-    //                         callback();
-    //                     });
-    //                 })
-    //             })
-                
-    //         }else{
-    //             alert('에러 발생. 다시 시도하세요.')
-    //             callback();
-    //         }
-    //     })
-    // });
+    
+exports.get_interests=(user_id, callback)=>{
+    console.log('여깄어요');
+    const sql = `select i.stock_code code, c.company_name name, c.company_info info
+    from interest_in i, company c
+    where i.stock_code = c.stock_code
+    and user_id = ${user_id};`;
+
+    connection.query(sql,(err,rows,fields)=>{
+        if(err) throw err;
+        callback(rows);
+    }); 
+} 
 }
