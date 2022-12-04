@@ -14,7 +14,7 @@ exports.write_board=(stock_code, user_id, Data, time, callback)=>{
 exports.read_post=(post_no, callback)=>{
     console.log(post_no)
     const sql = `
-    SELECT POST_TITLE, POST_CONTENT, USER_ID, date_format(REG_DATE,'%Y-%m-%d') as REG_DATE FROM POST WHERE POST_NO = ?;
+    SELECT POST_NO, POST_TITLE, POST_CONTENT, USER_ID, date_format(REG_DATE,'%Y-%m-%d') as REG_DATE, STOCK_CODE FROM POST WHERE POST_NO = ?;
     select comment_no, post_no, user_id, comment_content, date_format(reg_date,'%Y-%m-%d') reg_date 
     from comment
     where post_no = ?; 
@@ -28,7 +28,7 @@ exports.read_post=(post_no, callback)=>{
 
 exports.getPosts=(stock_code, callback)=>{
     console.log('in getPosts')
-    const sql = 'SELECT POST_TITLE, POST_CONTENT, USER_ID, REG_DATE FROM POST WHERE STOCK_CODE = ?; SELECT * FROM STOCK;'
+    const sql = `SELECT POST_NO, POST_TITLE, POST_CONTENT, USER_ID, date_format(REG_DATE,'%Y-%m-%d') as REG_DATE, STOCK_CODE FROM POST WHERE STOCK_CODE = ?; SELECT * FROM STOCK;`
     var data = [stock_code]
     console.log('data:', data)
     connection.query(sql,data,(err, rows, fileds)=>{
@@ -47,6 +47,14 @@ exports.remove_board=(post_no, callback)=>{
         if(err) throw err;
         callback()
         });
+}
+
+exports.update_board=(stock_code, post_no, user_id, Data, time, callback)=>{
+    const sql = `UPDATE POST SET POST_TITLE=?, POST_CONTENT=?, REG_DATE=? WHERE post_no = ?; SELECT * FROM STOCK;`;
+    connection.query(sql,[Data['POST_TITLE'], Data['POST_CONTENT'], time, post_no],(err,rows,fields)=>{
+        if(err) throw err;
+        callback(rows);
+    });
 }
 // exports.getList_company=(callback)=>{
 //     const sql = `select * from company; select * from stock;`;
