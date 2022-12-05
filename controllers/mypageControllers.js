@@ -2,15 +2,6 @@ var mypage_model = require('../models/mypageModel');
 var express = require('express');
 
 module.exports={
-    get_interests:function(req,res){  
-        console.log('나여기')           
-        const user_id = req.row.USER_ID;                    
-        mypage_model.get_interests(user_id ,(rows) =>{
-            console.log("값을 확인합시다" + JSON.stringify(rows));            
-            res.render('mypage/interests', {title: 'hi', rows:rows});
-        });      
-    },
-    
     get_userINFO:function(req,res){     
         console.log("============================")       
         let loginSuccess = !(req.token === undefined);
