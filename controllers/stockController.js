@@ -132,18 +132,27 @@ module.exports = {
         let loginString= loginSuccess ? "success" : "fail";
         console.log("Hello");
         
-        res.render('stock/stock_trade', {
-            title: 'FormanStock',
-            // stockInfo: {
-            //     stockCode: stockInfo[0].stock_code,
-            //     companyName: stockInfo[0].company_name, 
-            //     totalStockNum: stockInfo[0].total_stock_num, 
-            //     companyInfo: stockInfo[0].company_info
-            // },
-            userInfo: {
-                login: loginString,
-                info: loginSuccess ? req.row : 'empty'
+        stockModel.getOnlyStockInfo(stock_code, (success, stockInfo) => {
+            if(success){
+                res.render('stock/stock_trade', {
+                    title: 'FormanStock',
+                    stockInfo: {
+                        stockCode: stockInfo.stock_code,
+                        companyName: stockInfo.company_name, 
+                        totalStockNum: stockInfo.total_stock_num, 
+                        companyInfo: stockInfo.company_info
+                    },
+                    userInfo: {
+                        login: loginString,
+                        info: loginSuccess ? req.row : 'empty'
+                    }
+                });
             }
-        });
+            else{
+                // 404를 전송한다.
+                res.sendStatus(404);
+            }
+        })
+        
     }
 }

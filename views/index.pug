@@ -13,24 +13,20 @@ block content
     }
     .carousel-caption{
       color: black;
-      transition: all ease 1s;
       bottom: 20%;
-    }
-    .carousel-caption:hover{
-      transform: scale(1.2);
     }
   #carouselExampleControls.carousel.slide.carousel-fade(data-bs-ride="carousel")
     .carousel-inner 
       .carousel-item.active 
         img.d-block.w-100(src="assets/img/business-2_1.jpg" alt="")
         .carousel-caption.d-none.d-md-block 
-          h3 모의 주식 거래 기능
-          p 다양한 KOSPI 종목을 만나보세요!! 
+          h2.font-weight-bold 모의 주식 거래 기능
+          p.font-weight-bold 다양한 KOSPI 종목을 만나보세요!! 
       .carousel-item
         img.d-block.w-100(src="assets/img/chart-black_2_1.png" alt="")
         .carousel-caption.d-none.d-md-block 
-          h3 커뮤니티를 만나보세요
-          p 종목별로 사람들을 만나 토론해보세요!!
+          h2.font-weight-bold 커뮤니티를 만나보세요
+          p.font-weight-bold 종목별로 사람들을 만나 토론해보세요!!
     button.carousel-control-prev(type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev")
       span.carousel-control-prev-icon(aria-hidden="true")
       span.visually-hidden Previous

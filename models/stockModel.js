@@ -131,5 +131,23 @@ module.exports = {
             }
             return;
         })
+    },
+    getOnlyStockInfo: (stock_code, cb) => {
+        const sql = `select c.stock_code, c.company_name, c.total_stock_num, c.company_info
+        from stock s, company c 
+        where s.stock_code = ?
+        and s.stock_code = c.stock_code;`;
+        
+        connection.query(sql, [stock_code], (err, rows) => {
+            if(err){
+                console.log(err);
+                cb(false, {empty: 'none'});
+            }
+            else{
+                //console.log(rows[0]);
+                cb(true, rows[0]);
+            }
+            return;
+        });
     }
 }
