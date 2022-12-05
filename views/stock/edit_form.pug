@@ -20,7 +20,7 @@ html(lang="en")
                                     .card-header
                                     h3.text-center.font-weight-light.my-4 게시글 수정
                                     .card-body
-                                        form(action=`/formanstock/board/${rows.stock_code}/posts/${rows.post_no}` method = "post")
+                                        form(action=`/formanstock/board/${rows}/write-form` method = "post")
                                             .form-floating.mb-3                                                                                                  
                                                 input(class="form-control" name = "POST_TITLE" type="text")
                                                 label(for="POST_TITLE") 제목

@@ -10,12 +10,10 @@ block content
                         article.blog-details
                             h2.title #{rows[0][0].POST_TITLE}
                             if user_id == rows[rows[0][0].USER_ID] 
-                                form(action=`/formanstock/board/${rows[0][0].STOCK_CODE}/posts/${rows[0][0].POST_NO}/removal` method = 'post')
+                                form(action='/formanstock/board/:stock_code/posts/:post_no' method = 'post')
                                     button.btn.btn-danger(type='submit' style='float:right') 삭제
-                                a.btn.btn-success.btn-icon-split(href=`/formanstock/board/${rows[0][0].STOCK_CODE}/posts/${rows[0][0].POST_NO}/info`)
-                                    span.icon.text-white-50
-                                        i.fas.fa-check 
-                                    span.text 수정  
+                                form(action='/formanstock/board//:stock_code/posts/:post_no/removal' method = 'post')
+                                    button.btn.btn-warning(type='submit' style='float:right') 수정
                             .meta-top
                                 ul
                                     li.d-flex.align-items-center
@@ -46,7 +44,7 @@ block content
                                             p #{row.comment_content}
                                 .reply-form
                                     h4 덧글 달기
-                                    form(action=`/formanstock/board/${rows[0][0].STOCK_CODE}/posts/${rows[0][0].POST_NO}/comment` method = 'post') 
+                                    form(action='' method = 'post') //- 덧글 달기 주소 지정해야함!!!!
                                         .row
                                             .col.form-group
                                                 textarea.form-control(name='comment' placeholder='내용을 작성하세요')
