@@ -20,20 +20,20 @@ script.
 
   // 차트에 들어갈 데이터
   let samsungChartData = {
-    labels: samsungDateList,
+    labels: [1, 2, 3, 4],//samsungDateList,
     datasets: [{
       label: 'Samsung',
       backgroundColor: 'transparent',
       //borderColor: 'black',
-      data: samsungPriceList
+      data: [1, 2, 3, 4],//samsungPriceList
     }]
   }
 
   let lgChartData = {
-    labels: lgDateList,
+    labels: [1, 2, 3, 4],//lgDateList,
     datasets:[{
       label: 'LG',
-      data: lgPriceList
+      data: [1, 2, 3, 4]//lgPriceList
     }]
   }
 
@@ -82,16 +82,25 @@ script.
     }
   }
 
+  let samsungChart;
+  if(samsungChart != undefined){
+    samsungChart.destroy();
+  }
+  let lgChart;
+  if(lgChart != undefined){
+    lgChart.destroy();
+  }
   // 차트의 기본 폰트 색상 설정
   //Chart.defaults.color = 'white';
   // 차트 선언 및, canvas 태그에 데이터를 넣어주는 부분
-  let samsungChart = new Chart(ctxSamsung, {
+  
+  samsungChart = new Chart(ctxSamsung, {
     type: 'line',
     data: samsungChartData,
     options: makeOptions('#4285F4', 'year')
   });
 
-  let lgChart = new Chart(ctxLG, {
+  lgChart = new Chart(ctxLG, {
     type: 'line',
     data: lgChartData,
     options: makeOptions('#202124', 'year')
