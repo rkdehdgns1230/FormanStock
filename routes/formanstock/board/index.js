@@ -13,6 +13,5 @@ router.get('/:stock_code/posts/:post_no', boardController.read_post); // 게시�
 router.get('/:stock_code/posts/:post_no/info', boardController.getUpdatepage)// 게시글 수정
 
 router.post('/:stock_code/write-form', boardController.write_board); // 작성글 제출
-router.post('/:stock_code/posts/:post_no', ); // 게시글 수정
 router.post('/:stock_code/posts/:post_no/removal', boardController.remove_board)// 게시글 삭제
 module.exports = router;

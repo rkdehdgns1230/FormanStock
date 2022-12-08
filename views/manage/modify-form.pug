@@ -36,7 +36,7 @@ html(lang="en")
                                                         input.form-control#total_stock_num(name="total_stock_num" type="text" value = `${row[0].TOTAL_STOCK_NUM}`)
                                                         label(for="total_stock_num") 총 주식량                                                                                         
                                             .form-floating.mb-3
-                                                textarea.form-control#company_info(name="company_info" style="height: 200px;")
+                                                textarea.form-control#company_info(name="company_info" style="height: 200px;") #{row[0].COMPANY_INFO}
                                                 label(for="company_info") 회사 정보                                                                                   
                                             .mt-4.mb-0
                                                 .grid
