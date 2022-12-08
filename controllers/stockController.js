@@ -132,18 +132,66 @@ module.exports = {
         let loginString= loginSuccess ? "success" : "fail";
         console.log("Hello");
         
-        res.render('stock/stock_trade', {
-            title: 'FormanStock',
-            // stockInfo: {
-            //     stockCode: stockInfo[0].stock_code,
-            //     companyName: stockInfo[0].company_name, 
-            //     totalStockNum: stockInfo[0].total_stock_num, 
-            //     companyInfo: stockInfo[0].company_info
-            // },
-            userInfo: {
-                login: loginString,
-                info: loginSuccess ? req.row : 'empty'
+        stockModel.getOnlyStockInfo(stock_code, (success, stockInfo) => {
+            if(success){
+                res.render('stock/stock_trade', {
+                    title: 'FormanStock',
+                    stockInfo: {
+                        stockCode: stockInfo.stock_code,
+                        companyName: stockInfo.company_name, 
+                        totalStockNum: stockInfo.total_stock_num, 
+                        companyInfo: stockInfo.company_info
+                    },
+                    userInfo: {
+                        login: loginString,
+                        info: loginSuccess ? req.row : 'empty'
+                    }
+                });
             }
-        });
+            else{
+                // 404를 전송한다.
+                res.sendStatus(404);
+            }
+        })
+        
+    },
+    buyStock: (req, res, next) => {
+        const price = req.body.trade_price;
+        const num = parseInt(req.body.trade_amount);
+        const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
+        const stock_code = req.params.stock_code;
+
+        // 구매 가능한 경우에는 바로 구매한다.
+        console.log(`price: ${price}, num: ${num}`);
+        //res.send('hello');
+        console.log(`type check: ${typeof(num)}`);
+
+        stockModel.buyStock(user_id, stock_code, num, price, (success) => {
+            if(success){
+                res.send("buy success");
+            }
+            else{
+                res.send("buy fail");
+            }
+        })
+    },
+    sellStock: (req, res, next) => {
+        const price = req.body.trade_price;
+        const num = req.body.trade_amount;
+        const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
+        const stock_code = req.params.stock_code;
+
+        // 판매 가능한 경우에는 바로 구매한다.
+        console.log(`price: ${price}, num: ${num}`);
+        //res.send('hello');
+
+        stockModel.sellStock(user_id, stock_code, num, price, (success) => {
+            if(success){
+                res.send("sell success");
+            }
+            else{
+                res.send("sell fail");
+            }
+        })
     }
 }
