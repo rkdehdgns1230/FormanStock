@@ -149,5 +149,125 @@ module.exports = {
             }
             return;
         });
+    },
+    buyStock: (user_id, stock_code, num, stock_price, cb) => {
+        // 어쩔수 없다 판매나 구매를 무한 수량이 가능하다는 가정하에 구현해야될 것 같다.
+        // 이미 보유한 종목은 개수를 올려야 하고
+        // 새롭게 매수하는 종목은 hold에 추가해야 한다.
+        const sql = `
+        insert into trade
+        values(null, ?, ?, ?, ?, ?, ?, ?);
+
+        select count(*) cnt
+        from hold
+        where user_id=? and stock_code=?;
+        `;
+        let date = new Date();
+        // 두 개의 query에 들어갈 data list
+        let datas = [user_id, stock_code, num, stock_price, 'buy', date, 'y', user_id, stock_code];
+        console.log("여기까지 돌아간다.");
+
+        connection.query(sql, datas, (err, rows) => {
+            const update_sql = `update hold
+            set stock_cnt = stock_cnt + ?
+            where user_id=? and stock_code=?`;
+
+            const insert_sql = `insert into hold
+            values(?, ?, ?, 0.0);`;
+            let insert_data = [stock_code, user_id, num];
+            console.log(rows[1][0]);
+            console.log(`rows[1].cnt: ${rows[1][0].cnt}`);
+            if(err){
+                console.log(err);
+                return;
+            }
+            else{
+                if(rows[1][0].cnt == 0){
+                    connection.query(insert_sql, insert_data, (err, result) => {
+                        // insert query 실행 결과를 반환
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        else{
+                            cb(true);
+                        }
+                    });
+                }
+                else{
+                    connection.query(update_sql, [num, user_id, stock_code], (err, result) => {
+                        // update query 실행 결과를 반환
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        else{
+                            cb(true);
+                        }
+                    });
+                }
+            }
+        });
+    },
+    sellStock: (user_id, stock_code, num, stock_price, cb) => {
+        // 전량 매도인지 아닌지는 따져야 한다.
+        const sql = `
+        insert into trade
+        values(null, ?, ?, ?, ?, ?, ?, ?);
+
+        select STOCK_CNT cnt
+        from hold
+        where user_id=? and stock_code=?;
+        `;
+        // 일부 매도의 경우
+        // 거래 기록 + 보유 주식 일부 판매
+
+        let date = new Date();
+        // 두 개의 query에 들어갈 data list
+        let datas = [user_id, stock_code, num, stock_price, 'buy', date, 'y', user_id, stock_code];
+        console.log("여기까지 돌아간다.");
+
+        connection.query(sql, datas, (err, rows) => {
+            const update_sql = `update hold
+            set stock_cnt = stock_cnt - ?
+            where user_id=? and stock_code=?`;
+
+            const delete_sql = `delete from hold
+            where user_id=? and stock_code=?;`;
+            let delete_data = [user_id, stock_code];
+
+            console.log(rows[1][0]);
+            console.log(`rows[1].cnt: ${rows[1][0].cnt}`);
+            if(err){
+                console.log(err);
+                return;
+            }
+            else{
+                if(rows[1][0].cnt == num){
+                    connection.query(delete_sql, delete_data, (err, result) => {
+                        // delete query 실행 결과를 반환
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        else{
+                            cb(true);
+                        }
+                    });
+                }
+                else{
+                    connection.query(update_sql, [num, user_id, stock_code], (err, result) => {
+                        // update query 실행 결과를 반환
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        else{
+                            cb(true);
+                        }
+                    });
+                }
+            }
+        });
     }
 }

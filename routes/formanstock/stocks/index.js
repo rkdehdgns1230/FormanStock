@@ -20,8 +20,8 @@ router.post('/:stock_code/interest', stockController.registerInterestInStock);
 router.post('/:stock_code/not-interest', stockController.excludeInterestInStock);
 
 router.get('/:stock_code/trade', stockController.getStockTradePage);
-router.post('/:stock_code/trade/buy');
-router.post('/:stock_code/trade/sell');
+router.post('/:stock_code/trade/buy', stockController.buyStock);
+router.post('/:stock_code/trade/sell', stockController.sellStock);
 
 // 임시로 company data 추가하는 api 추가
 router.get('/:stock_code/importCompanyInfo', stockController.loadCompanyData);

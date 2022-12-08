@@ -154,5 +154,44 @@ module.exports = {
             }
         })
         
+    },
+    buyStock: (req, res, next) => {
+        const price = req.body.trade_price;
+        const num = parseInt(req.body.trade_amount);
+        const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
+        const stock_code = req.params.stock_code;
+
+        // 구매 가능한 경우에는 바로 구매한다.
+        console.log(`price: ${price}, num: ${num}`);
+        //res.send('hello');
+        console.log(`type check: ${typeof(num)}`);
+
+        stockModel.buyStock(user_id, stock_code, num, price, (success) => {
+            if(success){
+                res.send("buy success");
+            }
+            else{
+                res.send("buy fail");
+            }
+        })
+    },
+    sellStock: (req, res, next) => {
+        const price = req.body.trade_price;
+        const num = req.body.trade_amount;
+        const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
+        const stock_code = req.params.stock_code;
+
+        // 판매 가능한 경우에는 바로 구매한다.
+        console.log(`price: ${price}, num: ${num}`);
+        //res.send('hello');
+
+        stockModel.sellStock(user_id, stock_code, num, price, (success) => {
+            if(success){
+                res.send("sell success");
+            }
+            else{
+                res.send("sell fail");
+            }
+        })
     }
 }

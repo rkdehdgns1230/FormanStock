@@ -37,14 +37,15 @@ block content
         - }
 
     .right-box.d-flex.flex-column.flex-fill.m-2.border
-      .upper-box.flex-fill
-        .card.mb-3
+      // 매수 매도 행동에 따라 다른 action에 대한 처리가 필요하다.
+      form.upper-box.flex-fill(action='', method="post" name="trade_form")
+        .card.mb-4
           .card-body
             h5.card-title #{stockInfo.companyName}
             h6.card-subtitle.my-1 (#{stockInfo.stockCode}) 
             p.card-text #{stockInfo.companyInfo}
         // 가격 정보 입력하는 input 창
-        .card.mb-3.p-4
+        .card.mb-4.p-4
           .content-title.d-inline-flex
             i.fa-regular.fa-circle-check(style="font-size:30px;")
             h3.ms-2 모의 거래시 다음 내용을 참고하세요! 
@@ -57,28 +58,37 @@ block content
             li 매도하는 매물이 있는 경우 바로 매수가 가능합니다.
             li 매도하는 매물이 없는 경우 매수 요청 등록이 가능합니다.
             li 매수 요청은 해당 가격에 매도하는 매물이 없는 경우 등록할 수 있습니다.
-            
-        .input-group.input-group-lg.mb-3
-          .input-group.prepend
-            span.input-group-text#inputGroup-sizing-lg 매매가 (원)
-            input.form-control#price-form(type="number" name="trade_price" arai-label="Large" aria-description="inputGroup-sizing-sm" required)
         
+        
+        .card.mb-4.p-4 
+          .left-box.flex-fill.p-2
+            h3 종목토론방
+            ul
+              -for(let i = 1; i <= 10; i++){
+              li
+                a(href="#") #{i}번 게시글
+              -}
+        div.mb-3.d-flex.ms-5
+          .input-group.input-group-lg.ms-4
+            .input-group.prepend
+              span.input-group-text#inputGroup-sizing-lg 매매가 (원)
+              input.form-control#price-form(type="number" name="trade_price" arai-label="Large" aria-description="inputGroup-sizing-sm" required)
 
-
-      .lower-box.d-flex.border.border-secondary 
-        .left-box.flex-fill.p-2.border.border-secondary.col-md-8
-          h3 종목토론방
-          ul
-            li
-              a(href="#") 1번 게시글
-            li
-              a(href="#") 2번 게시글
-            li
-              a(href="#") 3번 게시글
-        .right-box.flex-fill.d-flex.flex-column.p-2.border.border-secondary.col-md-4
+          .input-group.input-group-lg.ms-4
+            select.form-select#inputGroupSelect04(aria-label="Example select with button" name="trade_amount")
+              option(selected) 수량 선택
+              - for(let i = 1; i <= 10; i++){
+              option(value=`${i}`)= i
+              -}
+        
+      .lower-box.d-flex.border
+        .left-box.flex-fill.border.col-md-8
+          .card.p-4
+            h3 여기에 내 소유 정보가 담긴다.
+        .right-box.flex-fill.d-flex.flex-column.p-2.border.col-md-4
           h5 버튼을 눌러 매수 혹은 매도가 가능합니다!
-          button.btn.btn-danger.m-1 BUY
-          button.btn.btn-primary.m-1 SELL
+          button.btn.btn-danger.m-1#buy-btn BUY
+          button.btn.btn-primary.m-1#sell-btn SELL
 
     script.
       let btnEle = document.getElementsByClassName('price-box');
@@ -94,5 +104,18 @@ block content
           formEle.setAttribute('value', price);
         }
       }
+      let buyButton = document.getElementById('buy-btn');
+      let sellButton = document.getElementById('sell-btn');
 
-      // form 
+      let tradeForm = document.trade_form;
+      // 버튼 클릭시에
+      // 각 버튼에 맞는 요청을 보내기 위해 action을 변경하고 제출한다.
+      buyButton.onclick = () => {
+        tradeForm.action = `trade/buy`;
+        tradeForm.submit();
+      }
+
+      sellButton.onclick = () => {
+        tradeForm.action = `trade/sell`;
+        tradeForm.submit();
+      }
