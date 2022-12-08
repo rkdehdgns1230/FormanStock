@@ -14,7 +14,13 @@ const mainPageController = require('../../controllers/mainPageController');
 
 router.use('/stocks', stockRouter);
 router.use('/board', boardRouter);
-router.use('/manage', manageRouter);
+router.use('/manage', (req,res,next) =>{    
+    const val = req.row.AUTHORITY;
+    console.log("val:" + JSON.stringify(val));
+    if(val != "MANAGER") 
+        throw err;
+    next();
+},manageRouter);
 router.use('/mypage', mypageRouter);
 router.use('/search', searchRouter);
 
