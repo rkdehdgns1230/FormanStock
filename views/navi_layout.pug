@@ -44,13 +44,11 @@ html(lang="en")
                         i.fas.fa-user.fa-fw
                     ul.dropdown-menu.dropdown-menu-end(aria-labelledby="navbarDropdown")
                         li
-                            a.dropdown-item(href="#!") Settings
-                        li 
-                            a.dropdown-item(href="#!") Activity Log
+                            a.dropdown-item(href=`/formanstock/mypage/${userInfo.info.USER_ID}`) 마이 페이지
                         li 
                             hr.dropdown-divider
                         li
-                            a.dropdown-item(href=`/formanstock/${userInfo.login === "success" ? "logout" : "login-page"}`) #{userInfo.login === "success" ? "Logout" : "LogIn"}
+                            a.dropdown-item(href=`/${userInfo.login === "success" ? "logout" : "login-page"}`) #{userInfo.login === "success" ? "Logout" : "LogIn"}
         div#layoutSidenav
             div#layoutSidenav_nav
                 nav.sb-sidenav.accordion.sb-sidenav-dark(id="sidenavAccordion")
@@ -99,9 +97,14 @@ html(lang="en")
                             // sidenavAccordion 이라는 아이디가 설정된 태그의 child이다.                      
                             div.collapse(id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
                                 nav.sb-sidenav-menu-nested.nav
-                                    a.nav-link(href="#") BEST
-                                    a.nav-link(href="#") 종목게시판
-                                    a.nav-link(href="#") My 관심 종목
+                                    if (userInfo.login === "success")
+                                        a.nav-link(href="#") BEST
+                                        a.nav-link(href="/formanstock/board/003550/posts") 종목게시판
+                                        a.nav-link(href=`/formanstock/mypage/${userInfo.info.USER_ID}/interests`) My 관심 종목
+                                    else 
+                                        a.nav-link(href="#") BEST
+                                        a.nav-link(href="/formanstock/board/003550/posts") 종목게시판                                        
+
 
                             // 계정 관련 설정 탭
                             div.sb-sidenav-menu-heading Setting

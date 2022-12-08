@@ -7,11 +7,8 @@ const router = express.Router();
 //   res.render('mypage/index', { title: 'Express' });
 // });
 
-
-
 router.get('/:user_id', mypageControllers.get_userINFO);
 router.post('/change_pw/:user_id', mypageControllers.ChangePW);
-
 // router.get('/companies',manage_controllers.getlist_company);
 // router.get('/users-suspension',manage_controllers.getlist_users_suspension);
 // router.get('/users',manage_controllers.getlist_users);

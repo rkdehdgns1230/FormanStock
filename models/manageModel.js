@@ -33,7 +33,8 @@ exports.getlist_users=(callback)=>{
 exports.getlist_users_suspension=(callback)=>{
     const sql = `select * from user
                  where suspension_yn = 'y' 
-                 and delete_yn = 'n'; select * from stock;`;
+                 and delete_yn = 'n'
+                 and AUTHORITY = 'USER'; select * from stock;`;
 
     connection.query(sql,(err,rows,fields)=>{
         if(err) throw err;
@@ -51,7 +52,7 @@ exports.getList_comments=(callback)=>{
        }); 
     } 
 exports.user_suspend=(user_id,callback)=>{
-    const sql = `update user set suspension_yn = 'y' where user_id = ?;`;
+    const sql = `update user set suspension_yn = 'y' where user_id = ? and AUTHORITY = 'USER';`;
 
     connection.query(sql,user_id,(err,rows,fields)=>{
         if(err) throw err;
@@ -101,9 +102,13 @@ exports.update_company=(datas,callback)=>{
        });
     }    
 exports.insert_company=(datas,callback)=>{
-    const sql = `INSERT INTO STOCK(stock_code, stock_name) VALUES(?,?);
-    INSERT INTO COMPANY(stock_code, company_name, total_stock_num, company_info) VALUES(?,?,?,?);`;
+    const sql = ` START TRANSACTION;
+
+    INSERT INTO STOCK(stock_code, stock_name) VALUES(?,?);
+    INSERT INTO COMPANY(stock_code, company_name, total_stock_num, company_info) VALUES(?,?,?,?);
     
+    COMMIT`;
+
     console.log("datas:" + datas);
     connection.query(sql,datas,(err,row,fields)=>{
         if(err) throw err;
