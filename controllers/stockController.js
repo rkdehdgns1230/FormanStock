@@ -132,9 +132,10 @@ module.exports = {
         let loginString= loginSuccess ? "success" : "fail";
         console.log("Hello");
         
-        stockModel.getOnlyStockInfo(stock_code, user_id, (success, stockInfo, userStockInfo, postInfo) => {
+        stockModel.getOnlyStockInfo(stock_code, user_id, (success, stockInfo, userStockInfo, postInfo, recentPriceInfo) => {
             console.log(userStockInfo);
             console.log(stockInfo);
+            console.log(recentPriceInfo);
             if(success){
                 res.render('stock/stock_trade', {
                     title: 'FormanStock',
@@ -151,7 +152,8 @@ module.exports = {
                     userStockInfo: {
                         stock_cnt: userStockInfo.length !== 0 ? userStockInfo[0].stock_cnt : 0
                     },
-                    postInfo: postInfo
+                    postInfo: postInfo,
+                    standardPrice: recentPriceInfo[0]
                 });
             }
             else{
