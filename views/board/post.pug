@@ -45,11 +45,11 @@ block content
                                             th #{row.reg_date}
                                             p #{row.comment_content}
                                 .reply-form
-                                    h4 덧글 달기
+                                    h4
                                     form(action=`/formanstock/board/${rows[0][0].STOCK_CODE}/posts/${rows[0][0].POST_NO}/comment` method = 'post') 
                                         .row
                                             .col.form-group
-                                                textarea.form-control(name='comment' placeholder='내용을 작성하세요')
+                                                textarea.form-control(name='COMMENT' placeholder='내용을 작성하세요')
                                         button.btn.btn-primary(type='submit') 작성
 
 
