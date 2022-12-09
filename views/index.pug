@@ -121,12 +121,24 @@ block content
           
       .col-sm 
         .card.mb-4(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));") 
-          .card-header(style="background-color: #0D1117; color: #D29922;") 오늘의 주식왕 
+          .card-header(style="background-color: #0D1117; color: #D29922;") 오늘의 거래왕 
             i.fas.fa-solid.fa-crown
           .card-body
-            ul
-              - for(let i = 1; i <= 10; i++){
-                li.list-box #{i}등 홍길동
+            table.table
+              thead
+                tr 
+                  th(scope="col") rank.
+                  th(scope="col") user id
+                  th(scope="col") stock code 
+                  th(scope="col") trading volume
+              - for(let i = 0; i < topTrader.length; i++){
+                tr
+                  th.text-warning
+                    i.fas.fa-solid.fa-crown
+                    span  #{i + 1}등 
+                  th #{topTrader[i].user_id}
+                  th #{topTrader[i].stock_code}
+                  th #{topTrader[i].trade_volume}
               -}
 
 

@@ -13,7 +13,7 @@ module.exports = {
 
         console.log(`loginSuccess: ${loginSuccess}`);
         
-        mainPageModel.getMainPage(stock_code1, stock_code2, (stockList1, stockList2, postList, mostLikedStock) => {
+        mainPageModel.getMainPage(stock_code1, stock_code2, (stockList1, stockList2, postList, mostLikedStock, top10Trader) => {
             let closePriceList1 = new Array();
             let closePriceList2 = new Array();
 
@@ -47,7 +47,8 @@ module.exports = {
                 stockClosePriceListLg: closePriceList2,
                 stockDateListLG: dateList2,
                 postList: postList,
-                mostLikedStock: mostLikedStock
+                mostLikedStock: mostLikedStock,
+                topTrader: top10Trader
             });
         });
     }

@@ -7,7 +7,7 @@ module.exports = {
         const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
         
 
-        stockModel.getSpecificStockInfo(user_id, stock_code, (stockInfo, stockPriceInfo, likeCount, userLike, interestCount, userInterest) => {
+        stockModel.getSpecificStockInfo(user_id, stock_code, (stockInfo, stockPriceInfo, likeCount, userLike, interestCount, userInterest, postList) => {
             //res.send([stockInfo, stockPriceInfo]);
             // stock_info template과 data를 결합해 rendering한다.
             //console.log(stockPriceInfo[0].close_price);
@@ -44,7 +44,8 @@ module.exports = {
                     info: loginSuccess ? req.row : 'empty'
                 },
                 stockDateList: dateList,
-                stockClosePriceList: closePriceList
+                stockClosePriceList: closePriceList,
+                postList: postList
             });
         });
     },
