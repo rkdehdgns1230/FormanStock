@@ -7,13 +7,24 @@ exports.getPage=(req, res, next) => {
     console.log('게시글 페이지');
     let loginSuccess = !(req.token === undefined);
     let loginString= loginSuccess ? "success" : "fail"; 
+    const stock_code = req.params.stock_code;
 
-    boardModel.getPosts(req.params.stock_code, (rows)=>{
+    boardModel.getPosts(stock_code, (rows)=>{
         console.log("rows:" + JSON.stringify(rows));
-        res.render('board',{title:'게시물', rows:rows, userInfo: {
-            login: loginString,
-            info: loginSuccess ? req.row : 'empty'
-        }});
+        console.log(`length: ${rows[0].length}`);
+
+        res.render('board',{
+            title:'게시물', 
+            rows:rows, 
+            userInfo: {
+                login: loginString,
+                info: loginSuccess ? req.row : 'empty'
+            },
+            stock: {
+                STOCK_NAME: 'samsung',
+                STOCK_CODE: stock_code
+            }
+        });
     });
 };
 exports.read_board=(req, res, next) => {

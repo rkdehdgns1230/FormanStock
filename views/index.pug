@@ -15,6 +15,13 @@ block content
       color: black;
       bottom: 20%;
     }
+    ul{
+      list-style: none;
+      padding-left: 0rem;
+    }
+    .list-box{
+      margin: 1px;
+    }
   #carouselExampleControls.carousel.slide.carousel-fade(data-bs-ride="carousel")
     .carousel-inner 
       .carousel-item.active 
@@ -55,14 +62,14 @@ block content
         .card.text-black.fw-bold.mb-4(style="background-color: #B8A49B")
           .card-body 매매하러가기
           .card-footer.d-flex.align-items-center.justify-content-between
-            a.small.text-black.stretched-link(href='#') 구경하기
+            a.small.text-black.stretched-link(href='/formanstock/stocks/005930/trade') 구경하기
             .small.text-white
             i.fas.fa-angle-right
       .col-xl-3.col-md-6(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));") 
         .card.text-black.fw-bold.mb-4(style="background-color: #B8A49B")
           .card-body 시세 보러가기
           .card-footer.d-flex.align-items-center.justify-content-between
-            a.small.text-black.stretched-link(href='#') 구경하기
+            a.small.text-black.stretched-link(href='/formanstock/stocks/005930') 구경하기
             .small.text-white
             i.fas.fa-angle-right      
     //그래프 주식왕
@@ -83,14 +90,22 @@ block content
         .card.mb-4(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));")  
           .card-header(style="background-color: #F9F0E7") BEST 종목 
             i.fas.fa-solid.fa-fire
-          .card-body 
-            canvas#myAreaChart(width="100%" height="100%")
+          .card-body
+            // 좋아요 순으로 종목을 보여준다.
+            ul 
+              - for(let i = 0; i < mostLikedStock.length; i++){
+                li.list-box.border.border-3 #{i + 1}등 #{mostLikedStock[i].stock_name}(#{mostLikedStock[i].stock_code})
+              - }
     .row 
       .col-sm 
         .card.mb-4(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));")  
           .card-header(style="background-color: #F9F0E7") 종목게시판 
             i.fas.fa-regular.fa-comments
-          .card-body 
+          .card-body
+            ul
+              -for(let i = 0; i < postList.length; i++){
+                li.list-box #{postList[i].post_no}, #{postList[i].post_title}, #{postList[i].user_id}
+              -} 
           
       .col-sm 
         .card.mb-4(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));")  
@@ -99,7 +114,7 @@ block content
           .card-body 
             ul
               - for(let i = 1; i <= 10; i++){
-                li #{i}등 홍길동
+                li.list-box #{i}등 홍길동
               -}
 
 

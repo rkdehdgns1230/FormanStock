@@ -16,19 +16,28 @@ block content
                         th 내용
                         th 작성자                                           
                         th 날짜                                                          
-                    tbody           
-                        for row in rows[0]                                     
-                            tr 
-                            td 
-                                a(href=`/formanstock/board/${row.STOCK_CODE}/posts/${row.POST_NO}`)= row.POST_TITLE
-                            if row.POST_CONTENT.length >= 15
-                                td #{row.POST_CONTENT.substring(0,15) + ' ...'}
-                            else 
-                                td #{row.POST_CONTENT}
-                            td #{row.USER_ID}
-                            td #{row.REG_DATE}
+                    tbody
+                    //
+                        if rows[0].length === 0
+                            tr
+                                td 1
+                                td 1 
+                                td 1
+                        else
+                        //
+                            for row in rows[0]                                     
+                                tr 
+                                td 
+                                    a(href=`/formanstock/board/{row.STOCK_CODE}/posts/{row.POST_NO}`) row.POST_TITLE
+                                if row.POST_CONTENT.length >= 15
+                                    td #{row.POST_CONTENT.substring(0,15) + ' ...'}
+                                else 
+                                    td #{row.POST_CONTENT}
+                                td #{row.USER_ID}
+                                td #{row.REG_DATE}
+                            
     
-            a.btn.btn-success.btn-icon-split(href=`/formanstock/board/${rows[0][0].STOCK_CODE}/write-form`)
+            a.btn.btn-success.btn-icon-split(href=`/formanstock/board/{rows[0][0].STOCK_CODE}/write-form`)
                 span.icon.text-white-50
                     i.fas.fa-check 
                 span.text 글 작성하기  
