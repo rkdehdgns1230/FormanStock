@@ -36,5 +36,19 @@ module.exports={
             else if (callback == 2)res.send("<script>alert('비밀번호 변경이 완료되었습니다.');window.location=\"/formanstock/mypage\";</script>");
         });      
     },
-
+    deleteInterestStockList:function(req, res, next){
+        const user_id = req.row.USER_ID;
+        const stock_code = req.params.stock_code;
+        console.log("관심 종목 제외 작업");
+        console.log(user_id, stock_code)
+        mypage_model.deleteInterestStockList(stock_code, user_id, (success) => {
+            // 일단 성공 실패 상관없이 종목 조회 페이지로 redirection
+            if(success){
+                res.redirect(`/formanstock/mypage/${user_id}`);
+            }
+            else{
+                res.redirect(`/formanstock/stocks/${user_id}`);
+            }
+        });
+    },
 }
