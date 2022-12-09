@@ -31,9 +31,9 @@ module.exports={
 
         mypage_model.ChangePW(req, res, Data ,(callback) =>{
             console.log("ChangePW end" + JSON.stringify(callback));
-            if (callback == 0)res.send("<script>alert('비밀번호가 틀렸습니다.');window.location=\"/formanstock/mypage\";</script>");
-            else if (callback == 1)res.send("<script>alert('변경할 비밀번호가 서로 일치하지 않습니다.');window.location=\"/formanstock/mypage\";</script>");
-            else if (callback == 2)res.send("<script>alert('비밀번호 변경이 완료되었습니다.');window.location=\"/formanstock/mypage\";</script>");
+            if (callback == 0)res.send(`<script>alert('비밀번호가 틀렸습니다.');window.location=\"/formanstock/mypage/${user_id}\";</script>`);
+            else if (callback == 1)res.send(`<script>alert('변경할 비밀번호가 서로 일치하지 않습니다.');window.location=\"/formanstock/mypage/${user_id}\";</script>`);
+            else if (callback == 2)res.send(`<script>alert('비밀번호 변경이 완료되었습니다.');window.location=\"/formanstock/mypage/${user_id}\";</script>`);
         });      
     },
     deleteInterestStockList:function(req, res, next){
