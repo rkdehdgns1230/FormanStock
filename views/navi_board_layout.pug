@@ -71,32 +71,6 @@ html(lang="en")
                                 div.sb-nav-link-icon 
                                     i.fas.fa-tachometer-alt
                                     span  HOME 
-                            // a tag, div tag 형태로 구성됨. 계층 구조 형태가 아님
-                            // Pages tab                         
-                                a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#example" aria-expanded="false" aria-controls="collapsePages")
-                                    div.sb-nav-link-icon
-                                        i.fas.fa-book-open 
-                                        span  Pages                                
-                                    div.sb-sidenav-collapse-arrow
-                                        i.fas.fa-angle-down                            
-                                div.collapse(id="example" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion")
-                                    nav.sb-sidenav-menu-nested.nav.accordion(id="sidenavAccordionPages")
-                                        a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth") Authentication                                        
-                                            div.sb-sidenav-collapse-arrow
-                                                i.fas.fa-angle-down                                    
-                                        div.collapse(id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
-                                            nav.sb-sidenav-menu-nested.nav
-                                                a.nav-link(href="login.html") Login
-                                                a.nav-link(href="register.html") Register
-                                                a.nav-link(href="password.html") Forgot Password                                        
-                                        a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false") HOT                                    
-                                            div.sb-sidenav-collapse-arrow
-                                                i.fas.fa-angle-down                                    
-                                        #pagesCollapseError.collapse(aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages")
-                                            nav.sb-sidenav-menu-nested.nav
-                                                a.nav-link(href="401.html") BEST
-                                                a.nav-link(href="404.html") WORST
-                                                a.nav-link(href="500.html") 관심종목
 
                             a.nav-link.collapsed(href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapseLayouts")
                                 div.sb-nav-link-icon 

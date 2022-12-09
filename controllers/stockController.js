@@ -132,20 +132,23 @@ module.exports = {
         let loginString= loginSuccess ? "success" : "fail";
         console.log("Hello");
         
-        stockModel.getOnlyStockInfo(stock_code, (success, stockInfo) => {
+        stockModel.getOnlyStockInfo(stock_code, user_id, (success, stockInfo, userStockInfo) => {
+            console.log(userStockInfo);
+            console.log(stockInfo);
             if(success){
                 res.render('stock/stock_trade', {
                     title: 'FormanStock',
                     stockInfo: {
-                        stockCode: stockInfo.stock_code,
-                        companyName: stockInfo.company_name, 
-                        totalStockNum: stockInfo.total_stock_num, 
-                        companyInfo: stockInfo.company_info
+                        stockCode: stockInfo[0].stock_code,
+                        companyName: stockInfo[0].company_name, 
+                        totalStockNum: stockInfo[0].total_stock_num, 
+                        companyInfo: stockInfo[0].company_info
                     },
                     userInfo: {
                         login: loginString,
                         info: loginSuccess ? req.row : 'empty'
-                    }
+                    },
+                    userStockInfo: userStockInfo[0]
                 });
             }
             else{
@@ -165,13 +168,13 @@ module.exports = {
         console.log(`price: ${price}, num: ${num}`);
         //res.send('hello');
         console.log(`type check: ${typeof(num)}`);
-
+        // 매매완료시 원래 창으로 redirection
         stockModel.buyStock(user_id, stock_code, num, price, (success) => {
             if(success){
-                res.send("buy success");
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
             }
             else{
-                res.send("buy fail");
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
             }
         })
     },
@@ -187,10 +190,10 @@ module.exports = {
 
         stockModel.sellStock(user_id, stock_code, num, price, (success) => {
             if(success){
-                res.send("sell success");
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
             }
             else{
-                res.send("sell fail");
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
             }
         })
     }

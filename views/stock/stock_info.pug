@@ -56,108 +56,108 @@ block content
       text-align: center;
     }
 
-  .p-4.p-md-5.m-4.mb-2.border.border-5(style=`background-color: ${card_background_color};`)
-    .px-0
-      h1 증권정보
-      hr
-      .stock-info-block.d-flex
-        // bold체로 종목 정보를 보여준다.
-        strong.m-1.col-md-8 #{stockInfo.companyName}(#{stockInfo.stockCode})
-        // 좋아요 눌렀는지 여부로 하트 바뀐다.
-        // ms-auto: 양끝단에 배치되게 margin 부여
-        .m-1.ms-auto
-          // 좋아요 버튼을 누르면 /formanstock/stocks/:stock_code/like url로 POST request가 전달되어 DB에 좋아요가 반영되도록
-          // 꽉찬 하트일 때 버튼을 누르면 /formanstock/stocks/:stock_code/unlike로 POST request가 전달되어 DB에 좋아요 취소가 반영되도록
-          form(
-            action=`/formanstock/stocks/${stockInfo.stockCode}/${userInfo.like ? 'unlike' : 'like'}`, 
-            method="post"
+  .card.m-4.mb-2(style=`background-color: ${card_background_color};`)
+    .card-header.fs-2(style="background-color: #0D1117; color: white;") 증권정보
+    hr
+    .stock-info-block.d-flex
+      // bold체로 종목 정보를 보여준다.
+      strong.m-2.ms-4.col-md-8.fs-4 #{stockInfo.companyName}(#{stockInfo.stockCode})
+      // 좋아요 눌렀는지 여부로 하트 바뀐다.
+      // ms-auto: 양끝단에 배치되게 margin 부여
+      .m-2.ms-auto
+        // 좋아요 버튼을 누르면 /formanstock/stocks/:stock_code/like url로 POST request가 전달되어 DB에 좋아요가 반영되도록
+        // 꽉찬 하트일 때 버튼을 누르면 /formanstock/stocks/:stock_code/unlike로 POST request가 전달되어 DB에 좋아요 취소가 반영되도록
+        form(
+          action=`/formanstock/stocks/${stockInfo.stockCode}/${userInfo.like ? 'unlike' : 'like'}`, 
+          method="post"
+        )
+          // 로그인 안한 유저는 버튼 활성화 X
+          button.tooltip1.bi.btn#like-icon(
+            class= userInfo.like ? 'bi-heart-fill' : 'bi-heart',
+            type= `${userInfo.login == "success" ? 'submit' : 'button'}`
           )
-            // 로그인 안한 유저는 버튼 활성화 X
-            button.tooltip1.bi.btn#like-icon(
-              class= userInfo.like ? 'bi-heart-fill' : 'bi-heart',
-              type= `${userInfo.login == "success" ? 'submit' : 'button'}`
-            )
-              span.tooltip-text 좋아요
-            span.center-font= stockInfo.like
-        .m-1
-          form(
-            action=`/formanstock/stocks/${stockInfo.stockCode}/${userInfo.interest ? 'not-interest' : 'interest'}`, 
-            method = "post"
+            span.tooltip-text 좋아요
+          span.center-font= stockInfo.like
+      .m-2.me-4
+        form(
+          action=`/formanstock/stocks/${stockInfo.stockCode}/${userInfo.interest ? 'not-interest' : 'interest'}`, 
+          method = "post"
+        )
+          // 로그인 안한 유저는 버튼 활성화 X
+          button.tooltip1.bi.btn#interest-icon(
+            class= userInfo.interest ? "bi-bookmark-plus-fill" : "bi-bookmark-plus",
+            type= `${userInfo.login == "success" ? 'submit' : 'button'}`
           )
-            // 로그인 안한 유저는 버튼 활성화 X
-            button.tooltip1.bi.btn#interest-icon(
-              class= userInfo.interest ? "bi-bookmark-plus-fill" : "bi-bookmark-plus",
-              type= `${userInfo.login == "success" ? 'submit' : 'button'}`
-            )
-              span.tooltip-text 관심종목 추가
-            span.center-font= stockInfo.interest
+            span.tooltip-text 관심종목 추가
+          span.center-font= stockInfo.interest
 
-      hr
-      //////////// bootstrap tab을 이용한 주식 차트 탭 ///////////
-      ul.nav.nav-tabs.nav-tabs-bordered#mytab(role='tablist')
-        li.nav-item(role="presentation")
-            button.nav-link.active#char-all(data-bs-toggle='tab' data-bs-target='#chart-all' role='tab' aria-controls="chart-all" aria-selected="true") 전체
-        li.nav-item(role="presentation")
-            button.nav-link(data-bs-toggle='tab' data-bs-target='#chart-month' role='tab' aria-controls="chart-month" aria-selected="false") 1년
-        li.nav-item(role="presentation")
-            button.nav-link(data-bs-toggle='tab' data-bs-target='#chart-week' role='tab' aria-controls="chart-week" aria-selected="false") 3개월
-        li.nav-item(role="presentation")
-            button.nav-link(data-bs-toggle='tab' data-bs-target='#chart-day' role='tab' aria-controls="chart-day" aria-selected="false") 7일
-      
-      /////////////////// 탭의 content 정의 //////////////
-      .tab-content
-        // 전체 차트 조회
-        #chart-all.tab-pane.fade.show.active.chart-all(role="tabpanel" aria-labelledby="chart-all" tabindex="0")
-          .p-4 
-            canvas#myChart.col-md-12(style="background-color: transparent;")
-        // 월단위 차트 조회
-        #chart-month.tab-pane.fade.chart-month(role="tabpanel" aria-labelledby="chart-month" tabindex="0")
-          .p-4
-            canvas#MonthChart.col-md-12(style=`background-color: ${chart_background_color}`)
-        // 주단위 차트 조회
-        #chart-week.tab-pane.fade.chart-week(role="tabpanel" aria-labelledby="chart-week" tabindex="0")
-          .p-4
-            canvas#WeekChart.col-md-12(style=`background-color: ${chart_background_color}`)
-        // 일단위 차트 조회
-        #chart-day.tab-pane.fade.chart-day(role="tabpanel" aria-labelledby="chart-day" tabindex="0")
-          .p-4
-            canvas#DayChart.col-md-12(style=`background-color: ${chart_background_color}`)
+    hr
+    //////////// bootstrap tab을 이용한 주식 차트 탭 ///////////
+    ul.nav.nav-tabs.nav-tabs-bordered#mytab(role='tablist')
+      li.nav-item(role="presentation")
+          button.nav-link.active#char-all(data-bs-toggle='tab' data-bs-target='#chart-all' role='tab' aria-controls="chart-all" aria-selected="true") 전체
+      li.nav-item(role="presentation")
+          button.nav-link(data-bs-toggle='tab' data-bs-target='#chart-month' role='tab' aria-controls="chart-month" aria-selected="false") 1년
+      li.nav-item(role="presentation")
+          button.nav-link(data-bs-toggle='tab' data-bs-target='#chart-week' role='tab' aria-controls="chart-week" aria-selected="false") 3개월
+      li.nav-item(role="presentation")
+          button.nav-link(data-bs-toggle='tab' data-bs-target='#chart-day' role='tab' aria-controls="chart-day" aria-selected="false") 7일
+    
+    /////////////////// 탭의 content 정의 //////////////
+    .tab-content
+      // 전체 차트 조회
+      #chart-all.tab-pane.fade.show.active.chart-all(role="tabpanel" aria-labelledby="chart-all" tabindex="0")
+        .p-4 
+          canvas#myChart.col-md-12(style="background-color: transparent;")
+      // 월단위 차트 조회
+      #chart-month.tab-pane.fade.chart-month(role="tabpanel" aria-labelledby="chart-month" tabindex="0")
+        .p-4
+          canvas#MonthChart.col-md-12(style=`background-color: ${chart_background_color}`)
+      // 주단위 차트 조회
+      #chart-week.tab-pane.fade.chart-week(role="tabpanel" aria-labelledby="chart-week" tabindex="0")
+        .p-4
+          canvas#WeekChart.col-md-12(style=`background-color: ${chart_background_color}`)
+      // 일단위 차트 조회
+      #chart-day.tab-pane.fade.chart-day(role="tabpanel" aria-labelledby="chart-day" tabindex="0")
+        .p-4
+          canvas#DayChart.col-md-12(style=`background-color: ${chart_background_color}`)
 
-      .d-inline-flex
-        // 매매 화면으로 이동, template literal도 사용 가능하다.
-        a.btn.btn-outline-danger.btn-lg(role="button" href=`/formanstock/stocks/${stockInfo.stockCode}/trade`) Trade it!!
+    .d-inline-flex.m-2
+      .col-md-10
+      // 매매 화면으로 이동, template literal도 사용 가능하다.
+      a.btn.btn-outline-danger.btn-lg.col-md-2(role="button" href=`/formanstock/stocks/${stockInfo.stockCode}/trade`) Trade it!!
 
   .d-flex
     // me: maring-right
-    .p-4.p-md-5.m-4.me-2.border.border-5(style=`background-color: ${card_background_color};color: #212529!important;`)
+    .m-4.me-2(style=`background-color: ${card_background_color};color: #212529!important;`)
       // 해당 inline-block의 전체를 점유한다. (12칸)
-      .col-md-12.px-0
-        div
-          h3 종목 정보
-        hr
-        table
-          colgroup
-            // 전체 12그리드를 2:10 비율로 나눈다.
-            col.col-md-2
-            col.col-md-10
-          tbody 
-            tr 
-              td 종목명
-              td= stockInfo.companyName 
-            tr
-              td 종목코드
-              td= stockInfo.stockCode 
-            tr
-              td 기업개요
-              td= stockInfo.companyInfo 
-            tr
-              td 상장주식수
-              td= stockInfo.totalStockNum
+      .card.col-md-12.px-0
+        .card-header.fs-2(style="background-color: #0D1117; color: white;") 종목 정보
+        .card-body
+          table
+            colgroup
+              // 전체 12그리드를 2:10 비율로 나눈다.
+              col.col-md-2
+              col.col-md-10
+            tbody 
+              tr 
+                td 종목명
+                td= stockInfo.companyName 
+              tr
+                td 종목코드
+                td= stockInfo.stockCode 
+              tr
+                td 기업개요
+                td= stockInfo.companyInfo 
+              tr
+                td 상장주식수
+                td= stockInfo.totalStockNum
     // flex-fill로 남은 영역을 모두 차지하도록    
-    .p-2.p-md-4.m-4.border.border-5.flex-fill(style=`background-color: ${card_background_color};color: #212529!important;`)
-      .stock-info-container
-        a(href=`/formanstock/board/${stockInfo.stockCode}/posts`).font-weight-bold 종목토론방으로
-        hr
+    .card.m-4.flex-fill(style=`background-color: ${card_background_color};color: #212529!important;`)
+      .card-header.fs-2(style="background-color: #0D1117; color: white;")
+        a(href=`/formanstock/board/${stockInfo.stockCode}/posts` style="color: white; text-decoration: none;") 종목토론방으로
+      
+      .card-body
         table 
           colspan 
             // 4:2 비율로 칸을 나눠 가진다.
@@ -165,7 +165,7 @@ block content
             col.col-md-2
           tbody
             tr
-              td Comment
+              td Title
               td Date
             
             - const content_list = ['내일쯤은 상칠듯?', '지금 빼라', '내일은 갈듯?'];
@@ -176,7 +176,7 @@ block content
               tr 
                 td
                   // 종목 토론방 해당 게시글로 바로 이동 가능합니다.
-                  a(href="#")= content_list[i]
+                  a(href=`/formanstock/board/${stockInfo.stockCode}/posts`)= content_list[i]
                 td= date_list[i]
             - }
 
