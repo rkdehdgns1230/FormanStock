@@ -126,10 +126,6 @@ exports.reply_board=(req,res,next)=>{
     console.log(user_id)
     boardModel.reply_board(stock_code, post_no, user_id, Data, time, (rows)=>{
         console.log("rows:" + JSON.stringify(rows));
-        // res.render('/formanstock/board/'+ stock_code +'/posts' + post_no,{title:'게시물', rows:rows, user_id:user_id, userInfo: {
-        //     login: loginString,
-        //     info: loginSuccess ? req.row : 'empty'
-        // }});
         res.redirect('/formanstock/board/'+ stock_code +'/posts/' + post_no + '');
     });
 
