@@ -7,10 +7,10 @@ exports.getPage=(req, res, next) => {
     console.log('게시글 페이지');
     let loginSuccess = !(req.token === undefined);
     let loginString= loginSuccess ? "success" : "fail"; 
-
-    boardModel.getPosts(req.params.stock_code, (rows)=>{
+    stock_code = req.params.stock_code
+    boardModel.getPosts(stock_code, (rows)=>{
         console.log("rows:" + JSON.stringify(rows));
-        res.render('board',{title:'게시물', rows:rows, userInfo: {
+        res.render('board',{title:'게시물', rows:rows, stock_code:stock_code, userInfo: {
             login: loginString,
             info: loginSuccess ? req.row : 'empty'
         }});
