@@ -82,16 +82,4 @@ exports.ChangePW=(req, res, Data, callback)=>{
         }
     })
     
-exports.get_interests=(user_id, callback)=>{
-    console.log('여깄어요');
-    const sql = `select i.stock_code code, c.company_name name, c.company_info info
-    from interest_in i, company c
-    where i.stock_code = c.stock_code
-    and user_id = ${user_id};`;
-
-    connection.query(sql,(err,rows,fields)=>{
-        if(err) throw err;
-        callback(rows);
-    }); 
-} 
 }
