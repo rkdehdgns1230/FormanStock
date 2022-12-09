@@ -88,7 +88,7 @@ module.exports = {
     },
     // 해당 종목에 좋아요를 취소한 경우
     unlikeStock: (stock_code, user_id, cb) => {
-        const sql = 'delete from LIKE_STOCK where user_id = ? and stock_code = ?';
+        const sql = 'delete from LIKE_STOCK where user_id = ? and stock_code = ?;';
 
         connection.query(sql, [user_id, stock_code], (err, rows) => {
             if(err){
@@ -119,7 +119,7 @@ module.exports = {
     },
     // 관심 종목에서 제외
     deleteInterestStockList: (stock_code, user_id, cb) => {
-        const sql = 'delete from INTEREST_IN where user_id = ? and stock_code = ?';
+        const sql = 'delete from INTEREST_IN where user_id = ? and stock_code = ?;';
 
         connection.query(sql, [user_id, stock_code], (err, rows) => {
             if(err){
@@ -139,18 +139,23 @@ module.exports = {
         and s.stock_code = c.stock_code;
 
         select stock_code, stock_cnt from hold 
-        where user_id = ? and stock_code = ?;`;
+        where user_id = ? and stock_code = ?;
+        
+        select post_no, post_title, date_format(reg_date, '%Y-%m-%d %H:%i:%S') reg_date
+        from post
+        where stock_code = ? limit 10;
+        `;
 
-        let datas = [stock_code, user_id, stock_code];
+        let datas = [stock_code, user_id, stock_code, stock_code];
 
         connection.query(sql, datas, (err, rows) => {
             if(err){
                 console.log(err);
-                cb(false, {empty: 'none'}, {empty: 'none'});
+                cb(false, {empty: 'none'}, {empty: 'none'}, {empty: 'none'});
             }
             else{
                 //console.log(rows[0]);
-                cb(true, rows[0], rows[1]);
+                cb(true, rows[0], rows[1], rows[2]);
             }
             return;
         });
@@ -229,7 +234,7 @@ module.exports = {
 
         let date = new Date();
         // 두 개의 query에 들어갈 data list
-        let datas = [user_id, stock_code, num, stock_price, 'buy', date, 'y', user_id, stock_code];
+        let datas = [user_id, stock_code, num, stock_price, 'sell', date, 'y', user_id, stock_code];
         console.log("여기까지 돌아간다.");
 
         connection.query(sql, datas, (err, rows) => {

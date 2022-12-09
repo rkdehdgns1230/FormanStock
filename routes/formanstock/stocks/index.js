@@ -23,7 +23,7 @@ router.get('/:stock_code/trade',(req, res, next) => {
   const isLogin = req.token;
 
   if(isLogin === undefined){
-    res.redirect('/login');
+    res.redirect('/login-page');
   }
   // 로그인이 되어있다면, 거래창으로 이동 가능하다.
   next();

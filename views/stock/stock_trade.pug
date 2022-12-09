@@ -68,12 +68,12 @@ block content
                     th(scope="col") Title
                     th(scope="col") Date
                 tbody
-                  -for(let i = 1; i <= 10; i++){
+                  -for(let i = 0; i < postInfo.length; i++){
                   tr
-                    th= i
+                    th #{i+1}
                     th
-                      a(href="#" style="text-decoration: none; color: black") #{i}번 title
-                    th #{i}번 date
+                      a(href="#" style="text-decoration: none; color: black") #{postInfo[i].post_title}
+                    th #{postInfo[i].reg_date}
                   -}
         div.mb-3.d-flex.ms-5
           .input-group.input-group-lg.ms-4
@@ -93,7 +93,7 @@ block content
           .card
             .card-header.fs-4(style="background-color: #0D1117; color: white;") 내 보유 정보
             .p-4.
-              현재 #{userInfo.info.USER_ID}님이 보유하신 #{stockInfo.companyName}(#{userStockInfo.stock_code})의 주식은 총 #{userStockInfo.stock_cnt}주 입니다.
+              현재 #{userInfo.info.USER_ID}님이 보유하신 #{stockInfo.companyName}(#{stockInfo.stockCode})의 주식은 총 #{userStockInfo.stock_cnt}주 입니다.
         .right-box.flex-fill.d-flex.flex-column.p-2.col-md-4
           h5.text-white 매수 / 매도
           button.btn.btn-danger.m-1#buy-btn BUY
