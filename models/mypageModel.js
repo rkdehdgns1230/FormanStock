@@ -83,3 +83,20 @@ exports.ChangePW=(req, res, Data, callback)=>{
     })
     
 }
+
+exports.deleteInterestStockList=(stock_code, user_id, callback)=>{
+    const sql = 'delete from INTEREST_IN where user_id = ? and stock_code = ?';
+    console.log('Success')
+    connection.query(sql, [user_id, stock_code], (err, rows) => {
+        if(err){
+            console.log(err);
+            callback(false);
+        }
+        else{
+            
+            callback(true);
+        }
+        return;
+    })
+    
+}

@@ -86,8 +86,8 @@ block content
                                                                 i.fas.fa-check 
                                                             span.text 이동                       
                                                     td 
-                                                        form(action=`/formanstock/stocks/${row.stock_code}/not-interest/` method = "post")
-                                                            a.btn.btn-danger.btn-icon-split(type ="submit")
+                                                        form(action=`/formanstock/mypage/${row.stock_code}/not-interest` method = "post")
+                                                            button.btn.btn-danger.btn-icon-split(type ="submit")
                                                                 span.icon.text-white-50
                                                                     i.fas.fa-check 
                                                                 span.text 제거
