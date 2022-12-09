@@ -98,7 +98,7 @@ html(lang="en")
                                 nav.sb-sidenav-menu-nested.nav
                                     if (userInfo.login === "success")
                                         a.nav-link(href=`/logout`) 로그아웃
-                                        a.nav-link(href=`/mypage/${userInfo.info.USER_ID}`) 마이페이지
+                                        a.nav-link(href=`/formanstock/mypage/${userInfo.info.USER_ID}`) 마이페이지
                                     else
                                         a.nav-link(href='/login-page') 로그인
                                         a.nav-link(href="/signup-page") 회원가입

@@ -82,16 +82,21 @@ exports.ChangePW=(req, res, Data, callback)=>{
         }
     })
     
-exports.get_interests=(user_id, callback)=>{
-    console.log('여깄어요');
-    const sql = `select i.stock_code code, c.company_name name, c.company_info info
-    from interest_in i, company c
-    where i.stock_code = c.stock_code
-    and user_id = ${user_id};`;
+}
 
-    connection.query(sql,(err,rows,fields)=>{
-        if(err) throw err;
-        callback(rows);
-    }); 
-} 
+exports.deleteInterestStockList=(stock_code, user_id, callback)=>{
+    const sql = 'delete from INTEREST_IN where user_id = ? and stock_code = ?';
+    console.log('Success')
+    connection.query(sql, [user_id, stock_code], (err, rows) => {
+        if(err){
+            console.log(err);
+            callback(false);
+        }
+        else{
+            
+            callback(true);
+        }
+        return;
+    })
+    
 }
