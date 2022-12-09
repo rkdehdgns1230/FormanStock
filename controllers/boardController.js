@@ -1,6 +1,6 @@
 var boardModel = require('../models/boardModel');
 var express = require('express');
-// const dateUtils = require('date-utils');
+const dateUtils = require('date-utils');
 
 exports.getPage=(req, res, next) => {
     console.log(req.params.stock_code)
@@ -40,6 +40,7 @@ exports.write_board=(req, res, next) => {
     var newDate = new Date();
     var time = newDate.toFormat('YYYY-MM-DD');
     console.log(user_id)
+    
     boardModel.write_board(stock_code, user_id, Data, time, (rows)=>{
         console.log("rows:" + JSON.stringify(rows));
         res.redirect('/formanstock/board/'+ stock_code +'/posts');
@@ -91,7 +92,7 @@ exports.update_board=(req,res,next)=>{
     console.log(req.body)
     console.log('--------------------=-------------------------');
     console.log(req.params.stock_code);
-    console.log('게시글 작성');
+    console.log('게시글 수정');
     let loginSuccess = !(req.token === undefined);
     let loginString= loginSuccess ? "success" : "fail"; 
     Data = req.body;
@@ -104,6 +105,32 @@ exports.update_board=(req,res,next)=>{
     boardModel.update_board(stock_code, post_no, user_id, Data, time, (rows)=>{
         console.log("rows:" + JSON.stringify(rows));
         res.redirect('/formanstock/board/'+ stock_code +'/posts');
+    });
+
+}
+
+exports.reply_board=(req,res,next)=>{
+    console.log(JSON.stringify(req.body))
+    console.log('--------------------=-------------------------');
+    console.log(req.params.stock_code);
+    console.log('덧글 작성');
+    let loginSuccess = !(req.token === undefined);
+    let loginString= loginSuccess ? "success" : "fail"; 
+    Data = req.body;
+  
+    stock_code = req.params.stock_code
+    post_no = req.params.post_no
+    user_id = req.row.USER_ID;
+    var newDate = new Date();
+    var time = newDate.toFormat('YYYY-MM-DD');
+    console.log(user_id)
+    boardModel.reply_board(stock_code, post_no, user_id, Data, time, (rows)=>{
+        console.log("rows:" + JSON.stringify(rows));
+        // res.render('/formanstock/board/'+ stock_code +'/posts' + post_no,{title:'게시물', rows:rows, user_id:user_id, userInfo: {
+        //     login: loginString,
+        //     info: loginSuccess ? req.row : 'empty'
+        // }});
+        res.redirect('/formanstock/board/'+ stock_code +'/posts/' + post_no + '');
     });
 
 }

@@ -15,4 +15,5 @@ router.post('/:stock_code/posts/:post_no/removal', boardController.remove_board)
 router.get('/:stock_code/posts/:post_no/info', boardController.getUpdatepage)// 게시글 수정
 router.post('/:stock_code/posts/:post_no', boardController.update_board); // 게시글 수정
 
+router.post('/:stock_code/posts/:post_no/comment', boardController.reply_board);
 module.exports = router;
