@@ -37,41 +37,4 @@ module.exports={
         });      
     },
 
-    // user_suspend:function(req,res){
-    //     const user_id = req.params.user_id;        
-    //     manage_model.user_suspend(user_id,(num) =>{
-    //         console.log("rows:" + JSON.stringify(num));
-    //         res.redirect('/formanstock/manage/users');
-    //     });        
-    // },
-    // user_delete:function(req,res){
-    //     const user_id = req.params.user_id;        
-    //     manage_model.user_delete(user_id,(num) =>{
-    //         console.log("rows:" + JSON.stringify(num));
-    //         res.redirect('/formanstock/manage/users');
-    //     });        
-    // },
-    // suspended_user_delete:function(req,res){
-    //     const user_id = req.params.user_id;        
-    //     manage_model.user_delete(user_id,(num) =>{
-    //         console.log("rows:" + JSON.stringify(num));
-    //         res.redirect('/formanstock/manage/users-suspension');
-    //     });        
-    // },
-    // post_delete:function(req,res){
-    //     const stock_code = req.params.stock_code;        
-    //     const post_no = req.params.post_no;
-    //     manage_model.post_delete(post_no,(num) =>{
-    //         console.log("rows:" + JSON.stringify(num));
-    //         res.redirect('/formanstock/manage/board/'+ stock_code +'');
-    //     });        
-    // },
-    // comment_delete:function(req,res){
-    //     const comment_no = req.params.comment_no;                
-    //     manage_model.comment_delete(comment_no,(num) =>{
-    //         console.log("rows:" + JSON.stringify(num));
-    //         res.redirect('/formanstock/manage/board/comments');
-    //     });        
-    // },
-    
 }
