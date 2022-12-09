@@ -10,14 +10,14 @@ const saltRounds = 10
 
 exports.get_userINFO=(id, callback)=>{
     const sql = `
-    select s.stock_name, date_format(t.reg_date,'%Y-%m-%d') reg_date, t.trade_price, t.trade_stock_cnt, s.stock_code
-    from hold h, trade t, stock s
-    where h.stock_code = t.stock_code and h.user_id = t.user_id and s.stock_code = h.stock_code and h.user_id = ?;
+    select s.stock_name, h.stock_cnt, s.stock_code
+    from hold h, stock s
+    where s.stock_code = h.stock_code and h.user_id = ?;
 
     
     
     select
-    s.stock_name, p.open_price, p.close_price, p.high_price, p.low_price, p.trading_volume, s.stock_code
+    s.stock_name, p.open_price, p.close_price, p.high_price, p.low_price, p.trading_volume, s.stock_code, count(l.stock_code) AS LIKE_CNT
     from(
         select
             *
@@ -27,12 +27,18 @@ exports.get_userINFO=(id, callback)=>{
             from stock_price group by stock_code
         )
         order by stock_date desc
-    ) p, interest_in i, stock s
+    ) p, interest_in i LEFT JOIN like_stock l ON i.stock_code = l.stock_code, stock s
     where i.stock_code = s.stock_code and i.stock_code = p.stock_code and i.user_id = ?
     group by p.stock_code;
 
-    select user_id, user_passwd, user_real_name, age from USER where user_id = ?;`;
-    connection.query(sql, [id, id, id], (err,rows,fields)=>{
+    select user_id, user_passwd, user_real_name, age from USER where user_id = ?;
+    
+    select s.stock_name, date_format(t.reg_date,'%Y-%m-%d') reg_date, t.trade_price, t.trade_stock_cnt, t.trade_type, t.trade_yn, s.stock_code
+    from trade t, stock s
+    where s.stock_code = t.stock_code and t.user_id = ?;
+    
+    `;
+    connection.query(sql, [id, id, id, id], (err,rows,fields)=>{
         if(err) throw err;
         callback(rows);
     });
