@@ -6,9 +6,11 @@ html(lang="en")
         meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
         meta(name="description" content="")
         meta(name="author" content="")
-        title 포맨스톡
+        title FormanStock
         link(href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet")
         link(href="/css/styles.css" rel="stylesheet")
+        link(rel="shortcut icon" href="/assets/img/4.png")
+
         script(src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous")    
         //-조회
                 // Google Fonts
@@ -36,7 +38,9 @@ html(lang="en")
     body.sb-nav-fixed
         nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
             //- Navbar Brand
-            a.navbar-brand.ps-3(href="/formanstock") 포맨스톡
+            div.navbar-brand.ps-3
+                a(href="/formanstock" style="text-decoration: none; color:white;") FormanStock 
+                img(src="/assets/img/4_24.png")
             //- Sidebar Toggle
             button.btn.btn-link.btn-sm.order-1.order-lg-0.me-4.me-lg-0(id="sidebarToggle" href="#!")
                 i.fas.fa-bars

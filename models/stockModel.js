@@ -6,7 +6,6 @@ const connection = mysql.createConnection(dbInfo.mySQL_config);
 
 module.exports = {
     getSpecificStockInfo: (user_id, stock_code, cb) => {
-        // 두 개의 sql문 실행 결과를 조회하자.
         // 주식 종목의 정보를 조회하는 sql문
         // 해당 주식의 가격 정보를 조회하는 sql문 (주식 그래프를 그리기 위함)
         const sql = `
@@ -27,9 +26,11 @@ module.exports = {
         SELECT COUNT(*) interest_count FROM INTEREST_IN WHERE STOCK_CODE = ?;
 
         SELECT * FROM INTEREST_IN WHERE USER_ID = ? and STOCK_CODE = ?;
+
+        SELECT post_no, post_title, user_id, date_format(reg_date, '%Y-%m-%d') post_date FROM POST WHERE STOCK_CODE = ? limit 5;
         `;
         
-        connection.query(sql, [stock_code, stock_code, stock_code, user_id, stock_code, stock_code, user_id, stock_code], (err, rows) => {
+        connection.query(sql, [stock_code, stock_code, stock_code, user_id, stock_code, stock_code, user_id, stock_code, stock_code], (err, rows) => {
             // rows[0]: 종목 정보
             // rows[1]: 종목 가격 정보
             if(err){
@@ -37,7 +38,7 @@ module.exports = {
                 return;
             }
             // stockInfo, stockPriceInfo, likeCount, userLike, interestCount, userInterest
-            cb(rows[0], rows[1], rows[2][0], rows[3], rows[4][0], rows[5]);
+            cb(rows[0], rows[1], rows[2][0], rows[3], rows[4][0], rows[5], rows[6]);
             return;
         });
     },
@@ -183,12 +184,15 @@ module.exports = {
 
         connection.query(sql, datas, (err, rows) => {
             const update_sql = `update hold
-            set stock_cnt = stock_cnt + ?
+            set stock_cnt = stock_cnt + ?, total_trade_volume = total_trade_volume + ?
             where user_id=? and stock_code=?`;
 
             const insert_sql = `insert into hold
-            values(?, ?, ?, 0.0);`;
-            let insert_data = [stock_code, user_id, num];
+            values(?, ?, ?, 0.0, ?);`;
+            // 매수 수량과 총 매수 금액 정보를 갱신한다.
+            const trade_amount = stock_price * num;
+            // 종목코드, 총거래가격, 사용자아이디, 거래수량을 이용한다.
+            let insert_data = [stock_code, user_id, num, trade_amount];
             console.log(rows[1][0]);
             console.log(`rows[1].cnt: ${rows[1][0].cnt}`);
             if(err){
@@ -209,7 +213,7 @@ module.exports = {
                     });
                 }
                 else{
-                    connection.query(update_sql, [num, user_id, stock_code], (err, result) => {
+                    connection.query(update_sql, [num, trade_amount, user_id, stock_code], (err, result) => {
                         // update query 실행 결과를 반환
                         if(err){
                             console.log(err);
@@ -243,7 +247,7 @@ module.exports = {
 
         connection.query(sql, datas, (err, rows) => {
             const update_sql = `update hold
-            set stock_cnt = stock_cnt - ?
+            set stock_cnt = stock_cnt - ?, total_trade_volume = total_trade_volume + ?
             where user_id=? and stock_code=?`;
 
             const delete_sql = `delete from hold
@@ -270,7 +274,10 @@ module.exports = {
                     });
                 }
                 else{
-                    connection.query(update_sql, [num, user_id, stock_code], (err, result) => {
+                    // 보유 수량과 총 매수 금액 정보를 갱신한다.
+                    const trade_amount = stock_price * num;
+
+                    connection.query(update_sql, [num, trade_amount, user_id, stock_code], (err, result) => {
                         // update query 실행 결과를 반환
                         if(err){
                             console.log(err);

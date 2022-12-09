@@ -158,13 +158,15 @@ block content
         a(href=`/formanstock/board/${stockInfo.stockCode}/posts` style="color: white; text-decoration: none;") 종목토론방으로
       
       .card-body
-        table 
+        table.table
           colspan 
             // 4:2 비율로 칸을 나눠 가진다.
+            col.col-md-1
+            col.col-md-5
             col.col-md-4
-            col.col-md-2
           tbody
             tr
+              td #
               td Title
               td Date
             
@@ -172,12 +174,13 @@ block content
             - const date_list = ['11/22 14:30', '11/22 14:30', '11/22 14:30'];
             
             // 최근에 작성된 5개의 글을 간략하게 조회 가능하도록
-            - for(let i = 0; i < 3; i++){
-              tr 
+            - for(let i = 0; i < postList.length; i++){
+              tr
+                td= postList[i].post_no
                 td
                   // 종목 토론방 해당 게시글로 바로 이동 가능합니다.
-                  a(href=`/formanstock/board/${stockInfo.stockCode}/posts`)= content_list[i]
-                td= date_list[i]
+                  a(href=`/formanstock/board/${stockInfo.stockCode}/posts/${postList[i].post_no}`)= postList[i].post_title
+                td= postList[i].post_date
             - }
 
         // 종목토론방으로 갈 수 있는 link

@@ -82,7 +82,7 @@ block content
               input.form-control#price-form(type="number" name="trade_price" arai-label="Large" aria-description="inputGroup-sizing-sm" required)
 
           .input-group.input-group-lg.ms-4
-            select.form-select#inputGroupSelect04(aria-label="Example select with button" name="trade_amount")
+            select.form-select#inputGroupSelect04(aria-label="Example select with button" name="trade_amount" required)
               option(selected) 수량 선택
               - for(let i = 1; i <= 10; i++){
               option(value=`${i}`)= i
