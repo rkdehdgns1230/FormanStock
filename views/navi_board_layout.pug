@@ -114,7 +114,7 @@ html(lang="en")
                             div.collapse(id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion")
                                 nav.sb-sidenav-menu-nested.nav
 
-                                for stock in rows[1]
+                                for stock in rows[0]
                                     - const _url = `/formanstock/board/${stock.STOCK_CODE}/posts`;
                                     a.nav-link(href=_url) #{stock.STOCK_NAME} 
                                                                                                                 

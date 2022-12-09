@@ -28,7 +28,7 @@ exports.read_post=(post_no, callback)=>{
 
 exports.getPosts=(stock_code, callback)=>{
     console.log('in getPosts')
-    const sql = `SELECT POST_NO, POST_TITLE, POST_CONTENT, USER_ID, date_format(REG_DATE,'%Y-%m-%d') as REG_DATE, STOCK_CODE FROM POST WHERE DELETE_YN = 'n' AND STOCK_CODE = ?; SELECT * FROM STOCK;`;
+    const sql = `SELECT * FROM STOCK; SELECT POST_NO, POST_TITLE, POST_CONTENT, USER_ID, date_format(REG_DATE,'%Y-%m-%d') as REG_DATE, STOCK_CODE FROM POST WHERE DELETE_YN = 'n' AND STOCK_CODE = ?;`;
     var data = [stock_code]
     console.log('data:', data)
     connection.query(sql,data,(err, rows, fileds)=>{
