@@ -132,7 +132,7 @@ module.exports = {
         let loginString= loginSuccess ? "success" : "fail";
         console.log("Hello");
         
-        stockModel.getOnlyStockInfo(stock_code, user_id, (success, stockInfo, userStockInfo) => {
+        stockModel.getOnlyStockInfo(stock_code, user_id, (success, stockInfo, userStockInfo, postInfo) => {
             console.log(userStockInfo);
             console.log(stockInfo);
             if(success){
@@ -148,7 +148,10 @@ module.exports = {
                         login: loginString,
                         info: loginSuccess ? req.row : 'empty'
                     },
-                    userStockInfo: userStockInfo[0]
+                    userStockInfo: {
+                        stock_cnt: userStockInfo.length !== 0 ? userStockInfo[0].stock_cnt : 0
+                    },
+                    postInfo: postInfo
                 });
             }
             else{

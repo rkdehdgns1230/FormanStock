@@ -14,9 +14,9 @@ module.exports = {
         where s.stock_code = ?
         and s.stock_code = sp.stock_code;
         
-        SELECT post_no, post_title, user_id, date_format(reg_date, '%Y-%m-%d') post_date FROM POST;
+        SELECT post_no, post_title, user_id, date_format(reg_date, '%Y-%m-%d') post_date FROM POST limit 5;
 
-        select s.stock_code, s.stock_name, count(*) like_cnt from like_stock ls, stock s where ls.stock_code = s.stock_code group by stock_code order by like_cnt limit 5;
+        select s.stock_code, s.stock_name, count(*) like_cnt from like_stock ls, stock s where ls.stock_code = s.stock_code group by stock_code order by like_cnt desc limit 5;
         `
 
         connection.query(sql, [stock_code1, stock_code2], (err, rows) => {
