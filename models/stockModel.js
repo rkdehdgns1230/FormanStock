@@ -132,24 +132,29 @@ module.exports = {
             return;
         })
     },
-    getOnlyStockInfo: (stock_code, cb) => {
-        const sql = `select c.stock_code, c.company_name, c.total_stock_num, c.company_info
+    getOnlyStockInfo: (stock_code, user_id, cb) => {
+        let sql = `select c.stock_code, c.company_name, c.total_stock_num, c.company_info
         from stock s, company c 
         where s.stock_code = ?
-        and s.stock_code = c.stock_code;`;
-        
-        connection.query(sql, [stock_code], (err, rows) => {
+        and s.stock_code = c.stock_code;
+
+        select stock_code, stock_cnt from hold 
+        where user_id = ? and stock_code = ?;`;
+
+        let datas = [stock_code, user_id, stock_code];
+
+        connection.query(sql, datas, (err, rows) => {
             if(err){
                 console.log(err);
-                cb(false, {empty: 'none'});
+                cb(false, {empty: 'none'}, {empty: 'none'});
             }
             else{
                 //console.log(rows[0]);
-                cb(true, rows[0]);
+                cb(true, rows[0], rows[1]);
             }
             return;
         });
-    },
+    },  
     buyStock: (user_id, stock_code, num, stock_price, cb) => {
         // 어쩔수 없다 판매나 구매를 무한 수량이 가능하다는 가정하에 구현해야될 것 같다.
         // 이미 보유한 종목은 개수를 올려야 하고
