@@ -130,8 +130,8 @@ html(lang="en")
                         div.small #{userInfo.login === "fail" ? `Guest` : `${userInfo.info.USER_ID}`}
                         // 회원 정보에 따라 사용자 이름 표시되도록 수정해야 
                         span #{userInfo.login === "fail" ? "더 많은 서비스를 이용해보세요" : `환영합니다!!`}
-                        
-            div#layoutSidenav_content(style="background-color: #e2e2e2;")
+            -const backGroundColor = '#161B22';
+            div#layoutSidenav_content(style=`background-color: ${backGroundColor};`)
                 //- 여기에 본인들 넣을 프론트 템플릿 추가하면 댐
                 block content                    
                 footer.py-4.bg-light.mt-auto 

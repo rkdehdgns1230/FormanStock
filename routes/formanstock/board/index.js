@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 var boardController = require('../../../controllers/boardController')
 /* GET home page. */
-router.get('/:stock_code/posts', boardController.getPage);
+router.get('/:stock_code/posts', (req, res, next) => {
+    console.log("why??");
+    next();
+}, boardController.getPage);
 
 
 router.get('/:stock_code/posts/:post_no', boardController.read_post); // 게시글 조회

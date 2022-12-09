@@ -10,7 +10,7 @@ exports.getPage=(req, res, next) => {
     stock_code = req.params.stock_code
     boardModel.getPosts(stock_code, (rows)=>{
         console.log("rows:" + JSON.stringify(rows));
-        res.render('board',{title:'게시물', rows:rows, stock_code:stock_code, userInfo: {
+        res.render('board',{title:'게시물', rows:rows, userInfo: {
             login: loginString,
             info: loginSuccess ? req.row : 'empty'
         }});

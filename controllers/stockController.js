@@ -7,7 +7,7 @@ module.exports = {
         const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
         
 
-        stockModel.getSpecificStockInfo(user_id, stock_code, (stockInfo, stockPriceInfo, likeCount, userLike, interestCount, userInterest) => {
+        stockModel.getSpecificStockInfo(user_id, stock_code, (stockInfo, stockPriceInfo, likeCount, userLike, interestCount, userInterest, postList) => {
             //res.send([stockInfo, stockPriceInfo]);
             // stock_info template과 data를 결합해 rendering한다.
             //console.log(stockPriceInfo[0].close_price);
@@ -44,7 +44,8 @@ module.exports = {
                     info: loginSuccess ? req.row : 'empty'
                 },
                 stockDateList: dateList,
-                stockClosePriceList: closePriceList
+                stockClosePriceList: closePriceList,
+                postList: postList
             });
         });
     },
@@ -132,20 +133,28 @@ module.exports = {
         let loginString= loginSuccess ? "success" : "fail";
         console.log("Hello");
         
-        stockModel.getOnlyStockInfo(stock_code, (success, stockInfo) => {
+        stockModel.getOnlyStockInfo(stock_code, user_id, (success, stockInfo, userStockInfo, postInfo, recentPriceInfo) => {
+            console.log(userStockInfo);
+            console.log(stockInfo);
+            console.log(recentPriceInfo);
             if(success){
                 res.render('stock/stock_trade', {
                     title: 'FormanStock',
                     stockInfo: {
-                        stockCode: stockInfo.stock_code,
-                        companyName: stockInfo.company_name, 
-                        totalStockNum: stockInfo.total_stock_num, 
-                        companyInfo: stockInfo.company_info
+                        stockCode: stockInfo[0].stock_code,
+                        companyName: stockInfo[0].company_name, 
+                        totalStockNum: stockInfo[0].total_stock_num, 
+                        companyInfo: stockInfo[0].company_info
                     },
                     userInfo: {
                         login: loginString,
                         info: loginSuccess ? req.row : 'empty'
-                    }
+                    },
+                    userStockInfo: {
+                        stock_cnt: userStockInfo.length !== 0 ? userStockInfo[0].stock_cnt : 0
+                    },
+                    postInfo: postInfo,
+                    standardPrice: recentPriceInfo[0]
                 });
             }
             else{
@@ -165,13 +174,13 @@ module.exports = {
         console.log(`price: ${price}, num: ${num}`);
         //res.send('hello');
         console.log(`type check: ${typeof(num)}`);
-
+        // 매매완료시 원래 창으로 redirection
         stockModel.buyStock(user_id, stock_code, num, price, (success) => {
             if(success){
-                res.send("buy success");
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
             }
             else{
-                res.send("buy fail");
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
             }
         })
     },
@@ -187,10 +196,10 @@ module.exports = {
 
         stockModel.sellStock(user_id, stock_code, num, price, (success) => {
             if(success){
-                res.send("sell success");
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
             }
             else{
-                res.send("sell fail");
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
             }
         })
     }

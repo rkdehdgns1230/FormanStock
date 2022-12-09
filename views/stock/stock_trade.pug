@@ -3,19 +3,18 @@ extends ../navi_layout
 block content 
   style.
     .price-container{
-      background-color: white;
+      border: 3px solid white;
     }
     .price-container:hover{
-      background-color: #F3EFE0;
+      border: 3px solid black;
     }
   // 기준 가격은 최신 데이터를 기반으로 가져오도록 구현한다.
-  - const default_price = 10000;
+  - const default_price = standardPrice.CLOSE_PRICE;
   - const price_gap = default_price / 100;
   // 템플릿 틀 디자인 완료
   .whole-box.m-4.d-flex.flex-fill.flex-row
-    .left-box.flex-fill.m-2.p-2.border.border-secondary.rounded(style="background-color: white;")
-      h3.p-3 매매가
-      div.p-3 클릭해서 매매가 선택이 가능해요!!
+    .left-box.flex-fill.m-2.card.mb-4(style="background-color: white;")
+      .card-header.fs-3(style="background-color: #0D1117; color: white;") 매매가
       // 마커를 지운 리스트를 사용한다.
       ul.p-1(style="list-style-type: none;")
         // 매수 or 매도는 색깔로 구분한다.
@@ -23,51 +22,59 @@ block content
         // 가격대에 따른 버튼은 모두 존재하되, 매수 or 매도 대상인
         // 주식의 개수가 버튼 내부에 표현되도록 구현한다.
         - for(let i = 0; i < 10; i++){
-          li.border.border-danger.m-2.text-center.price-container.rounded(style="color: red;")
-            button.p-1.price-box.btn.btn-link(style="text-decoration: none; color: red;") #{default_price + price_gap * (10 - i)}
+          li.m-2.text-center.price-container.rounded(style="color: white; background-color: #DA3F3A")
+            button.p-1.price-box.btn.btn-link(style="text-decoration: none; color: white") #{default_price + price_gap * (10 - i)}
             span.align-middle (+#{10 - i}%)
         - }
-        li.border.border-secondary.m-2.text-center.price-container.rounded
+        li.m-2.text-center.price-container.rounded
          button.p-1.price-box.btn.btn-link(style="text-decoration: none; color: black;") #{default_price}
          span.align-middle ( 0%)
         - for(let i = 1; i <= 10; i++){
-          li.border.border-primary.m-2.text-center.price-container.rounded(style="color: blue;")
-            button.p-1.price-box.btn.btn-link(style="text-decoration: none; color: blue;") #{default_price - price_gap * i}
+          li.m-2.text-center.price-container.rounded(style="color: white; background-color: #0170A8")
+            button.p-1.price-box.btn.btn-link(style="text-decoration: none; color: white;") #{default_price - price_gap * i}
             span.align-middle (-#{i}%)
         - }
 
-    .right-box.d-flex.flex-column.flex-fill.m-2.border
+    .right-box.d-flex.flex-column.flex-fill.m-2
       // 매수 매도 행동에 따라 다른 action에 대한 처리가 필요하다.
       form.upper-box.flex-fill(action='', method="post" name="trade_form")
         .card.mb-4
+          .card-header.fs-3(style="background-color: #0D1117; color: white;") #{stockInfo.companyName} (#{stockInfo.stockCode}) 
           .card-body
-            h5.card-title #{stockInfo.companyName}
-            h6.card-subtitle.my-1 (#{stockInfo.stockCode}) 
             p.card-text #{stockInfo.companyInfo}
         // 가격 정보 입력하는 input 창
-        .card.mb-4.p-4
-          .content-title.d-inline-flex
-            i.fa-regular.fa-circle-check(style="font-size:30px;")
-            h3.ms-2 모의 거래시 다음 내용을 참고하세요! 
-          ul
-            li 매수 or 매도는 +10%에서 -10% 사이의 가격으로 가능합니다.
-            li 가격 단위는 현재 기준가격의 1%단위로 결정됩니다.
-            li 기준 가격은 최신일자의 시가로 정해집니다.
-            li 매매를 하기 위해서는 다른 주주가 매물을 등록한 경우만 가능합니다.
-            li 주식이 거래되는 순서는 먼저 등록된 매물순으로 정해집니다.
-            li 매도하는 매물이 있는 경우 바로 매수가 가능합니다.
-            li 매도하는 매물이 없는 경우 매수 요청 등록이 가능합니다.
-            li 매수 요청은 해당 가격에 매도하는 매물이 없는 경우 등록할 수 있습니다.
-        
-        
-        .card.mb-4.p-4 
-          .left-box.flex-fill.p-2
-            h3 종목토론방
-            ul
-              -for(let i = 1; i <= 10; i++){
-              li
-                a(href="#") #{i}번 게시글
-              -}
+        .card.mb-4
+          .content-title
+            .card-header.fs-3(style="background-color: #0D1117; color: white;")
+              i.fa-regular.fa-circle-check
+              span.ms-2 모의 거래시 다음 내용을 참고하세요!
+            .card-body 
+              ul
+                li 매수 or 매도는 +10%에서 -10% 사이의 가격으로 가능합니다.
+                li 가격 단위는 현재 기준가격의 1%단위로 결정됩니다.
+                li 기준 가격은 최신일자의 시가로 정해집니다.
+                li 매도하는 매물이 있는 경우 바로 매수가 가능합니다.
+          
+        .card.mb-4 
+          .left-box.flex-fill
+            .card-header.fs-3(style="background-color: #0D1117; color: white;")
+              i.fas.fa-regular.fa-comments
+              span  종목토론방
+            .card-body
+              table.table.table-hover
+                thead 
+                  tr 
+                    th(scope="col") #
+                    th(scope="col") Title
+                    th(scope="col") Date
+                tbody
+                  -for(let i = 0; i < postInfo.length; i++){
+                  tr
+                    th #{i+1}
+                    th
+                      a(href="#" style="text-decoration: none; color: black") #{postInfo[i].post_title}
+                    th #{postInfo[i].reg_date}
+                  -}
         div.mb-3.d-flex.ms-5
           .input-group.input-group-lg.ms-4
             .input-group.prepend
@@ -75,18 +82,20 @@ block content
               input.form-control#price-form(type="number" name="trade_price" arai-label="Large" aria-description="inputGroup-sizing-sm" required)
 
           .input-group.input-group-lg.ms-4
-            select.form-select#inputGroupSelect04(aria-label="Example select with button" name="trade_amount")
+            select.form-select#inputGroupSelect04(aria-label="Example select with button" name="trade_amount" required)
               option(selected) 수량 선택
               - for(let i = 1; i <= 10; i++){
               option(value=`${i}`)= i
               -}
         
-      .lower-box.d-flex.border
-        .left-box.flex-fill.border.col-md-8
-          .card.p-4
-            h3 여기에 내 소유 정보가 담긴다.
-        .right-box.flex-fill.d-flex.flex-column.p-2.border.col-md-4
-          h5 버튼을 눌러 매수 혹은 매도가 가능합니다!
+      .lower-box.d-flex
+        .left-box.flex-fill.col-md-8
+          .card
+            .card-header.fs-4(style="background-color: #0D1117; color: white;") 내 보유 정보
+            .p-4.
+              현재 #{userInfo.info.USER_ID}님이 보유하신 #{stockInfo.companyName}(#{stockInfo.stockCode})의 주식은 총 #{userStockInfo.stock_cnt}주 입니다.
+        .right-box.flex-fill.d-flex.flex-column.p-2.col-md-4
+          h5.text-white 매수 / 매도
           button.btn.btn-danger.m-1#buy-btn BUY
           button.btn.btn-primary.m-1#sell-btn SELL
 

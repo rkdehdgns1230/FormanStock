@@ -6,7 +6,6 @@ const connection = mysql.createConnection(dbInfo.mySQL_config);
 
 module.exports = {
     getSpecificStockInfo: (user_id, stock_code, cb) => {
-        // 두 개의 sql문 실행 결과를 조회하자.
         // 주식 종목의 정보를 조회하는 sql문
         // 해당 주식의 가격 정보를 조회하는 sql문 (주식 그래프를 그리기 위함)
         const sql = `
@@ -27,9 +26,11 @@ module.exports = {
         SELECT COUNT(*) interest_count FROM INTEREST_IN WHERE STOCK_CODE = ?;
 
         SELECT * FROM INTEREST_IN WHERE USER_ID = ? and STOCK_CODE = ?;
+
+        SELECT post_no, post_title, user_id, date_format(reg_date, '%Y-%m-%d') post_date FROM POST WHERE STOCK_CODE = ? limit 5;
         `;
         
-        connection.query(sql, [stock_code, stock_code, stock_code, user_id, stock_code, stock_code, user_id, stock_code], (err, rows) => {
+        connection.query(sql, [stock_code, stock_code, stock_code, user_id, stock_code, stock_code, user_id, stock_code, stock_code], (err, rows) => {
             // rows[0]: 종목 정보
             // rows[1]: 종목 가격 정보
             if(err){
@@ -37,7 +38,7 @@ module.exports = {
                 return;
             }
             // stockInfo, stockPriceInfo, likeCount, userLike, interestCount, userInterest
-            cb(rows[0], rows[1], rows[2][0], rows[3], rows[4][0], rows[5]);
+            cb(rows[0], rows[1], rows[2][0], rows[3], rows[4][0], rows[5], rows[6]);
             return;
         });
     },
@@ -88,7 +89,7 @@ module.exports = {
     },
     // 해당 종목에 좋아요를 취소한 경우
     unlikeStock: (stock_code, user_id, cb) => {
-        const sql = 'delete from LIKE_STOCK where user_id = ? and stock_code = ?';
+        const sql = 'delete from LIKE_STOCK where user_id = ? and stock_code = ?;';
 
         connection.query(sql, [user_id, stock_code], (err, rows) => {
             if(err){
@@ -119,7 +120,7 @@ module.exports = {
     },
     // 관심 종목에서 제외
     deleteInterestStockList: (stock_code, user_id, cb) => {
-        const sql = 'delete from INTEREST_IN where user_id = ? and stock_code = ?';
+        const sql = 'delete from INTEREST_IN where user_id = ? and stock_code = ?;';
 
         connection.query(sql, [user_id, stock_code], (err, rows) => {
             if(err){
@@ -132,24 +133,38 @@ module.exports = {
             return;
         })
     },
-    getOnlyStockInfo: (stock_code, cb) => {
-        const sql = `select c.stock_code, c.company_name, c.total_stock_num, c.company_info
+    getOnlyStockInfo: (stock_code, user_id, cb) => {
+        let sql = `select c.stock_code, c.company_name, c.total_stock_num, c.company_info
         from stock s, company c 
         where s.stock_code = ?
-        and s.stock_code = c.stock_code;`;
+        and s.stock_code = c.stock_code;
+
+        select stock_code, stock_cnt from hold 
+        where user_id = ? and stock_code = ?;
         
-        connection.query(sql, [stock_code], (err, rows) => {
+        select post_no, post_title, date_format(reg_date, '%Y-%m-%d %H:%i:%S') reg_date
+        from post
+        where stock_code = ? limit 10;
+
+        select * from stock_price
+        where stock_code = ?
+        order by stock_date desc limit 1;
+        `;
+
+        let datas = [stock_code, user_id, stock_code, stock_code, stock_code];
+
+        connection.query(sql, datas, (err, rows) => {
             if(err){
                 console.log(err);
-                cb(false, {empty: 'none'});
+                cb(false, {empty: 'none'}, {empty: 'none'}, {empty: 'none'});
             }
             else{
                 //console.log(rows[0]);
-                cb(true, rows[0]);
+                cb(true, rows[0], rows[1], rows[2], rows[3]);
             }
             return;
         });
-    },
+    },  
     buyStock: (user_id, stock_code, num, stock_price, cb) => {
         // 어쩔수 없다 판매나 구매를 무한 수량이 가능하다는 가정하에 구현해야될 것 같다.
         // 이미 보유한 종목은 개수를 올려야 하고
@@ -169,12 +184,15 @@ module.exports = {
 
         connection.query(sql, datas, (err, rows) => {
             const update_sql = `update hold
-            set stock_cnt = stock_cnt + ?
+            set stock_cnt = stock_cnt + ?, total_trade_volume = total_trade_volume + ?
             where user_id=? and stock_code=?`;
 
             const insert_sql = `insert into hold
-            values(?, ?, ?, 0.0);`;
-            let insert_data = [stock_code, user_id, num];
+            values(?, ?, ?, 0.0, ?);`;
+            // 매수 수량과 총 매수 금액 정보를 갱신한다.
+            const trade_amount = stock_price * num;
+            // 종목코드, 총거래가격, 사용자아이디, 거래수량을 이용한다.
+            let insert_data = [stock_code, user_id, num, trade_amount];
             console.log(rows[1][0]);
             console.log(`rows[1].cnt: ${rows[1][0].cnt}`);
             if(err){
@@ -195,7 +213,7 @@ module.exports = {
                     });
                 }
                 else{
-                    connection.query(update_sql, [num, user_id, stock_code], (err, result) => {
+                    connection.query(update_sql, [num, trade_amount, user_id, stock_code], (err, result) => {
                         // update query 실행 결과를 반환
                         if(err){
                             console.log(err);
@@ -224,12 +242,12 @@ module.exports = {
 
         let date = new Date();
         // 두 개의 query에 들어갈 data list
-        let datas = [user_id, stock_code, num, stock_price, 'buy', date, 'y', user_id, stock_code];
+        let datas = [user_id, stock_code, num, stock_price, 'sell', date, 'y', user_id, stock_code];
         console.log("여기까지 돌아간다.");
 
         connection.query(sql, datas, (err, rows) => {
             const update_sql = `update hold
-            set stock_cnt = stock_cnt - ?
+            set stock_cnt = stock_cnt - ?, total_trade_volume = total_trade_volume + ?
             where user_id=? and stock_code=?`;
 
             const delete_sql = `delete from hold
@@ -256,7 +274,10 @@ module.exports = {
                     });
                 }
                 else{
-                    connection.query(update_sql, [num, user_id, stock_code], (err, result) => {
+                    // 보유 수량과 총 매수 금액 정보를 갱신한다.
+                    const trade_amount = stock_price * num;
+
+                    connection.query(update_sql, [num, trade_amount, user_id, stock_code], (err, result) => {
                         // update query 실행 결과를 반환
                         if(err){
                             console.log(err);
