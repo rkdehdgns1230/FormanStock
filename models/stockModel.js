@@ -144,9 +144,13 @@ module.exports = {
         select post_no, post_title, date_format(reg_date, '%Y-%m-%d %H:%i:%S') reg_date
         from post
         where stock_code = ? limit 10;
+
+        select * from stock_price
+        where stock_code = ?
+        order by stock_date desc limit 1;
         `;
 
-        let datas = [stock_code, user_id, stock_code, stock_code];
+        let datas = [stock_code, user_id, stock_code, stock_code, stock_code];
 
         connection.query(sql, datas, (err, rows) => {
             if(err){
@@ -155,7 +159,7 @@ module.exports = {
             }
             else{
                 //console.log(rows[0]);
-                cb(true, rows[0], rows[1], rows[2]);
+                cb(true, rows[0], rows[1], rows[2], rows[3]);
             }
             return;
         });

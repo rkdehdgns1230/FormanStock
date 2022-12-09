@@ -9,7 +9,7 @@ block content
       border: 3px solid black;
     }
   // 기준 가격은 최신 데이터를 기반으로 가져오도록 구현한다.
-  - const default_price = 10000;
+  - const default_price = standardPrice.CLOSE_PRICE;
   - const price_gap = default_price / 100;
   // 템플릿 틀 디자인 완료
   .whole-box.m-4.d-flex.flex-fill.flex-row
