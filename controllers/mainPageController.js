@@ -32,7 +32,7 @@ module.exports = {
                 dateList2.push(stockList2[i].stock_date);
             }
             console.log(postList[0]);
-            console.log(mostLikedStock[0].stock_code);
+            //console.log(mostLikedStock[0].stock_code);
             res.render('index', {
                 title: 'FormanStock',
                 welcome_comment: "KOSPI 주식 종목 거래와 종목 토론 서비스를 이용해 보세요!!",

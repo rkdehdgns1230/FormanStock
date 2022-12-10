@@ -193,8 +193,8 @@ module.exports = {
             const trade_amount = stock_price * num;
             // 종목코드, 총거래가격, 사용자아이디, 거래수량을 이용한다.
             let insert_data = [stock_code, user_id, num, trade_amount];
-            console.log(rows[1][0]);
-            console.log(`rows[1].cnt: ${rows[1][0].cnt}`);
+            //console.log(rows[1][0]);
+            //console.log(`rows[1].cnt: ${rows[1][0].cnt}`);
             if(err){
                 console.log(err);
                 return;
