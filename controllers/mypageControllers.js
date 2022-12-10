@@ -9,7 +9,7 @@ module.exports={
         const user_id = req.row.USER_ID;   
         console.log("id:" + JSON.stringify(user_id));
         mypage_model.get_userINFO(user_id,(rows) =>{
-            console.log("rows:" + JSON.stringify(rows));
+            //console.log("rows:" + JSON.stringify(rows));
             res.render('mypage/index',
                 {title:'FormanStock', 
                 rows:rows, 

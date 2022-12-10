@@ -24,15 +24,15 @@ block content
         - for(let i = 0; i < 10; i++){
           li.m-2.text-center.price-container.rounded(style="color: white; background-color: #DA3F3A")
             button.p-1.price-box.btn.btn-link(style="text-decoration: none; color: white") #{default_price + price_gap * (10 - i)}
-            span.align-middle (+#{10 - i}%)
+            span.align-middle KRW (+#{10 - i}%)
         - }
         li.m-2.text-center.price-container.rounded
          button.p-1.price-box.btn.btn-link(style="text-decoration: none; color: black;") #{default_price}
-         span.align-middle ( 0%)
+         span.align-middle KRW ( 0%)
         - for(let i = 1; i <= 10; i++){
           li.m-2.text-center.price-container.rounded(style="color: white; background-color: #0170A8")
             button.p-1.price-box.btn.btn-link(style="text-decoration: none; color: white;") #{default_price - price_gap * i}
-            span.align-middle (-#{i}%)
+            span.align-middle KRW (-#{i}%)
         - }
 
     .right-box.d-flex.flex-column.flex-fill.m-2

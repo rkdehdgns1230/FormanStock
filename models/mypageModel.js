@@ -10,7 +10,7 @@ const saltRounds = 10
 
 exports.get_userINFO=(id, callback)=>{
     const sql = `
-    select s.stock_name, h.stock_cnt, s.stock_code
+    select s.stock_name, h.stock_cnt, s.stock_code, h.total_trade_volume
     from hold h, stock s
     where s.stock_code = h.stock_code and h.user_id = ?;
 

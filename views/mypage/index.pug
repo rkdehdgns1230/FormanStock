@@ -37,13 +37,17 @@ block content
                                             thead
                                                 tr 
                                                 th 이름
+                                                th 종목 코드
+                                                th 평균 매수 금액
                                                 th 보유량                   
                                                 th 매매
                                             tbody            
                                                 for row in rows[0]                                     
                                                     tr 
                                                     td #{row.stock_name}
-                                                    td #{row.stock_cnt}                             
+                                                    td #{row.stock_code}
+                                                    td #{row.total_trade_volume / row.stock_cnt}KRW
+                                                    td #{row.stock_cnt}주                       
                                                     td 
                                                         a.btn.btn-primary.btn-icon-split(href=`/formanstock/stocks/${row.stock_code}`)
                                                             span.icon.text-white-50
@@ -72,8 +76,8 @@ block content
                                                     tr 
                                                     td #{row.stock_name}
                                                     td #{row.reg_date}
-                                                    td #{row.trade_price}     
-                                                    td #{row.trade_stock_cnt}       
+                                                    td #{row.trade_price}KRW     
+                                                    td #{row.trade_stock_cnt}주    
                                                     td #{row.trade_type}     
                                                     td #{row.trade_yn}                        
                                                     td 
@@ -105,10 +109,10 @@ block content
                                                 for row in rows[1]                                     
                                                     tr 
                                                     td #{row.stock_name}
-                                                    td #{row.OPEN_PRICE}
-                                                    td #{row.CLOSE_PRICE} 
-                                                    td #{row.HIGH_PRICE}
-                                                    td #{row.LOW_PRICE}        
+                                                    td #{row.OPEN_PRICE}KRW
+                                                    td #{row.CLOSE_PRICE}KRW 
+                                                    td #{row.HIGH_PRICE}KRW
+                                                    td #{row.LOW_PRICE}KRW      
                                                     td #{row.TRADING_VOLUME}  
                                                     td #{row.LIKE_CNT}                             
                                                     td 

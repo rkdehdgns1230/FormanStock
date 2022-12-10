@@ -21,7 +21,11 @@ module.exports = {
             console.log("rows : "+JSON.stringify(rows));
 
             if (rows.length === 0) {
-                console.log('해당하는 이메일 없음!')
+                console.log('해당하는 이메일 없음!');
+                // 빈 객체와 로그인 실패를 알리는 false를 반한
+                callback({empty: ""}, false);
+                // 여기서 비동기 함수를 종료한다.
+                return;
             }
             
             bcrypt.compare(member_password, rows[0].USER_PASSWD, function (err, isMatch) {
@@ -36,8 +40,9 @@ module.exports = {
                 var sqlForUpdateMember = `Update user SET TOKEN=? WHERE USER_ID=?;`                                      ;
                 connection.query(sqlForUpdateMember, data, function (err, result) {                 
                     if (err) console.error("login_token_update_err: ", err);
-                    res.cookie("x_auth", token);             
-                    callback(rows[0]);              
+                    res.cookie("x_auth", token);  
+                    // 유저 정보 객체와 로그인 성공 정보를 전달한다.           
+                    callback(rows[0], true);              
                 });
                 //res.redirect('/') //-> board로 redirect
                 //connection.release();
