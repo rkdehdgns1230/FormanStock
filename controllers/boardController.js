@@ -9,8 +9,8 @@ exports.getPage=(req, res, next) => {
     let loginString= loginSuccess ? "success" : "fail"; 
     stock_code = req.params.stock_code
     boardModel.getPosts(stock_code, (rows)=>{
-        console.log("rows:" + JSON.stringify(rows));
-        res.render('board',{title:'게시물', rows:rows, userInfo: {
+        //console.log("rows[2]:" + JSON.stringify(rows[1]));
+        res.render('board',{title: rows[2][0].stock_name, rows:rows, userInfo: {
             login: loginString,
             info: loginSuccess ? req.row : 'empty'
         }});
@@ -53,7 +53,7 @@ exports.read_post=(req, res, next) => {
     let loginSuccess = !(req.token === undefined);
     let loginString= loginSuccess ? "success" : "fail"; 
     post_no = req.params.post_no;
-    user_id = req.row.user_id;
+    user_id = req.row.user_id; 
     boardModel.read_post(post_no, (rows)=>{
         console.log("rows:" + JSON.stringify(rows));
         res.render('board/post',{title:'게시물', rows:rows, user_id:user_id, userInfo: {

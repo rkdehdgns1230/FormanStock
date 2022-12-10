@@ -23,7 +23,8 @@ exports.getList_board=(stock_code,callback)=>{
 exports.getlist_users=(callback)=>{
     const sql = `select * from user
                  where suspension_yn = 'n' 
-                 and delete_yn = 'n'; select * from stock;`;
+                 and delete_yn = 'n'
+                 and authority = 'user'; select * from stock;`;
 
     connection.query(sql,(err,rows,fields)=>{
         if(err) throw err;

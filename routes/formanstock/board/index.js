@@ -5,7 +5,7 @@ var boardController = require('../../../controllers/boardController')
 router.get('/:stock_code/posts', (req, res, next) => {
     console.log("why??");
     next();
-}, boardController.getPage);
+}, boardController.getPage); 
 
 
 router.get('/:stock_code/posts/:post_no', boardController.read_post); // 게시글 조회

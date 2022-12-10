@@ -18,7 +18,7 @@ exports.read_post=(post_no, callback)=>{
     select comment_no, post_no, user_id, comment_content, date_format(reg_date,'%Y-%m-%d') reg_date 
     from comment
     where post_no = ? and delete_yn = 'n'; 
-    `;
+    `; 
 
     connection.query(sql,[post_no,post_no],(err,rows,fields)=>{
         if(err) throw err;
@@ -28,12 +28,13 @@ exports.read_post=(post_no, callback)=>{
 
 exports.getPosts=(stock_code, callback)=>{
     console.log('in getPosts')
-    const sql = `SELECT * FROM STOCK; SELECT POST_NO, POST_TITLE, POST_CONTENT, USER_ID, date_format(REG_DATE,'%Y-%m-%d') as REG_DATE, STOCK_CODE FROM POST WHERE DELETE_YN = 'n' AND STOCK_CODE = ?;`;
-    var data = [stock_code]
+    const sql = `SELECT * FROM STOCK; SELECT POST_NO, POST_TITLE, POST_CONTENT, USER_ID, date_format(REG_DATE,'%Y-%m-%d') as REG_DATE, STOCK_CODE FROM POST WHERE DELETE_YN = 'n' AND STOCK_CODE = ?;
+    select stock_name from stock where stock_code =?`;
+    var data = [stock_code, stock_code]
     console.log('data:', data)
     connection.query(sql,data,(err, rows, fileds)=>{
         if(err) throw err;
-        console.log(rows)
+        console.log(rows[2][0].stock_name)
         callback(rows)
     });
 }
