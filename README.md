@@ -26,3 +26,19 @@
 "nodemon": "^2.0.20",
 "pug": "2.0.0-beta11"
 ```
+
+## ERD
+
+## URI mapping table
+
+**회원 서비스**  
+![image](https://user-images.githubusercontent.com/68600592/206827274-0c7dbb4c-8c00-4eb1-b00c-a6641f0fb769.png)
+
+**사용자 서비스**  
+![image](https://user-images.githubusercontent.com/68600592/206827286-af0500f7-4b50-49f4-81f2-7d1d924b676f.png)
+
+**유저별 서비스**  
+![image](https://user-images.githubusercontent.com/68600592/206827293-aad52419-2a89-4032-9365-27bc269b8873.png)
+
+**관리자 파트**  
+![image](https://user-images.githubusercontent.com/68600592/206827301-a5b9f3a2-bbd3-4355-9556-2b9a592bdbb9.png)
