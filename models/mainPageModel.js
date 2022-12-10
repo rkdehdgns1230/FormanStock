@@ -8,10 +8,18 @@ module.exports = {
         from STOCK_PRICE sp, stock s
         where s.stock_code = ?
         and s.stock_code = sp.stock_code;
+
         select date_format(sp.stock_date, '%Y-%m-%d %H:%i:%S') stock_date, sp.close_price
         from STOCK_PRICE sp, stock s
         where s.stock_code = ?
-        and s.stock_code = sp.stock_code;`
+        and s.stock_code = sp.stock_code;
+        
+        SELECT post_no, post_title, user_id, date_format(reg_date, '%Y-%m-%d') post_date FROM POST limit 5;
+
+        select s.stock_code, s.stock_name, count(*) like_cnt from like_stock ls, stock s where ls.stock_code = s.stock_code group by stock_code order by like_cnt desc limit 5;
+
+        select user_id, stock_code, trade_price * trade_stock_cnt trade_volume from trade order by trade_volume desc limit 10;
+        `
 
         connection.query(sql, [stock_code1, stock_code2], (err, rows) => {
             if(err){
@@ -19,7 +27,8 @@ module.exports = {
                 return;
             }
             else{
-                callback(rows[0], rows[1]);
+                // 1번 주식의 데이터, 2번 주식의 데이터, 종목토론방, 상위 5개 좋아요 주식
+                callback(rows[0], rows[1], rows[2], rows[3], rows[4]);
                 return;
             }
         })

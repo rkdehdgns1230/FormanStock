@@ -16,6 +16,8 @@ block content
                             li.nav-item
                                 button.nav-link.active(data-bs-toggle='tab' data-bs-target='#profile-stock') 보유주식
                             li.nav-item
+                                button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-trade') 거래기록
+                            li.nav-item
                                 button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-interest') 관심종목
                             li.nav-item
                                 button.nav-link(data-bs-toggle='tab' data-bs-target='#profile-edit') 나의 프로필
@@ -35,23 +37,54 @@ block content
                                             thead
                                                 tr 
                                                 th 이름
-                                                th 매매시각
-                                                th 매매가  
+                                                th 종목 코드
+                                                th 평균 매수 금액
                                                 th 보유량                   
                                                 th 매매
                                             tbody            
                                                 for row in rows[0]                                     
                                                     tr 
                                                     td #{row.stock_name}
-                                                    td #{row.reg_date}
-                                                    td #{row.trade_price}     
-                                                    td #{row.trade_stock_cnt}                             
+                                                    td #{row.stock_code}
+                                                    td #{row.total_trade_volume / row.stock_cnt}KRW
+                                                    td #{row.stock_cnt}주                       
                                                     td 
                                                         a.btn.btn-primary.btn-icon-split(href=`/formanstock/stocks/${row.stock_code}`)
                                                             span.icon.text-white-50
                                                                 i.fas.fa-check 
                                                             span.text 거래창으로 이동
 
+                            .tab-content.pt-2
+                            #profile-trade.tab-pane.fade.show.profile-trade
+                                .card-body 
+                                    .table-responsive
+                                        table.table.table-bordered#dataTable(
+                                            width="100%"
+                                            cellspacing="0"
+                                            style = "text-align:center"
+                                        )
+                                            thead
+                                                tr 
+                                                th 이름
+                                                th 거래시각
+                                                th 거래가  
+                                                th 거래량                   
+                                                th 매수/매도
+                                                th 거래완료 여부
+                                            tbody            
+                                                for row in rows[3]                                     
+                                                    tr 
+                                                    td #{row.stock_name}
+                                                    td #{row.reg_date}
+                                                    td #{row.trade_price}KRW     
+                                                    td #{row.trade_stock_cnt}주    
+                                                    td #{row.trade_type}     
+                                                    td #{row.trade_yn}                        
+                                                    td 
+                                                        a.btn.btn-primary.btn-icon-split(href=`/formanstock/stocks/${row.stock_code}`)
+                                                            span.icon.text-white-50
+                                                                i.fas.fa-check 
+                                                            span.text 거래창으로 이동
 
                             #profile-interest.tab-pane.fade.profile-interest
                                 .card-body 
@@ -68,26 +101,28 @@ block content
                                                 th 종가
                                                 th 고가
                                                 th 저가
-                                                th 거래량   
+                                                th 거래량  
+                                                th 좋아요 수 
                                                 th 상세정보 이동                    
                                                 th 관심종목에서 제거
                                             tbody                                                 
                                                 for row in rows[1]                                     
                                                     tr 
                                                     td #{row.stock_name}
-                                                    td #{row.OPEN_PRICE}
-                                                    td #{row.CLOSE_PRICE} 
-                                                    td #{row.HIGH_PRICE}
-                                                    td #{row.LOW_PRICE}        
-                                                    td #{row.TRADING_VOLUME}                             
+                                                    td #{row.OPEN_PRICE}KRW
+                                                    td #{row.CLOSE_PRICE}KRW 
+                                                    td #{row.HIGH_PRICE}KRW
+                                                    td #{row.LOW_PRICE}KRW      
+                                                    td #{row.TRADING_VOLUME}  
+                                                    td #{row.LIKE_CNT}                             
                                                     td 
                                                         a.btn.btn-success.btn-icon-split(href=`/formanstock/stocks/${row.stock_code}`)
                                                             span.icon.text-white-50
                                                                 i.fas.fa-check 
                                                             span.text 이동                       
                                                     td 
-                                                        form(action=`/formanstock/stocks/${row.stock_code}/not-interest/` method = "post")
-                                                            a.btn.btn-danger.btn-icon-split(type ="submit")
+                                                        form(action=`/formanstock/mypage/${row.stock_code}/not-interest` method = "post")
+                                                            button.btn.btn-danger.btn-icon-split(type ="submit")
                                                                 span.icon.text-white-50
                                                                     i.fas.fa-check 
                                                                 span.text 제거

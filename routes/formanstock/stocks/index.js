@@ -19,8 +19,17 @@ router.post('/:stock_code/unlike', stockController.unlikeStock);
 router.post('/:stock_code/interest', stockController.registerInterestInStock);
 router.post('/:stock_code/not-interest', stockController.excludeInterestInStock);
 
-router.post('/:stock_code/buy');
-router.post('/:stock_code/sell');
+router.get('/:stock_code/trade',(req, res, next) => {
+  const isLogin = req.token;
+
+  if(isLogin === undefined){
+    res.redirect('/login-page');
+  }
+  // 로그인이 되어있다면, 거래창으로 이동 가능하다.
+  next();
+} ,stockController.getStockTradePage);
+router.post('/:stock_code/trade/buy', stockController.buyStock);
+router.post('/:stock_code/trade/sell', stockController.sellStock);
 
 // 임시로 company data 추가하는 api 추가
 router.get('/:stock_code/importCompanyInfo', stockController.loadCompanyData);

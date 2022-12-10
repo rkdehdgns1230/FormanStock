@@ -9,7 +9,7 @@ module.exports={
         const user_id = req.row.USER_ID;   
         console.log("id:" + JSON.stringify(user_id));
         mypage_model.get_userINFO(user_id,(rows) =>{
-            console.log("rows:" + JSON.stringify(rows));
+            //console.log("rows:" + JSON.stringify(rows));
             res.render('mypage/index',
                 {title:'FormanStock', 
                 rows:rows, 
@@ -31,47 +31,24 @@ module.exports={
 
         mypage_model.ChangePW(req, res, Data ,(callback) =>{
             console.log("ChangePW end" + JSON.stringify(callback));
-            if (callback == 0)res.send("<script>alert('비밀번호가 틀렸습니다.');window.location=\"/formanstock/mypage\";</script>");
-            else if (callback == 1)res.send("<script>alert('변경할 비밀번호가 서로 일치하지 않습니다.');window.location=\"/formanstock/mypage\";</script>");
-            else if (callback == 2)res.send("<script>alert('비밀번호 변경이 완료되었습니다.');window.location=\"/formanstock/mypage\";</script>");
+            if (callback == 0)res.send(`<script>alert('비밀번호가 틀렸습니다.');window.location=\"/formanstock/mypage/${user_id}\";</script>`);
+            else if (callback == 1)res.send(`<script>alert('변경할 비밀번호가 서로 일치하지 않습니다.');window.location=\"/formanstock/mypage/${user_id}\";</script>`);
+            else if (callback == 2)res.send(`<script>alert('비밀번호 변경이 완료되었습니다.');window.location=\"/formanstock/mypage/${user_id}\";</script>`);
         });      
     },
-
-    // user_suspend:function(req,res){
-    //     const user_id = req.params.user_id;        
-    //     manage_model.user_suspend(user_id,(num) =>{
-    //         console.log("rows:" + JSON.stringify(num));
-    //         res.redirect('/formanstock/manage/users');
-    //     });        
-    // },
-    // user_delete:function(req,res){
-    //     const user_id = req.params.user_id;        
-    //     manage_model.user_delete(user_id,(num) =>{
-    //         console.log("rows:" + JSON.stringify(num));
-    //         res.redirect('/formanstock/manage/users');
-    //     });        
-    // },
-    // suspended_user_delete:function(req,res){
-    //     const user_id = req.params.user_id;        
-    //     manage_model.user_delete(user_id,(num) =>{
-    //         console.log("rows:" + JSON.stringify(num));
-    //         res.redirect('/formanstock/manage/users-suspension');
-    //     });        
-    // },
-    // post_delete:function(req,res){
-    //     const stock_code = req.params.stock_code;        
-    //     const post_no = req.params.post_no;
-    //     manage_model.post_delete(post_no,(num) =>{
-    //         console.log("rows:" + JSON.stringify(num));
-    //         res.redirect('/formanstock/manage/board/'+ stock_code +'');
-    //     });        
-    // },
-    // comment_delete:function(req,res){
-    //     const comment_no = req.params.comment_no;                
-    //     manage_model.comment_delete(comment_no,(num) =>{
-    //         console.log("rows:" + JSON.stringify(num));
-    //         res.redirect('/formanstock/manage/board/comments');
-    //     });        
-    // },
-    
+    deleteInterestStockList:function(req, res, next){
+        const user_id = req.row.USER_ID;
+        const stock_code = req.params.stock_code;
+        console.log("관심 종목 제외 작업");
+        console.log(user_id, stock_code)
+        mypage_model.deleteInterestStockList(stock_code, user_id, (success) => {
+            // 일단 성공 실패 상관없이 종목 조회 페이지로 redirection
+            if(success){
+                res.redirect(`/formanstock/mypage/${user_id}`);
+            }
+            else{
+                res.redirect(`/formanstock/stocks/${user_id}`);
+            }
+        });
+    },
 }

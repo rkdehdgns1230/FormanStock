@@ -7,37 +7,17 @@ const connection = mysql.createConnection(dbInfo.mySQL_config);
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const saltRounds = 10
-// select s.stock_name, p.open_price, p.close_price, p.high_price, p.low_price, p.trading_volume
-//     from interest_in i, stock s, stock_price p
-//     where i.stock_code = s.stock_code and i.stock_code = p.stock_code and i.user_id = ?
-//     ;
-
-// select
-//     s.stock_name, p.open_price, p.close_price, p.high_price, p.low_price, p.trading_volume
-//     from(
-//         select
-//             *
-//         from stock_price
-//         where (stock_code, stock_date) in (
-//             select stock_code, max(stock_date) as stock_date
-//             from stock_price group by stock_code
-//         )
-//         order by stock_date desc
-//     ) p, interest_in i, stock s
-//     where i.stock_code = s.stock_code and i.stock_code = p.stock_code and i.user_id = ?
-//     group by p.stock_code;
-
 
 exports.get_userINFO=(id, callback)=>{
     const sql = `
-    select s.stock_name, date_format(t.reg_date,'%Y-%m-%d') reg_date, t.trade_price, t.trade_stock_cnt, s.stock_code
-    from hold h, trade t, stock s
-    where h.stock_code = t.stock_code and h.user_id = t.user_id and s.stock_code = h.stock_code and h.user_id = ?;
+    select s.stock_name, h.stock_cnt, s.stock_code, h.total_trade_volume
+    from hold h, stock s
+    where s.stock_code = h.stock_code and h.user_id = ?;
 
     
     
     select
-    s.stock_name, p.open_price, p.close_price, p.high_price, p.low_price, p.trading_volume, s.stock_code
+    s.stock_name, p.open_price, p.close_price, p.high_price, p.low_price, p.trading_volume, s.stock_code, count(l.stock_code) AS LIKE_CNT
     from(
         select
             *
@@ -47,12 +27,18 @@ exports.get_userINFO=(id, callback)=>{
             from stock_price group by stock_code
         )
         order by stock_date desc
-    ) p, interest_in i, stock s
+    ) p, interest_in i LEFT JOIN like_stock l ON i.stock_code = l.stock_code, stock s
     where i.stock_code = s.stock_code and i.stock_code = p.stock_code and i.user_id = ?
     group by p.stock_code;
 
-    select user_id, user_passwd, user_real_name, age from USER where user_id = ?;`;
-    connection.query(sql, [id, id, id], (err,rows,fields)=>{
+    select user_id, user_passwd, user_real_name, age from USER where user_id = ?;
+    
+    select s.stock_name, date_format(t.reg_date,'%Y-%m-%d') reg_date, t.trade_price, t.trade_stock_cnt, t.trade_type, t.trade_yn, s.stock_code
+    from trade t, stock s
+    where s.stock_code = t.stock_code and t.user_id = ?;
+    
+    `;
+    connection.query(sql, [id, id, id, id], (err,rows,fields)=>{
         if(err) throw err;
         callback(rows);
     });
@@ -101,39 +87,22 @@ exports.ChangePW=(req, res, Data, callback)=>{
             callback();
         }
     })
-    // connection.query(sqlForFindPW, user_id, function(err, rows){
-    //     if(err) console.error("err : "+err);
-    //     console.log("rows : "+JSON.stringify(rows));
-        
-    //     bcrypt.compare(member_password, rows.USER_PASSWD, function (err, isMatch) {
-    //         if (err) console.error("login_bcrpyt_compare_eror: " + err);
-    //         if (!isMatch){
-    //             alert('비밀번호가 틀렸습니다.')
-    //             callback();
-    //         }
-    //         else if(Data['newpassword'] != Data['renewpassword']){
-    //             alert('비밀번호가 서로 일치하지 않습니다.')
-    //             callback()
-    //         }
-    //         else if(Data['newpassword'] == Data['renewpassword']){
-    //             bcrypt.genSalt(saltRounds, function(err,salt){
-    //                 if (err) console.error("bcrypt err: " + err);
-    //                 bcrypt.hash(password, salt, function(err, hash){
-    //                     if (err) console.error("bcrypt err: " + err);
-    //                     password = hash
-    //                     var sqlForUpdateMember = "Update user SET USER_PASSWD=? WHERE USER_ID=?"
-    //                     connection.query(sqlForUpdateMember, [password, user_id], function (err, result) {
-    //                         if (err) console.error("login_token_update_err: ", err);
-    //                         alert('비밀번호가 변경되었습니다.')
-    //                         callback();
-    //                     });
-    //                 })
-    //             })
-                
-    //         }else{
-    //             alert('에러 발생. 다시 시도하세요.')
-    //             callback();
-    //         }
-    //     })
-    // });
+    
+}
+
+exports.deleteInterestStockList=(stock_code, user_id, callback)=>{
+    const sql = 'delete from INTEREST_IN where user_id = ? and stock_code = ?';
+    console.log('Success')
+    connection.query(sql, [user_id, stock_code], (err, rows) => {
+        if(err){
+            console.log(err);
+            callback(false);
+        }
+        else{
+            
+            callback(true);
+        }
+        return;
+    })
+    
 }

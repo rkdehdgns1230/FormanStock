@@ -4,33 +4,36 @@ block content
   style.
     .carousel-inner{
       width: auto;
-      height: 490px;
+      height: auto;
       background-color: transparent;
     }
     .carousel-item{
-      max-width: 100%;
+      width: 100%;
       height: auto;
     }
     .carousel-caption{
-      color: white;
-      bottom: 50%;
-      transition: all ease 1s;
+      color: black;
+      bottom: 20%;
     }
-    .carousel-caption:hover{
-      transform: scale(1.2);
+    ul{
+      list-style: none;
+      padding-left: 0rem;
     }
-  #carouselExampleControls.carousel.slide(data-bs-ride="carousel")
+    .list-box{
+      margin: 1px;
+    }
+  #carouselExampleControls.carousel.slide.carousel-fade(data-bs-ride="carousel")
     .carousel-inner 
       .carousel-item.active 
-        img.d-block.w-100(src="assets/img/stock_1920.jpg" alt="" width='100%')
+        img.d-block.w-100(src="assets/img/business-2_1.jpg" alt="")
         .carousel-caption.d-none.d-md-block 
-          h3 모의 주식 거래 기능
-          p 다양한 KOSPI 종목을 만나보세요!! 
-      .carousel-item 
-        img.d-block.w-100(src="assets/img/community_1920.jpg" alt="")
+          h1.font-weight-bold 모의 주식 거래 기능
+          p.font-weight-bold 다양한 KOSPI 종목을 만나보세요!! 
+      .carousel-item
+        img.d-block.w-100(src="assets/img/chart-black_2_1.png" alt="")
         .carousel-caption.d-none.d-md-block 
-          h3 커뮤니티를 만나보세요
-          p 종목별로 사람들을 만나 토론해보세요!!
+          h1.font-weight-bold 커뮤니티를 만나보세요
+          p.font-weight-bold 종목별로 사람들을 만나 토론해보세요!!
     button.carousel-control-prev(type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev")
       span.carousel-control-prev-icon(aria-hidden="true")
       span.visually-hidden Previous
@@ -41,69 +44,101 @@ block content
   .container-fluid.px-4
     h1.mt-4 
     .row 
-      .col-xl-3.col-md-6   
-        .card.text-black.fw-bold.mb-4(style="background-color: #B8A49B")
+      .col-xl-3.col-md-6(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));") 
+        .card.text-white.fw-bold.mb-4.border.border-secondary(style="background-color: #0D1117")
           .card-body 종목게시판
           .card-footer.d-flex.align-items-center.justify-content-between  
-            a.small.text-black.stretched-link(href='#') 구경가기
+            a.small.text-white.stretched-link(href='/formanstock/board/005930/posts') 구경가기
             .small.text-white
             i.fas.fa-angle-right
-      .col-xl-3.col-md-6
-        .card.text-black.fw-bold.mb-4(style="background-color: #B8A49B")
+      .col-xl-3.col-md-6(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));") 
+        .card.text-white.fw-bold.mb-4.border.border-secondary(style="background-color: #0D1117")
           .card-body 주식 회사 조회
           .card-footer.d-flex.align-items-center.justify-content-between
-            a.small.text-black.stretched-link(href='#') 구경하기
+            a.small.text-white.stretched-link(href='#') 구경하기
             .small.text-white
             i.fas.fa-angle-right
-      .col-xl-3.col-md-6
-        .card.text-black.fw-bold.mb-4(style="background-color: #B8A49B")
+      .col-xl-3.col-md-6(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));") 
+        .card.text-white.fw-bold.mb-4.border.border-secondary(style="background-color: #0D1117")
           .card-body 매매하러가기
           .card-footer.d-flex.align-items-center.justify-content-between
-            a.small.text-black.stretched-link(href='#') 구경하기
+            a.small.text-white.stretched-link(href='/formanstock/stocks/005930/trade') 구경하기
             .small.text-white
             i.fas.fa-angle-right
-      .col-xl-3.col-md-6
-        .card.text-black.fw-bold.mb-4(style="background-color: #B8A49B")
+      .col-xl-3.col-md-6(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));") 
+        .card.text-white.fw-bold.mb-4.border.border-secondary(style="background-color: #0D1117")
           .card-body 시세 보러가기
           .card-footer.d-flex.align-items-center.justify-content-between
-            a.small.text-black.stretched-link(href='#') 구경하기
+            a.small.text-white.stretched-link(href='/formanstock/stocks/005930') 구경하기
             .small.text-white
             i.fas.fa-angle-right      
     //그래프 주식왕
     .row 
       .col-sm 
-        .card.mb-4 
-          .card-header(style="background-color: #F9F0E7") 삼성차트 
+        .card.mb-4(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));") 
+          .card-header(style="background-color: #0D1117; color: white;") 삼성전자 
             i.fas.fa-chart-area.me-1(style="color: #037ef3")          
           .card-body
             canvas#samsungChart(width="100%" height="100%")
       .col-sm 
-        .card.mb-4 
-          .card-header(style="background-color: #F9F0E7") LG차트 
+        .card.mb-4(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));")  
+          .card-header(style="background-color: #0D1117; color: white;") LG전자 
             i.fas.fa-chart-area.me-1
           .card-body 
             canvas#lgChart(width="100%" height="100%")
       .col-sm 
-        .card.mb-4 
-          .card-header(style="background-color: #F9F0E7") 인기 BEST 종목 
+        .card.mb-4(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));")  
+          .card-header(style="background-color: #0D1117; color: #DA3F3A;") BEST 종목 
             i.fas.fa-solid.fa-fire
-          .card-body 
-            canvas#myAreaChart(width="100%" height="100")
+          .card-body
+            // 좋아요 순으로 종목을 보여준다.
+            ul 
+              - for(let i = 0; i < mostLikedStock.length; i++){
+                li.list-box.text-danger.border-bottom.border-danger
+                  i.fas.fa-solid.fa-fire(style="color: #DA3F3A;")
+                  span  #{i + 1}등 #{mostLikedStock[i].stock_name} (#{mostLikedStock[i].stock_code}) #{mostLikedStock[i].like_cnt} likes
+              - }
     .row 
       .col-sm 
-        .card.mb-4 
-          .card-header(style="background-color: #F9F0E7") 종목게시판 
+        .card.mb-4(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));") 
+          .card-header(style="background-color: #0D1117; color: white;") 종목게시판 
             i.fas.fa-regular.fa-comments
-          .card-body 
+          .card-body
+            table.table.table-hover
+                thead 
+                  tr 
+                    th(scope="col") #
+                    th(scope="col") TITLE
+                    th(scope="col") USER ID
+                tbody
+                  -for(let i = 0; i < postList.length; i++){
+                  tr
+                    th #{postList[i].post_no}
+                    th
+                      a(href="#" style="text-decoration: none; color: black") #{postList[i].post_title}
+                    th #{postList[i].user_id}
+                  -}
           
       .col-sm 
-        .card.mb-4 
-          .card-header(style="background-color: #F9F0E7") 오늘의 주식왕 
+        .card.mb-4(style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.5));") 
+          .card-header(style="background-color: #0D1117; color: #D29922;") 오늘의 거래왕 
             i.fas.fa-solid.fa-crown
-          .card-body 
-            ul
-              - for(let i = 1; i <= 10; i++){
-                li #{i}등 홍길동
+          .card-body
+            table.table.table-hover
+              thead
+                tr 
+                  th(scope="col") rank.
+                  th(scope="col") user id
+                  th(scope="col") stock code 
+                  th(scope="col") trading volume
+              - for(let i = 0; i < topTrader.length; i++){
+                tr
+                  th.text-warning
+                    i.fas.fa-solid.fa-crown
+                    span  #{i + 1}등 
+                  th #{topTrader[i].user_id}
+                  th #{topTrader[i].stock_code}
+                  th #{topTrader[i].trade_volume}
               -}
 
 

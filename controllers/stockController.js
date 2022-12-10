@@ -7,7 +7,7 @@ module.exports = {
         const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
         
 
-        stockModel.getSpecificStockInfo(user_id, stock_code, (stockInfo, stockPriceInfo, likeCount, userLike, interestCount, userInterest) => {
+        stockModel.getSpecificStockInfo(user_id, stock_code, (stockInfo, stockPriceInfo, likeCount, userLike, interestCount, userInterest, postList) => {
             //res.send([stockInfo, stockPriceInfo]);
             // stock_info template과 data를 결합해 rendering한다.
             //console.log(stockPriceInfo[0].close_price);
@@ -27,7 +27,7 @@ module.exports = {
             }
 
             // template과 data를 합쳐서 rendering 한다.
-            res.render('board/stock_info', {
+            res.render('stock/stock_info', {
                 title: 'FormanStock',
                 stockInfo: {
                     stockCode: stockInfo[0].stock_code,
@@ -45,8 +45,7 @@ module.exports = {
                 },
                 stockDateList: dateList,
                 stockClosePriceList: closePriceList,
-                listLength: dateList.length,
-                token: req.token
+                postList: postList
             });
         });
     },
@@ -123,5 +122,85 @@ module.exports = {
                 res.redirect(`/formanstock/stocks/${stock_code}`);
             }
         });
+    },
+    getStockTradePage: (req, res, next) => {
+        // 종목 코드는 path parameter 형태로 넘어온다.
+        const stock_code = req.params.stock_code;
+        const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
+        
+        // 로그인 성공 여부를 판단하기 위한 변수들
+        let loginSuccess = !(req.token === undefined);
+        let loginString= loginSuccess ? "success" : "fail";
+        console.log("Hello");
+        
+        stockModel.getOnlyStockInfo(stock_code, user_id, (success, stockInfo, userStockInfo, postInfo, recentPriceInfo) => {
+            console.log(userStockInfo);
+            console.log(stockInfo);
+            console.log(recentPriceInfo);
+            if(success){
+                res.render('stock/stock_trade', {
+                    title: 'FormanStock',
+                    stockInfo: {
+                        stockCode: stockInfo[0].stock_code,
+                        companyName: stockInfo[0].company_name, 
+                        totalStockNum: stockInfo[0].total_stock_num, 
+                        companyInfo: stockInfo[0].company_info
+                    },
+                    userInfo: {
+                        login: loginString,
+                        info: loginSuccess ? req.row : 'empty'
+                    },
+                    userStockInfo: {
+                        stock_cnt: userStockInfo.length !== 0 ? userStockInfo[0].stock_cnt : 0
+                    },
+                    postInfo: postInfo,
+                    standardPrice: recentPriceInfo[0]
+                });
+            }
+            else{
+                // 404를 전송한다.
+                res.sendStatus(404);
+            }
+        })
+        
+    },
+    buyStock: (req, res, next) => {
+        const price = req.body.trade_price;
+        const num = parseInt(req.body.trade_amount);
+        const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
+        const stock_code = req.params.stock_code;
+
+        // 구매 가능한 경우에는 바로 구매한다.
+        console.log(`price: ${price}, num: ${num}`);
+        //res.send('hello');
+        console.log(`type check: ${typeof(num)}`);
+        // 매매완료시 원래 창으로 redirection
+        stockModel.buyStock(user_id, stock_code, num, price, (success) => {
+            if(success){
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
+            }
+            else{
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
+            }
+        })
+    },
+    sellStock: (req, res, next) => {
+        const price = req.body.trade_price;
+        const num = req.body.trade_amount;
+        const user_id = req.token !== undefined ? req.row.USER_ID : 'unknown';
+        const stock_code = req.params.stock_code;
+
+        // 판매 가능한 경우에는 바로 구매한다.
+        console.log(`price: ${price}, num: ${num}`);
+        //res.send('hello');
+
+        stockModel.sellStock(user_id, stock_code, num, price, (success) => {
+            if(success){
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
+            }
+            else{
+                res.redirect(`/formanstock/stocks/${stock_code}/trade`);
+            }
+        })
     }
 }
